@@ -14,8 +14,8 @@ interface BookData {
   tilt?: string;
 }
 
-// Set to 1 for "Book already in foreground" or 2 for "Book comes out of shelf"
-export const BOOKSHELF_VERSION: 1 | 2 = 2;
+// Select version: 1 = Already centered | 2 = Face-forward pull | 3 = Real shelf book (spine-outward, slides out & rotates)
+export const BOOKSHELF_VERSION: 1 | 2 | 3 = 3;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -25,7 +25,6 @@ export default function BookshelfHero() {
   const bookPagesRef = useRef<HTMLDivElement>(null);
   const emergingElementsRef = useRef<HTMLDivElement>(null);
   const promptBadgeRef = useRef<HTMLDivElement>(null);
-  const shelfSlotRef = useRef<HTMLDivElement>(null);
 
   const [bookState, setBookState] = useState<"on-shelf" | "in-foreground" | "opening" | "opened">(
     "on-shelf"
@@ -59,7 +58,6 @@ export default function BookshelfHero() {
     { id: 21, title: "Full Stack Journeys", color: "bg-burgundy text-cream", height: "h-42", width: "w-12" },
   ];
 
-  // Initial Sequence: Handles Version 1 vs Version 2
   useEffect(() => {
     const ctx = gsap.context(() => {
       const book = bookRef.current;
@@ -67,19 +65,20 @@ export default function BookshelfHero() {
       const badge = promptBadgeRef.current;
       if (!book) return;
 
-      if (BOOKSHELF_VERSION === 2) {
+      if (BOOKSHELF_VERSION === 3) {
         // =========================================================================
-        // VERSION 2: BOOK STARTS INSIDE THE SHELF AND COMES OUT
+        // VERSION 3: PHYSICAL SHELF BOOK (SPINE-FACING) -> SLIDES OUT -> ROTATES
         // =========================================================================
+        // Initial state: Standing on the middle shelf like all other books, spine facing viewer
         gsap.set(book, {
           scale: 0.5,
-          y: -45,
+          y: -42,
           x: 0,
           z: 0,
           rotationX: 0,
-          rotationY: 0,
+          rotationY: -80, // Turned on its edge showing spine
           rotationZ: 0,
-          boxShadow: "0 5px 15px rgba(0,0,0,0.5)",
+          boxShadow: "0 8px 20px rgba(0,0,0,0.6)",
         });
 
         const tl = gsap.timeline({
@@ -89,38 +88,38 @@ export default function BookshelfHero() {
           },
         });
 
-        // 1. Book shifts and slides forward out from the shelf slot
+        // 1. Slides straight outward from between the books along Z
         tl.to(book, {
-          duration: 0.6,
-          z: 120,
-          rotationX: 18,
-          rotationZ: -4,
-          ease: "power1.inOut",
+          duration: 0.8,
+          z: 160,
+          x: -15,
+          rotationY: -65,
+          ease: "power2.in",
         });
 
-        // 2. Book tumbles off the shelf into the foreground center and enlarges
+        // 2. Turns smoothly from spine view to reveal front cover while tumbling into center foreground
         tl.to(
           book,
           {
-            duration: 1.5,
+            duration: 1.4,
             scale: 1.25,
             y: 0,
             x: 0,
             z: 320,
             rotationX: 10,
-            rotationY: -10,
+            rotationY: -10, // Faces forward toward user with gentle perspective
             rotationZ: -2,
             boxShadow: "-25px 35px 60px rgba(0,0,0,0.8)",
             ease: "power3.out",
           },
-          "-=0.1"
+          "-=0.2"
         );
 
-        // 3. Background bookshelf softens with depth-of-field blur
+        // 3. Background shelf blurs and softens, leaving the gap on shelf visible
         tl.to(
           shelf,
           {
-            duration: 1.5,
+            duration: 1.4,
             filter: "blur(6px)",
             opacity: 0.5,
             scale: 0.94,
@@ -144,47 +143,36 @@ export default function BookshelfHero() {
           duration: 1.2,
           ease: "sine.inOut",
         });
+      } else if (BOOKSHELF_VERSION === 2) {
+        // VERSION 2: Face-forward pull
+        gsap.set(book, {
+          scale: 0.5,
+          y: -45,
+          x: 0,
+          z: 0,
+          rotationX: 0,
+          rotationY: 0,
+          rotationZ: 0,
+        });
+
+        const tl = gsap.timeline({
+          delay: 0.8,
+          onComplete: () => setBookState("in-foreground"),
+        });
+
+        tl.to(book, { duration: 0.6, z: 120, rotationX: 18, rotationZ: -4, ease: "power1.inOut" });
+        tl.to(book, { duration: 1.5, scale: 1.25, y: 0, x: 0, z: 320, rotationX: 10, rotationY: -10, rotationZ: -2, ease: "power3.out" }, "-=0.1");
+        tl.to(shelf, { duration: 1.5, filter: "blur(6px)", opacity: 0.5, scale: 0.94, ease: "power2.out" }, "<0.1");
+        tl.fromTo(badge, { opacity: 0, y: 30, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "back.out(1.7)" }, "-=0.3");
       } else {
-        // =========================================================================
-        // VERSION 1: BOOK ALREADY ON SCREEN (CENTER ENTRANCE)
-        // =========================================================================
+        // VERSION 1: Book already on screen
         const tl = gsap.timeline({
           delay: 0.5,
-          onComplete: () => {
-            setBookState("in-foreground");
-          },
+          onComplete: () => setBookState("in-foreground"),
         });
-
-        tl.to(book, {
-          duration: 1.4,
-          y: 0,
-          x: 0,
-          scale: 1.25,
-          rotationX: 12,
-          rotationY: -10,
-          rotationZ: -3,
-          z: 300,
-          ease: "power3.out",
-        });
-
-        tl.to(
-          shelf,
-          {
-            duration: 1.4,
-            filter: "blur(5px)",
-            opacity: 0.55,
-            scale: 0.95,
-            ease: "power2.out",
-          },
-          "<0.2"
-        );
-
-        tl.fromTo(
-          badge,
-          { opacity: 0, y: 25, scale: 0.8 },
-          { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.7)" },
-          "-=0.4"
-        );
+        tl.to(book, { duration: 1.4, y: 0, x: 0, scale: 1.25, rotationX: 12, rotationY: -10, rotationZ: -3, z: 300, ease: "power3.out" });
+        tl.to(shelf, { duration: 1.4, filter: "blur(5px)", opacity: 0.55, scale: 0.95, ease: "power2.out" }, "<0.2");
+        tl.fromTo(badge, { opacity: 0, y: 25, scale: 0.8 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.7)" }, "-=0.4");
       }
     }, containerRef);
 
@@ -203,7 +191,6 @@ export default function BookshelfHero() {
         },
       });
 
-      // Hide the prompt badge
       tl.to(promptBadgeRef.current, {
         opacity: 0,
         scale: 0.8,
@@ -211,7 +198,6 @@ export default function BookshelfHero() {
         ease: "power2.in",
       });
 
-      // Center the book and prepare for opening
       tl.to(bookRef.current, {
         scale: 1.35,
         rotationX: 0,
@@ -221,25 +207,18 @@ export default function BookshelfHero() {
         ease: "power3.out",
       });
 
-      // Book cover swings open 180 degrees
       tl.to(bookCoverRef.current, {
         rotationY: -180,
         duration: 1.3,
         ease: "power3.inOut",
       });
 
-      // Reveal the inner pages
-      tl.to(
-        bookPagesRef.current,
-        {
-          opacity: 1,
-          duration: 0.5,
-          ease: "power2.out",
-        },
-        "<0.3"
-      );
+      tl.to(bookPagesRef.current, {
+        opacity: 1,
+        duration: 0.5,
+        ease: "power2.out",
+      }, "<0.3");
 
-      // Elements emerge and pop out from the pages
       const emergingCards = containerRef.current?.querySelectorAll(".emerging-item");
       if (emergingCards && emergingCards.length > 0) {
         tl.fromTo(
@@ -301,53 +280,58 @@ export default function BookshelfHero() {
           <div className="h-3 w-full bg-[#52383e] rounded-b-sm border-t border-[#6b4c53]/40" />
         </div>
 
-        {/* Middle Shelf (Slot where the portfolio book physically stands) */}
+        {/* Middle Shelf (Bookshelf row where the portfolio book is housed) */}
         <div className="relative w-full">
-          <div className="flex items-end justify-between border-b-[20px] border-[#38262a] pb-1 shadow-[0_16px_25px_rgba(0,0,0,0.8)] px-4">
-            {/* Left cluster */}
-            <div className="flex items-end space-x-2">
-              <div className="h-44 w-11 bg-burgundy rounded-t-sm p-1 shadow-md flex items-center justify-center">
-                <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-blush">
-                  Data Structures
-                </span>
-              </div>
-              <div className="h-40 w-10 bg-dustyRose rounded-t-sm p-1 shadow-md flex items-center justify-center rotate-3">
-                <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-white">
-                  Python 3.12
-                </span>
-              </div>
-              <div className="h-36 w-8 bg-mauve rounded-t-sm p-1 shadow-md flex items-center justify-center">
-                <span className="text-[9px] font-mono rotate-90 whitespace-nowrap text-cream">
-                  SQL Guides
-                </span>
-              </div>
+          <div className="flex items-end justify-center space-x-2 sm:space-x-4 border-b-[20px] border-[#38262a] pb-1 shadow-[0_16px_25px_rgba(0,0,0,0.8)] px-4">
+            {/* Left cluster books */}
+            <div className="h-44 w-11 bg-burgundy rounded-t-sm p-1 shadow-md flex items-center justify-center">
+              <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-blush">
+                Data Structures
+              </span>
+            </div>
+            <div className="h-40 w-10 bg-dustyRose rounded-t-sm p-1 shadow-md flex items-center justify-center rotate-2">
+              <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-white">
+                Python 3.12
+              </span>
+            </div>
+            <div className="h-36 w-8 bg-mauve rounded-t-sm p-1 shadow-md flex items-center justify-center">
+              <span className="text-[9px] font-mono rotate-90 whitespace-nowrap text-cream">
+                SQL Guides
+              </span>
+            </div>
+            <div className="h-42 w-10 bg-espresso-light rounded-t-sm p-1 shadow-md flex items-center justify-center -rotate-1">
+              <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-cream">
+                Algorithms
+              </span>
             </div>
 
-            {/* Middle Slot Shelf Anchor */}
-            <div
-              ref={shelfSlotRef}
-              className="w-28 sm:w-36 h-48 border border-dashed border-dustyRose/20 rounded-md flex items-center justify-center text-dustyRose/30 text-[10px] font-mono"
-            >
-              [Shelf Anchor Slot]
+            {/* Gap on shelf left behind when portfolio book is pulled forward */}
+            <div className="w-14 sm:w-16 h-44 border-r-2 border-l-2 border-[#1c1214] bg-[#160d0f]/60 rounded-t-sm flex items-center justify-center shadow-inner">
+              <span className="text-[8px] font-mono text-dustyRose/20 rotate-90 whitespace-nowrap">
+                VACANT SLOT
+              </span>
             </div>
 
-            {/* Right cluster */}
-            <div className="flex items-end space-x-2">
-              <div className="h-38 w-9 bg-espresso-light rounded-t-sm p-1 shadow-md flex items-center justify-center -rotate-2">
-                <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-cream">
-                  Next.js App
-                </span>
-              </div>
-              <div className="h-44 w-12 bg-burgundy rounded-t-sm p-1 shadow-md flex items-center justify-center">
-                <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-blush">
-                  React 18 Architecture
-                </span>
-              </div>
-              <div className="h-40 w-10 bg-dustyRose-dark rounded-t-sm p-1 shadow-md flex items-center justify-center">
-                <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-white">
-                  Spring Boot Core
-                </span>
-              </div>
+            {/* Right cluster books */}
+            <div className="h-40 w-10 bg-dustyRose-dark rounded-t-sm p-1 shadow-md flex items-center justify-center rotate-1">
+              <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-white">
+                Spring Boot Core
+              </span>
+            </div>
+            <div className="h-44 w-12 bg-burgundy rounded-t-sm p-1 shadow-md flex items-center justify-center">
+              <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-blush">
+                React Architecture
+              </span>
+            </div>
+            <div className="h-38 w-9 bg-espresso-light rounded-t-sm p-1 shadow-md flex items-center justify-center -rotate-2">
+              <span className="text-[10px] font-mono rotate-90 whitespace-nowrap text-cream">
+                Next.js App
+              </span>
+            </div>
+            <div className="h-36 w-8 bg-mauve-dark rounded-t-sm p-1 shadow-md flex items-center justify-center">
+              <span className="text-[9px] font-mono rotate-90 whitespace-nowrap text-blush">
+                Kafka Streams
+              </span>
             </div>
           </div>
           <div className="h-3 w-full bg-[#52383e] rounded-b-sm border-t border-[#6b4c53]/40" />
@@ -376,7 +360,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v{BOOKSHELF_VERSION} ({BOOKSHELF_VERSION === 2 ? "Out-of-Shelf Pull" : "On-Screen"})
+        Bookshelf: v{BOOKSHELF_VERSION} ({BOOKSHELF_VERSION === 3 ? "Spine-Outward Pull & Rotate" : BOOKSHELF_VERSION === 2 ? "Face-Forward Pull" : "Centered"})
       </div>
 
       {/* 3D PORTFOLIO BOOK */}
@@ -390,13 +374,30 @@ export default function BookshelfHero() {
       >
         {/* Book Container with Dual Pages */}
         <div className="relative w-full h-full preserve-3d flex items-center justify-center">
-          {/* CLOSED BOOK / BACK COVER */}
+          
+          {/* Physical 3D Spine Element (visible when standing in shelf row / rotating) */}
+          <div
+            style={{
+              transform: "rotateY(-90deg) translateZ(140px)",
+              width: "56px",
+              transformOrigin: "left center",
+            }}
+            className="absolute left-0 top-0 bottom-0 bg-gradient-to-r from-[#290d16] via-[#651F35] to-[#421221] border-t-2 border-b-2 border-r border-[#822744] flex flex-col justify-between items-center py-6 shadow-2xl z-20 pointer-events-none"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-[#d8a47f]" />
+            <div className="rotate-90 whitespace-nowrap text-[11px] font-serif font-bold text-[#FFF8F0] tracking-[0.25em] uppercase">
+              KRITIKA PANWAR &bull; PORTFOLIO
+            </div>
+            <span className="text-[9px] font-mono text-[#d8a47f]">2026</span>
+          </div>
+
+          {/* CLOSED BOOK / FRONT COVER */}
           <div
             className={`absolute inset-0 bg-[#3a101d] rounded-r-lg border-2 border-[#822744] shadow-[-20px_20px_50px_rgba(0,0,0,0.8)] flex flex-col justify-between p-6 ${
               bookState === "opened" ? "hidden" : "flex"
             }`}
           >
-            {/* Book Spine Texture */}
+            {/* Book Spine Shadow gradient */}
             <div className="absolute left-0 top-0 bottom-0 w-8 bg-gradient-to-r from-espresso via-burgundy-dark to-transparent opacity-80 rounded-l-sm" />
 
             {/* Gold foil embossed border */}
@@ -441,7 +442,6 @@ export default function BookshelfHero() {
 
               {/* LEFT PAGE */}
               <div className="w-1/2 h-full p-6 sm:p-8 flex flex-col justify-between border-r border-[#edd5d8] bg-[#FFF8F0] relative">
-                {/* Vintage page header */}
                 <div className="flex justify-between items-center text-[10px] font-mono text-mauve tracking-widest uppercase border-b border-blush pb-2">
                   <span>CHAPTER 01</span>
                   <span>THE PROLOGUE</span>
@@ -510,7 +510,6 @@ export default function BookshelfHero() {
             ref={emergingElementsRef}
             className="absolute inset-0 pointer-events-none z-40 overflow-visible"
           >
-            {/* Emerging Card 1: Top Left - Creative Tech */}
             <div className="emerging-item absolute -top-14 sm:-top-20 -left-12 sm:-left-24 bg-[#FFF8F0] text-burgundy p-3 sm:p-4 rounded-xl shadow-2xl border-2 border-dustyRose/40 w-44 sm:w-56 -rotate-6 pointer-events-auto backdrop-blur">
               <div className="flex items-center space-x-2 text-xs font-mono font-bold">
                 <Code className="w-4 h-4 text-dustyRose" />
@@ -521,7 +520,6 @@ export default function BookshelfHero() {
               </p>
             </div>
 
-            {/* Emerging Card 2: Top Right - Scrapbook Stamp */}
             <div className="emerging-item absolute -top-16 sm:-top-24 -right-10 sm:-right-20 bg-burgundy text-blush p-3 sm:p-4 rounded-xl shadow-2xl border-2 border-blush/30 w-40 sm:w-48 rotate-12 pointer-events-auto">
               <div className="flex items-center space-x-2 text-xs font-mono">
                 <Sparkles className="w-3.5 h-3.5 text-dustyRose-light" />
@@ -532,7 +530,6 @@ export default function BookshelfHero() {
               </p>
             </div>
 
-            {/* Emerging Card 3: Bottom Left - Projects Badge */}
             <div className="emerging-item absolute -bottom-12 sm:-bottom-16 -left-10 sm:-left-20 bg-blush text-burgundy p-3 rounded-lg shadow-xl border border-dustyRose w-40 sm:w-48 rotate-3 pointer-events-auto flex items-center space-x-2">
               <FolderGit2 className="w-4 h-4 text-burgundy" />
               <div className="text-[11px] font-mono leading-tight">
@@ -541,7 +538,6 @@ export default function BookshelfHero() {
               </div>
             </div>
 
-            {/* Emerging Card 4: Bottom Right - Journey Compass */}
             <div className="emerging-item absolute -bottom-14 sm:-bottom-20 -right-8 sm:-right-16 bg-[#FFF8F0] text-espresso p-3 rounded-lg shadow-xl border border-blush w-44 sm:w-52 -rotate-3 pointer-events-auto flex items-center space-x-3">
               <Compass className="w-5 h-5 text-dustyRose" />
               <div className="text-[11px] font-mono leading-tight">

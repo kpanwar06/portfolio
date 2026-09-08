@@ -11,12 +11,20 @@ This document tracks animation states and version history across components. If 
 - **Initial State**: Book centered in viewport at `z: 0`, scales to `1.25`.
 - **Git Commit Reference**: `14fadde` / `bd390f6`
 
-### **Version 2: Book Comes Out of Shelf (Physical Pull-Out Animation)**
-- **Behavior**: 
-  - **Start**: The portfolio book physically rests *inside* the middle shelf slot alongside other books (matching shelf scale ~`scale: 0.52`, upright orientation, nestled between the adjacent books).
-  - **Movement**: The book slides forward out of its shelf slot, tips slightly forward, tumbles smoothly downward toward the foreground center, and expands to full prominent hero size (`scale: 1.25`).
-  - **Camera/Shelf Depth**: As the book dislodges from the shelf and approaches the foreground, the shelf background softens with depth-of-field blur (`filter: blur(5px)`) and the "Click to Open" prompt appears.
-- **Reversion**: Can be reverted back to **Version 1** at any time by requesting: *"revert bookshelf to version 1"*.
+### **Version 2: Book Comes Out of Shelf (Face-Forward Pull)**
+- **Behavior**: The portfolio book starts in the middle shelf slot facing forward at reduced scale, then slides forward and enlarges.
+- **Git Commit Reference**: `0d6ee29`
+
+### **Version 3: Physical Shelf Row Integration (Spine-Outward → Slides Out → Rotates to Front Face)**
+- **Behavior**:
+  - **Initial State**: The portfolio book is realistically kept in the shelf row alongside other books, with its **spine facing outward** just like all the other books on the shelf (burgundy leather with gold embossed vertical spine text: *"KRITIKA PANWAR • PORTFOLIO"*). There is no pre-empty gap; it sits naturally in the row between other books.
+  - **Movement**:
+    1. The book pulls forward out of the shelf row.
+    2. As it moves toward the viewer, it rotates 90° from its side/spine profile to reveal its beautiful front cover.
+    3. It drops and centers into the foreground, leaving a gap on the shelf behind it.
+    4. The background shelf softens with depth-of-field blur.
+    5. The "Click the book to open" badge appears.
+  - **Click to Open**: User clicks the front cover → book swings open with dual pages → scrapbook elements emerge.
 
 ---
 
@@ -33,7 +41,7 @@ This document tracks animation states and version history across components. If 
 - **Version 1**: Pinned horizontal scroll track with vintage workshop pass cards.
 
 ## 🗺️ Section 6: Personal Journey Trail
-- **Version 6**: 45° organic diagonal stone trail with activity milestones ending at the floating "More to come..." cloud.
+- **Version 1**: 45° organic diagonal stone trail with activity milestones ending at the floating "More to come..." cloud.
 
 ## 📦 Section 7: 3D Tech Stack Box
 - **Version 1**: Three.js 3D box with tech cubes and continuous scroll-driven camera orbit from front-angle to top-down view.
