@@ -8,23 +8,23 @@ This document tracks animation states and version history across components. If 
 
 ### **Version 1: Book Already on Screen (Initial)**
 - **Behavior**: The portfolio book starts in the center of the viewport and performs an entrance scale/tilt towards the user, with the empty shelf slot visible behind it.
-- **Initial State**: Book centered in viewport at `z: 0`, scales to `1.25`.
 - **Git Commit Reference**: `14fadde` / `bd390f6`
 
 ### **Version 2: Book Comes Out of Shelf (Face-Forward Pull)**
 - **Behavior**: The portfolio book starts in the middle shelf slot facing forward at reduced scale, then slides forward and enlarges.
 - **Git Commit Reference**: `0d6ee29`
 
-### **Version 3: Physical Shelf Row Integration (Spine-Outward → Slides Out → Rotates to Front Face)**
+### **Version 3: Physical Shelf Row Integration (Spine-Outward → Rotates to Front)**
+- **Behavior**: The book starts showing only its narrow spine in the shelf row, pulls forward, and rotates 90° to face the user.
+- **Git Commit Reference**: `9aae53a`
+
+### **Version 4: Clean Front-Angle Display + 2-Second Still Pause + Polished Spines (Current)**
 - **Behavior**:
-  - **Initial State**: The portfolio book is realistically kept in the shelf row alongside other books, with its **spine facing outward** just like all the other books on the shelf (burgundy leather with gold embossed vertical spine text: *"KRITIKA PANWAR • PORTFOLIO"*). There is no pre-empty gap; it sits naturally in the row between other books.
-  - **Movement**:
-    1. The book pulls forward out of the shelf row.
-    2. As it moves toward the viewer, it rotates 90° from its side/spine profile to reveal its beautiful front cover.
-    3. It drops and centers into the foreground, leaving a gap on the shelf behind it.
-    4. The background shelf softens with depth-of-field blur.
-    5. The "Click the book to open" badge appears.
-  - **Click to Open**: User clicks the front cover → book swings open with dual pages → scrapbook elements emerge.
+  - **Clean Presentation**: The entire portfolio book is displayed prominently on the middle shelf at an elegant **front-angled perspective** (full front cover visible, with 3D spine and page edge depth).
+  - **2-Second Still Pause**: The scene stays calm and completely sharp for 2 seconds upon load, letting visitors take in the shelf environment.
+  - **Forward Flight**: The book smoothly glides forward out of the bookshelf, facing the user the entire time, expanding into the foreground center with realistic perspective easing.
+  - **Clean Spines**: All background book spine titles redesigned with proper typography and vertical orientation so no text is cut off or awkwardly wrapped.
+- **Git Commit Reference**: Current
 
 ---
 
