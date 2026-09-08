@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Instrument+Serif:ital@0;1&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-blush: #F7E6E8;
+  --color-cream: #FFF8F0;
+  --color-burgundy: #651F35;
+  --color-dustyRose: #C96F82;
+  --color-mauve: #A9828C;
+  --color-espresso: #261C1E;
+  --font-serif: 'Instrument Serif', 'Cinzel', Georgia, serif;
+  --font-sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: auto !important; /* Lenis takes over */
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  font-family: var(--font-sans);
+}
+
+body {
+  overflow-x: hidden;
+  background-color: var(--color-cream);
+  color: var(--color-espresso);
+  min-height: 100vh;
+  position: relative;
+  background-image: 
+    radial-gradient(rgba(201, 111, 130, 0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* 3D Transform Utilities */
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.perspective-1500 {
+  perspective: 1500px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Custom Editorial Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-cream);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-dustyRose);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-burgundy);
+}
+
+/* Paper Texture & Stamp Effects */
+.paper-edge {
+  box-shadow: 
+    inset 0 0 40px rgba(101, 31, 53, 0.05),
+    0 10px 30px rgba(38, 28, 30, 0.08);
+}
+
+.stamp-border {
+  border: 2px dashed rgba(101, 31, 53, 0.3);
+}
+
+/* Selection Color */
+::selection {
+  background-color: var(--color-dustyRose);
+  color: #ffffff;
+}
