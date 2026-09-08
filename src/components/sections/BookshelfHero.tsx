@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { Sparkles, BookOpen, ChevronDown, Compass, Code, Award, FolderGit2 } from "lucide-react";
+import { Sparkles, BookOpen, ChevronDown, Compass, Code, FolderGit2 } from "lucide-react";
 
 interface BookData {
   id: number;
@@ -14,6 +14,9 @@ interface BookData {
   tilt?: string;
 }
 
+// Set to 1 for "Book already in foreground" or 2 for "Book comes out of shelf"
+export const BOOKSHELF_VERSION: 1 | 2 = 2;
+
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const shelfRef = useRef<HTMLDivElement>(null);
@@ -22,6 +25,7 @@ export default function BookshelfHero() {
   const bookPagesRef = useRef<HTMLDivElement>(null);
   const emergingElementsRef = useRef<HTMLDivElement>(null);
   const promptBadgeRef = useRef<HTMLDivElement>(null);
+  const shelfSlotRef = useRef<HTMLDivElement>(null);
 
   const [bookState, setBookState] = useState<"on-shelf" | "in-foreground" | "opening" | "opened">(
     "on-shelf"
@@ -55,64 +59,133 @@ export default function BookshelfHero() {
     { id: 21, title: "Full Stack Journeys", color: "bg-burgundy text-cream", height: "h-42", width: "w-12" },
   ];
 
-  // Initial Sequence: Book falls out of bookshelf toward foreground
+  // Initial Sequence: Handles Version 1 vs Version 2
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        delay: 0.6,
-        onComplete: () => {
-          setBookState("in-foreground");
-        },
-      });
+      const book = bookRef.current;
+      const shelf = shelfRef.current;
+      const badge = promptBadgeRef.current;
+      if (!book) return;
 
-      // 1. Portfolio book tilts and falls forward out of the shelf
-      tl.to(bookRef.current, {
-        duration: 1.4,
-        y: 0,
-        x: 0,
-        scale: 1.25,
-        rotationX: 12,
-        rotationY: -10,
-        rotationZ: -3,
-        z: 300,
-        ease: "power3.out",
-      });
+      if (BOOKSHELF_VERSION === 2) {
+        // =========================================================================
+        // VERSION 2: BOOK STARTS INSIDE THE SHELF AND COMES OUT
+        // =========================================================================
+        gsap.set(book, {
+          scale: 0.5,
+          y: -45,
+          x: 0,
+          z: 0,
+          rotationX: 0,
+          rotationY: 0,
+          rotationZ: 0,
+          boxShadow: "0 5px 15px rgba(0,0,0,0.5)",
+        });
 
-      // 2. Shelf background softens with depth of field
-      tl.to(
-        shelfRef.current,
-        {
+        const tl = gsap.timeline({
+          delay: 0.8,
+          onComplete: () => {
+            setBookState("in-foreground");
+          },
+        });
+
+        // 1. Book shifts and slides forward out from the shelf slot
+        tl.to(book, {
+          duration: 0.6,
+          z: 120,
+          rotationX: 18,
+          rotationZ: -4,
+          ease: "power1.inOut",
+        });
+
+        // 2. Book tumbles off the shelf into the foreground center and enlarges
+        tl.to(
+          book,
+          {
+            duration: 1.5,
+            scale: 1.25,
+            y: 0,
+            x: 0,
+            z: 320,
+            rotationX: 10,
+            rotationY: -10,
+            rotationZ: -2,
+            boxShadow: "-25px 35px 60px rgba(0,0,0,0.8)",
+            ease: "power3.out",
+          },
+          "-=0.1"
+        );
+
+        // 3. Background bookshelf softens with depth-of-field blur
+        tl.to(
+          shelf,
+          {
+            duration: 1.5,
+            filter: "blur(6px)",
+            opacity: 0.5,
+            scale: 0.94,
+            ease: "power2.out",
+          },
+          "<0.1"
+        );
+
+        // 4. Prompt badge reveals
+        tl.fromTo(
+          badge,
+          { opacity: 0, y: 30, scale: 0.8 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.7, ease: "back.out(1.7)" },
+          "-=0.3"
+        );
+
+        gsap.to(badge, {
+          y: "+=6",
+          repeat: -1,
+          yoyo: true,
+          duration: 1.2,
+          ease: "sine.inOut",
+        });
+      } else {
+        // =========================================================================
+        // VERSION 1: BOOK ALREADY ON SCREEN (CENTER ENTRANCE)
+        // =========================================================================
+        const tl = gsap.timeline({
+          delay: 0.5,
+          onComplete: () => {
+            setBookState("in-foreground");
+          },
+        });
+
+        tl.to(book, {
           duration: 1.4,
-          filter: "blur(5px)",
-          opacity: 0.55,
-          scale: 0.95,
-          ease: "power2.out",
-        },
-        "<0.2"
-      );
-
-      // 3. Prompt badge floats in
-      tl.fromTo(
-        promptBadgeRef.current,
-        { opacity: 0, y: 25, scale: 0.8 },
-        {
-          opacity: 1,
           y: 0,
-          scale: 1,
-          duration: 0.8,
-          ease: "back.out(1.7)",
-        },
-        "-=0.4"
-      );
+          x: 0,
+          scale: 1.25,
+          rotationX: 12,
+          rotationY: -10,
+          rotationZ: -3,
+          z: 300,
+          ease: "power3.out",
+        });
 
-      // Pulsing hover hint
-      gsap.to(promptBadgeRef.current, {
-        y: "+=6",
-        repeat: -1,
-        yoyo: true,
-        duration: 1.2,
-        ease: "sine.inOut",
-      });
+        tl.to(
+          shelf,
+          {
+            duration: 1.4,
+            filter: "blur(5px)",
+            opacity: 0.55,
+            scale: 0.95,
+            ease: "power2.out",
+          },
+          "<0.2"
+        );
+
+        tl.fromTo(
+          badge,
+          { opacity: 0, y: 25, scale: 0.8 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.8, ease: "back.out(1.7)" },
+          "-=0.4"
+        );
+      }
     }, containerRef);
 
     return () => ctx.revert();
@@ -225,11 +298,10 @@ export default function BookshelfHero() {
               </div>
             ))}
           </div>
-          {/* Wooden Shelf Edge highlight */}
           <div className="h-3 w-full bg-[#52383e] rounded-b-sm border-t border-[#6b4c53]/40" />
         </div>
 
-        {/* Middle Shelf (Empty center slot where the portfolio book fell out) */}
+        {/* Middle Shelf (Slot where the portfolio book physically stands) */}
         <div className="relative w-full">
           <div className="flex items-end justify-between border-b-[20px] border-[#38262a] pb-1 shadow-[0_16px_25px_rgba(0,0,0,0.8)] px-4">
             {/* Left cluster */}
@@ -251,9 +323,12 @@ export default function BookshelfHero() {
               </div>
             </div>
 
-            {/* Ghost vacancy marker for where the portfolio book stood */}
-            <div className="w-24 h-48 border border-dashed border-dustyRose/25 rounded-md flex items-center justify-center text-dustyRose/40 text-xs font-mono">
-              [Portfolio Slot]
+            {/* Middle Slot Shelf Anchor */}
+            <div
+              ref={shelfSlotRef}
+              className="w-28 sm:w-36 h-48 border border-dashed border-dustyRose/20 rounded-md flex items-center justify-center text-dustyRose/30 text-[10px] font-mono"
+            >
+              [Shelf Anchor Slot]
             </div>
 
             {/* Right cluster */}
@@ -299,7 +374,12 @@ export default function BookshelfHero() {
       {/* Atmospheric Vignette & Warm Spotlight */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(201,111,130,0.15)_0%,rgba(26,19,21,0.95)_75%)]" />
 
-      {/* 3D PORTFOLIO BOOK IN THE FOREGROUND */}
+      {/* Version Tag Indicator (top right) */}
+      <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
+        Bookshelf: v{BOOKSHELF_VERSION} ({BOOKSHELF_VERSION === 2 ? "Out-of-Shelf Pull" : "On-Screen"})
+      </div>
+
+      {/* 3D PORTFOLIO BOOK */}
       <div
         ref={bookRef}
         onClick={handleBookClick}
