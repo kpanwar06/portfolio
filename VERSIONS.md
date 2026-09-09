@@ -117,11 +117,19 @@ This document tracks animation states and version history across components. If 
   - On hover or touch, `triggerBookPullOut()` dynamically measures the slot, initializes the 3D book box at that exact coordinate, switches the slot to `VACANT`, and seamlessly animates forward into the foreground.
 - **Git Commit Reference**: `baa02d6`
 
-### **Version 22: Scroll-Locked Until Book is Opened (Current)**
+### **Version 22: Scroll-Locked Until Book is Opened**
 - **Gated Page Scrolling**:
   - Scrolling down the page is completely locked while the book is closed (`on-shelf`, `pulling`, `in-foreground`, `opening`).
   - Scrolling is unlocked only once the book is opened (`bookState === "opened"`), allowing seamless navigation to the Identity screen and remaining sections.
   - Downward wheel gestures while locked smoothly progress the interaction (pull out book -> open book).
+- **Git Commit Reference**: `d6b8bb2`
+
+### **Version 23: Centered Balanced Opened Spread & Flat Alignment (Current)**
+- **Spine Aligned to Screen Center**:
+  - When the book straightens up to open, its left edge (spine) shifts to the exact horizontal center of the viewport (`x = bookHalfWidth`).
+  - When the front cover swings open 180° to the left, the left and right pages are symmetrically centered and balanced across the screen (eliminating the left-heavy bias).
+- **Flat Horizontal Level**:
+  - Set `rotationX: 0`, `rotationY: 0`, `rotationZ: 0` and front cover `rotationY: -180` so both pages lie flat and level with zero crooked slant.
 - **Git Commit Reference**: Current
 
 ---

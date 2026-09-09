@@ -15,7 +15,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 = 22;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 = 23;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -238,6 +238,7 @@ export default function BookshelfHero() {
     const frontCover = frontCoverRef.current;
     const pagesBlock = pagesBlockRef.current;
     const badge = promptBadgeRef.current;
+    if (!book || !frontCover) return;
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -255,20 +256,22 @@ export default function BookshelfHero() {
       });
     }
 
-    // Shift to center opened spread
+    // Shift book so its left edge (spine) is at the exact middle of the page
+    const bookHalfWidth = ((book.offsetWidth || 260) * 1.05) / 2;
+
     tl.to(book, {
       scale: 1.05,
-      rotationX: 4,
+      rotationX: 0,
       rotationY: 0,
       rotationZ: 0,
-      x: 60,
+      x: bookHalfWidth,
       duration: 0.6,
       ease: "power3.out",
     });
 
-    // Front Cover swings open on its left spine hinge
+    // Front Cover swings open flat on its left spine hinge
     tl.to(frontCover, {
-      rotationY: -165,
+      rotationY: -180,
       duration: 1.2,
       ease: "power3.inOut",
     });
@@ -458,7 +461,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v22 (Scroll Gated Until Book Opened)
+        Bookshelf: v23 (Centered Balanced Spread &bull; Flat Alignment)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
