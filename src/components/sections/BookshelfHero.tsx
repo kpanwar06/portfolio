@@ -14,7 +14,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 = 9;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 = 10;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ export default function BookshelfHero() {
   const [bookState, setBookState] = useState<"on-shelf" | "pulling" | "in-foreground" | "opening" | "opened">(
     "on-shelf"
   );
-  const [isMounted, setIsMounted] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   // Background shelf books
   const topShelfBooks: ShelfBook[] = [
@@ -95,16 +95,17 @@ export default function BookshelfHero() {
 
       // Vertically: using transformOrigin: "center bottom",
       // the unshifted bottom of the book is at (contCenterY + book.offsetHeight / 2).
-      // We translate by (adjRect.bottom - (contCenterY + book.offsetHeight / 2))
+      // We translate by (adjRect.bottom - (contCenterY + book.offsetHeight / 2)) - 12
       // so the book's bottom edge EXACTLY touches the shelf ledge flush with Spring Boot!
       const contCenterY = contRect.top + contRect.height / 2;
       const naturalBottom = contCenterY + (book.offsetHeight / 2);
-      initY = adjRect.bottom - naturalBottom;
+      initY = (adjRect.bottom - naturalBottom) - 12;
     }
 
     // Position directly on shelf before displaying (prevents flash)
     gsap.set(book, {
       scale: 0.5,
+      transformOrigin: "50% 100% 0px",
       x: initX,
       y: initY,
       z: 0,
@@ -114,7 +115,14 @@ export default function BookshelfHero() {
       boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
     });
 
-    setIsMounted(true);
+    // Exactly 1 second after page load, the book smoothly fades in directly in its shelf slot
+    const timer = setTimeout(() => {
+      setIsVisible(true);
+    }, 1000);
+
+    return () => {
+      clearTimeout(timer);
+    };
   }, []);
 
   // Action: Triggered when mouse touches (hovers) or clicks the glowing golden spine!
@@ -387,12 +395,12 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v9 (Zero-Flash &bull; Steady Golden Glow)
+        Bookshelf: v10 (1s Shelf Appearance &bull; Flush Ledge Baseline)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
-      {bookState === "on-shelf" && (
-        <div className="absolute bottom-10 z-30 flex items-center space-x-2 px-4 py-2 rounded-full bg-burgundy/80 text-cream border border-[#d8a47f]/60 shadow-lg backdrop-blur-sm pointer-events-none">
+      {bookState === "on-shelf" && isVisible && (
+        <div className="absolute bottom-10 z-30 flex items-center space-x-2 px-4 py-2 rounded-full bg-burgundy/80 text-cream border border-[#d8a47f]/60 shadow-lg backdrop-blur-sm pointer-events-none transition-opacity duration-500">
           <Sparkles className="w-3.5 h-3.5 text-[#d8a47f]" />
           <span className="text-xs font-mono tracking-wider uppercase font-semibold text-[#FFF8F0]">
             Touch the glowing book to pull it out
@@ -401,22 +409,25 @@ export default function BookshelfHero() {
       )}
 
       {/* ========================================================================= */}
-      {/* UNIFIED 3D PHYSICAL BOOK OBJECT (ZERO FLASH & FLUSH BASELINE)              */}
+      {/* UNIFIED 3D PHYSICAL BOOK OBJECT (1S DELAY & FLUSH BASELINE)                 */}
       {/* ========================================================================= */}
       <div
         ref={bookRef}
         onMouseEnter={() => {
-          if (bookState === "on-shelf") triggerBookPullOut();
+          if (bookState === "on-shelf" && isVisible) triggerBookPullOut();
         }}
-        onClick={handleBookClick}
+        onClick={() => {
+          if (!isVisible) return;
+          handleBookClick();
+        }}
         style={{
           transformStyle: "preserve-3d",
           transformOrigin: "center bottom",
-          opacity: isMounted ? 1 : 0,
+          opacity: isVisible ? 1 : 0,
         }}
-        className={`relative z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[360px] transition-opacity duration-200 ${
-          bookState === "on-shelf" ? "group" : ""
-        }`}
+        className={`relative z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[360px] transition-opacity duration-700 ease-out ${
+          !isVisible ? "pointer-events-none" : ""
+        } ${bookState === "on-shelf" ? "group" : ""}`}
       >
         {/* Physical 3D Book Box Container (Depth: 32px) */}
         <div className="relative w-full h-full preserve-3d">

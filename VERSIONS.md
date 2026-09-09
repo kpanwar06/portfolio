@@ -38,17 +38,22 @@ This document tracks animation states and version history across components. If 
 - **Behavior**: Pulses with golden glow, touch to pull out.
 - **Git Commit Reference**: `b9596d0`
 
-### **Version 9: Zero-Flash Shelf Spawn + Steady Golden Glow + Pixel-Perfect Bottom Alignment (Current)**
-- **Zero-Flash Shelf Spawn**:
-  - Eliminated the reload jump (where the book briefly showed outside the shelf before moving in).
-  - The book is pre-anchored so it appears **already resting inside the shelf on the very first frame**, with no teleportation or snapping.
-- **Pixel-Perfect Bottom Baseline**:
-  - Uses `transform-origin: center bottom` and dynamic baseline alignment to ensure the bottom edge of the book rests **flush on the wooden shelf ledge**, perfectly level with `Spring Boot` and `API Design`.
+### **Version 9: Zero-Flash Shelf Spawn + Steady Golden Glow**
+- **Behavior**: Steady glow without pulse.
+- **Git Commit Reference**: `79ea936`
+
+### **Version 10: 1-Second Delayed Shelf Appearance + Flush Ledge Baseline Alignment (Current)**
+- **1-Second Delayed Appearance on Shelf**:
+  - When the page loads/reloads, the bookshelf is displayed cleanly.
+  - After **exactly 1 second**, the portfolio book fades in smoothly directly **inside its shelf position** between `API Design` and `Spring Boot`.
+  - It never renders in the foreground or outside the shelf; its first appearance is already nestled inside the shelf with its golden glow.
+- **Flush Bottom Shelf Ledge Alignment**:
+  - Calibrated vertical baseline lifted by 12px to account for spine ribbing and 3D box bevels.
+  - The bottom of `KRITIKA PANWAR • PORTFOLIO` rests **completely flush on top of the wooden shelf ledge**, matching the exact bottom baseline of `Spring Boot` and `API Design`.
 - **Steady Golden Glow (No Pulsing)**:
-  - Removed pulsing animation.
-  - The spine has a clean, steady, elegant golden glow outline (`ring-2 ring-[#d8a47f] shadow-[0_0_20px_rgba(216,164,127,0.85)]`).
+  - Clean, elegant, steady golden outline shimmer (`#d8a47f`).
 - **Interactive Mouse Touch**:
-  - When the visitor touches/hovers or clicks the glowing spine, it slides forward along Z, rotates 90° to reveal the front cover, and settles into the center foreground at a comfortable distance.
+  - Touching/hovering or clicking the glowing spine pulls it forward out of the shelf row, rotates 90° to reveal the front cover, and settles into the center foreground at a comfortable distance.
 - **Git Commit Reference**: Current
 
 ---
