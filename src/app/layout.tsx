@@ -14,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="hero-active">
       <body className="antialiased selection:bg-dustyRose selection:text-white hero-active">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>

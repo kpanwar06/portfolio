@@ -119,8 +119,10 @@ export default function BookshelfHero() {
       const threshold = heroHeight * 0.35;
 
       if (scrollY > threshold) {
+        document.documentElement.classList.remove("hero-active");
         document.body.classList.remove("hero-active");
       } else {
+        document.documentElement.classList.add("hero-active");
         document.body.classList.add("hero-active");
       }
     };
@@ -138,6 +140,7 @@ export default function BookshelfHero() {
       if (lenis) {
         lenis.off("scroll", handleScroll);
       }
+      document.documentElement.classList.remove("hero-active");
       document.body.classList.remove("hero-active");
     };
   }, []);
@@ -390,7 +393,7 @@ export default function BookshelfHero() {
       {/* Background Library Bookshelf */}
       <div
         ref={shelfRef}
-        className="absolute inset-0 flex flex-col justify-between py-10 px-4 sm:px-14 pointer-events-none transition-all duration-700"
+        className="absolute inset-0 flex flex-col justify-between py-10 px-4 sm:px-14 pointer-events-none"
       >
         {/* Top Shelf */}
         <div className="relative w-full">
@@ -398,7 +401,7 @@ export default function BookshelfHero() {
             {topShelfBooks.map((b) => (
               <div
                 key={b.id}
-                className={`${b.height} ${b.width} ${b.bg} ${b.tilt || ""} rounded-t-sm shadow-md flex flex-col items-center justify-between py-2 border-t border-r border-white/10`}
+                className={`flex-shrink-0 ${b.height} ${b.width} ${b.bg} ${b.tilt || ""} rounded-t-sm shadow-md flex flex-col items-center justify-between py-2 border-t border-r border-white/10`}
               >
                 <div className="w-full h-1 bg-[#d8a47f]/75 border-t border-b border-black/40" />
                 <span
@@ -421,7 +424,7 @@ export default function BookshelfHero() {
             {middleLeftBooks.map((b) => (
               <div
                 key={b.id}
-                className={`${b.height} ${b.width} ${b.bg} ${b.tilt || ""} rounded-t-sm shadow-md flex flex-col items-center justify-between py-2 border-t border-r border-white/10`}
+                className={`flex-shrink-0 ${b.height} ${b.width} ${b.bg} ${b.tilt || ""} rounded-t-sm shadow-md flex flex-col items-center justify-between py-2 border-t border-r border-white/10`}
               >
                 <div className="w-full h-1 bg-[#d8a47f]/75 border-t border-b border-black/40" />
                 <span
@@ -443,7 +446,7 @@ export default function BookshelfHero() {
               onClick={() => {
                 if (bookState === "on-shelf") triggerBookPullOut();
               }}
-              className="w-8 sm:w-9 h-40 sm:h-44 rounded-t-sm flex items-end justify-center pointer-events-auto cursor-pointer group select-none"
+              className="flex-shrink-0 w-8 sm:w-9 h-40 sm:h-44 rounded-t-sm flex items-end justify-center pointer-events-auto cursor-pointer group select-none"
             >
               {bookState === "on-shelf" ? (
                 /* Native Shelf Book Spine - Paints INSTANTLY on first HTML paint (0ms delay) */
@@ -480,7 +483,7 @@ export default function BookshelfHero() {
               <div
                 key={b.id}
                 ref={i === 0 ? adjacentBookRef : null}
-                className={`${b.height} ${b.width} ${b.bg} ${b.tilt || ""} rounded-t-sm shadow-md flex flex-col items-center justify-between py-2 border-t border-r border-white/10`}
+                className={`flex-shrink-0 ${b.height} ${b.width} ${b.bg} ${b.tilt || ""} rounded-t-sm shadow-md flex flex-col items-center justify-between py-2 border-t border-r border-white/10`}
               >
                 <div className="w-full h-1 bg-[#d8a47f]/75 border-t border-b border-black/40" />
                 <span
@@ -502,7 +505,7 @@ export default function BookshelfHero() {
             {bottomShelfBooks.map((b) => (
               <div
                 key={b.id}
-                className={`${b.height} ${b.width} ${b.bg} ${b.tilt || ""} rounded-t-sm shadow-md flex flex-col items-center justify-between py-2 border-t border-r border-white/10`}
+                className={`flex-shrink-0 ${b.height} ${b.width} ${b.bg} ${b.tilt || ""} rounded-t-sm shadow-md flex flex-col items-center justify-between py-2 border-t border-r border-white/10`}
               >
                 <div className="w-full h-1 bg-[#d8a47f]/75 border-t border-b border-black/40" />
                 <span
@@ -521,11 +524,6 @@ export default function BookshelfHero() {
 
       {/* Atmospheric Vignette & Warm Spotlight */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(201,111,130,0.16)_0%,rgba(24,16,18,0.96)_75%)]" />
-
-      {/* Version Tag Indicator (top right) */}
-      <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v23 (Centered Balanced Spread &bull; Flat Alignment)
-      </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
       {bookState === "on-shelf" && (

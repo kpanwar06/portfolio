@@ -25,7 +25,9 @@ export default function SmoothScrollProvider({
     (window as any).__lenis = lenis;
     if (
       typeof document !== "undefined" &&
-      (document.body.style.overflow === "hidden" || document.body.classList.contains("hero-active"))
+      (document.body.style.overflow === "hidden" ||
+        document.body.classList.contains("hero-active") ||
+        document.documentElement.classList.contains("hero-active"))
     ) {
       lenis.stop();
     }

@@ -76,21 +76,35 @@ body {
   background: var(--color-burgundy);
 }
 
-/* Firefox scrollbar support */
+/* Modern & Firefox scrollbar support */
 html {
   scrollbar-width: thin;
   scrollbar-color: var(--color-dustyRose) var(--color-cream);
+  scrollbar-gutter: stable;
 }
 
 /* Invisible on Hero section (Zero glitch on reload or book open; active from Section 2) */
-body.hero-active ::-webkit-scrollbar-track,
-body.hero-active ::-webkit-scrollbar-thumb {
-  background: transparent !important;
-}
-
+html.hero-active,
+html.hero-active body,
 body.hero-active,
 body.hero-active * {
   scrollbar-color: transparent transparent !important;
+}
+
+html.hero-active::-webkit-scrollbar,
+html.hero-active ::-webkit-scrollbar,
+body.hero-active::-webkit-scrollbar,
+body.hero-active ::-webkit-scrollbar,
+html.hero-active::-webkit-scrollbar-track,
+html.hero-active ::-webkit-scrollbar-track,
+body.hero-active::-webkit-scrollbar-track,
+body.hero-active ::-webkit-scrollbar-track,
+html.hero-active::-webkit-scrollbar-thumb,
+html.hero-active ::-webkit-scrollbar-thumb,
+body.hero-active::-webkit-scrollbar-thumb,
+body.hero-active ::-webkit-scrollbar-thumb {
+  background: transparent !important;
+  background-color: transparent !important;
 }
 
 /* Paper Texture & Stamp Effects */
