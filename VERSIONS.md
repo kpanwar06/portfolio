@@ -124,12 +124,23 @@ This document tracks animation states and version history across components. If 
   - Downward wheel gestures while locked smoothly progress the interaction (pull out book -> open book).
 - **Git Commit Reference**: `d6b8bb2`
 
-### **Version 23: Centered Balanced Opened Spread & Flat Alignment (Current)**
+### **Version 23: Centered Balanced Opened Spread & Flat Alignment**
 - **Spine Aligned to Screen Center**:
   - When the book straightens up to open, its left edge (spine) shifts to the exact horizontal center of the viewport (`x = bookHalfWidth`).
   - When the front cover swings open 180° to the left, the left and right pages are symmetrically centered and balanced across the screen (eliminating the left-heavy bias).
 - **Flat Horizontal Level**:
   - Set `rotationX: 0`, `rotationY: 0`, `rotationZ: 0` and front cover `rotationY: -180` so both pages lie flat and level with zero crooked slant.
+- **Git Commit Reference**: `9216c0d`
+
+### **Version 24: Seamless Scrollbar Active from Section 2 & Zero-Shift Lock (Current)**
+- **Zero-Flash Initial Load**:
+  - Added `hero-active` class to `<body>` on server render (`layout.tsx`), keeping scrollbar track and thumb `transparent` from frame 0 so it never flickers or vanishes on reload.
+- **Zero Layout Shifts**:
+  - Eliminated toggling of `document.body.style.overflow = "hidden"` which previously altered viewport width by 8px and caused screen jumping.
+  - Scroll locking while the book is closed is now managed entirely via Lenis controls and non-destructive event interception (`wheel`, `touchmove`, `keydown`).
+- **Scrollbar Activated on Section 2**:
+  - Section 1 (Bookshelf Hero) remains completely clean with an invisible scrollbar.
+  - As the user explores past the bookshelf into Section 2 (Identity), the custom editorial pink scrollbar smoothly transitions into view on the cream background.
 - **Git Commit Reference**: Current
 
 ---

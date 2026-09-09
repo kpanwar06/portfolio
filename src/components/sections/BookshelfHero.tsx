@@ -15,7 +15,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 = 23;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 = 24;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -32,19 +32,76 @@ export default function BookshelfHero() {
     "on-shelf"
   );
 
-  // Lock page scrolling until the portfolio book is opened
+  // Lock page scrolling until the portfolio book is opened (zero layout shifts, no overflow: hidden toggles)
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (typeof window === "undefined") return;
+
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
 
     const lenis = (window as any).__lenis;
 
     if (bookState !== "opened") {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
+      window.scrollTo(0, 0);
       if (lenis) lenis.stop();
+
+      let lastActionTime = 0;
+      const preventAndProgress = (e: WheelEvent) => {
+        e.preventDefault();
+        const now = Date.now();
+        if (now - lastActionTime < 650) return;
+
+        if (e.deltaY > 25) {
+          lastActionTime = now;
+          if (bookState === "on-shelf") {
+            triggerBookPullOut();
+          } else if (bookState === "in-foreground") {
+            handleBookClick();
+          }
+        }
+      };
+
+      const preventTouch = (e: TouchEvent) => {
+        e.preventDefault();
+      };
+
+      const preventKeys = (e: KeyboardEvent) => {
+        const blockedKeys = [
+          "Space",
+          "PageDown",
+          "PageUp",
+          "ArrowDown",
+          "ArrowUp",
+          "Home",
+          "End",
+        ];
+        if (blockedKeys.includes(e.code) || blockedKeys.includes(e.key)) {
+          e.preventDefault();
+          if (e.key === "ArrowDown" || e.key === "PageDown" || e.code === "Space") {
+            const now = Date.now();
+            if (now - lastActionTime > 650) {
+              lastActionTime = now;
+              if (bookState === "on-shelf") {
+                triggerBookPullOut();
+              } else if (bookState === "in-foreground") {
+                handleBookClick();
+              }
+            }
+          }
+        }
+      };
+
+      window.addEventListener("wheel", preventAndProgress, { passive: false });
+      window.addEventListener("touchmove", preventTouch, { passive: false });
+      window.addEventListener("keydown", preventKeys);
+
+      return () => {
+        window.removeEventListener("wheel", preventAndProgress);
+        window.removeEventListener("touchmove", preventTouch);
+        window.removeEventListener("keydown", preventKeys);
+      };
     } else {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
       if (lenis) {
         lenis.start();
         setTimeout(() => {
@@ -52,35 +109,38 @@ export default function BookshelfHero() {
         }, 150);
       }
     }
-
-    return () => {
-      document.documentElement.style.overflow = "";
-      document.body.style.overflow = "";
-      if (lenis) lenis.start();
-    };
   }, [bookState]);
 
-  // Downward wheel gestures progress the book while locked
+  // Custom editorial scrollbar appears ONLY from Section 2 onwards (completely transparent on Section 1)
   useEffect(() => {
-    let lastWheelTime = 0;
-    const handleWheel = (e: WheelEvent) => {
-      const now = Date.now();
-      if (now - lastWheelTime < 700) return;
+    const handleScroll = () => {
+      const scrollY = window.scrollY || document.documentElement.scrollTop;
+      const heroHeight = containerRef.current?.offsetHeight || window.innerHeight;
+      const threshold = heroHeight * 0.35;
 
-      if (e.deltaY > 25) {
-        if (bookState === "on-shelf") {
-          lastWheelTime = now;
-          triggerBookPullOut();
-        } else if (bookState === "in-foreground") {
-          lastWheelTime = now;
-          handleBookClick();
-        }
+      if (scrollY > threshold) {
+        document.body.classList.remove("hero-active");
+      } else {
+        document.body.classList.add("hero-active");
       }
     };
 
-    window.addEventListener("wheel", handleWheel, { passive: true });
-    return () => window.removeEventListener("wheel", handleWheel);
-  }, [bookState]);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    const lenis = (window as any).__lenis;
+    if (lenis) {
+      lenis.on("scroll", handleScroll);
+    }
+
+    handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      if (lenis) {
+        lenis.off("scroll", handleScroll);
+      }
+      document.body.classList.remove("hero-active");
+    };
+  }, []);
 
   // Background shelf books
   const topShelfBooks: ShelfBook[] = [
@@ -312,8 +372,11 @@ export default function BookshelfHero() {
   };
 
   const handleScrollToNext = () => {
+    const lenis = (window as any).__lenis;
     const nextSection = document.getElementById("identity");
-    if (nextSection) {
+    if (lenis && nextSection) {
+      lenis.scrollTo(nextSection, { offset: 0, duration: 1.4 });
+    } else if (nextSection) {
       nextSection.scrollIntoView({ behavior: "smooth" });
     }
   };

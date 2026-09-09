@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="antialiased selection:bg-dustyRose selection:text-white">
+      <body className="antialiased selection:bg-dustyRose selection:text-white hero-active">
         <SmoothScrollProvider>{children}</SmoothScrollProvider>
       </body>
     </html>

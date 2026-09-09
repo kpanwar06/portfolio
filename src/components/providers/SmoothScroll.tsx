@@ -23,7 +23,10 @@ export default function SmoothScrollProvider({
     });
 
     (window as any).__lenis = lenis;
-    if (typeof document !== "undefined" && document.body.style.overflow === "hidden") {
+    if (
+      typeof document !== "undefined" &&
+      (document.body.style.overflow === "hidden" || document.body.classList.contains("hero-active"))
+    ) {
       lenis.stop();
     }
 
