@@ -22,6 +22,11 @@ export default function SmoothScrollProvider({
       wheelMultiplier: 1,
     });
 
+    (window as any).__lenis = lenis;
+    if (typeof document !== "undefined" && document.body.style.overflow === "hidden") {
+      lenis.stop();
+    }
+
     lenis.on("scroll", ScrollTrigger.update);
 
     const updateLenis = (time: number) => {
@@ -34,6 +39,7 @@ export default function SmoothScrollProvider({
     return () => {
       gsap.ticker.remove(updateLenis);
       lenis.destroy();
+      delete (window as any).__lenis;
     };
   }, []);
 

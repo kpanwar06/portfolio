@@ -110,11 +110,18 @@ This document tracks animation states and version history across components. If 
   - Book reveals smoothly (`opacity: 1`) only when its position and rotation are fully locked into the shelf slot.
 - **Git Commit Reference**: `35a6999`
 
-### **Version 21: Instant Native Shelf Spine & Seamless 3D Hand-off (Current)**
+### **Version 21: Instant Native Shelf Spine & Seamless 3D Hand-off**
 - **True Zero-Delay Native Shelf Integration**:
   - Rendered the resting spine directly inside `shelfSlotRef` in the initial server HTML.
   - The book is rendered simultaneously with the bookshelf at millisecond 0—no hydration delay, no 1-second appearance lag, and no center flash.
   - On hover or touch, `triggerBookPullOut()` dynamically measures the slot, initializes the 3D book box at that exact coordinate, switches the slot to `VACANT`, and seamlessly animates forward into the foreground.
+- **Git Commit Reference**: `baa02d6`
+
+### **Version 22: Scroll-Locked Until Book is Opened (Current)**
+- **Gated Page Scrolling**:
+  - Scrolling down the page is completely locked while the book is closed (`on-shelf`, `pulling`, `in-foreground`, `opening`).
+  - Scrolling is unlocked only once the book is opened (`bookState === "opened"`), allowing seamless navigation to the Identity screen and remaining sections.
+  - Downward wheel gestures while locked smoothly progress the interaction (pull out book -> open book).
 - **Git Commit Reference**: Current
 
 ---

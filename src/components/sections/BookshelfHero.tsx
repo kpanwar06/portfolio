@@ -2,6 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Sparkles, BookOpen, ChevronDown, Compass, Code, FolderGit2 } from "lucide-react";
 
 interface ShelfBook {
@@ -14,7 +15,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 = 21;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 = 22;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,6 +31,56 @@ export default function BookshelfHero() {
   const [bookState, setBookState] = useState<"on-shelf" | "pulling" | "in-foreground" | "opening" | "opened">(
     "on-shelf"
   );
+
+  // Lock page scrolling until the portfolio book is opened
+  useEffect(() => {
+    window.scrollTo(0, 0);
+
+    const lenis = (window as any).__lenis;
+
+    if (bookState !== "opened") {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+      if (lenis) lenis.stop();
+    } else {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      if (lenis) {
+        lenis.start();
+        setTimeout(() => {
+          ScrollTrigger.refresh();
+        }, 150);
+      }
+    }
+
+    return () => {
+      document.documentElement.style.overflow = "";
+      document.body.style.overflow = "";
+      if (lenis) lenis.start();
+    };
+  }, [bookState]);
+
+  // Downward wheel gestures progress the book while locked
+  useEffect(() => {
+    let lastWheelTime = 0;
+    const handleWheel = (e: WheelEvent) => {
+      const now = Date.now();
+      if (now - lastWheelTime < 700) return;
+
+      if (e.deltaY > 25) {
+        if (bookState === "on-shelf") {
+          lastWheelTime = now;
+          triggerBookPullOut();
+        } else if (bookState === "in-foreground") {
+          lastWheelTime = now;
+          handleBookClick();
+        }
+      }
+    };
+
+    window.addEventListener("wheel", handleWheel, { passive: true });
+    return () => window.removeEventListener("wheel", handleWheel);
+  }, [bookState]);
 
   // Background shelf books
   const topShelfBooks: ShelfBook[] = [
@@ -407,7 +458,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v21 (Instant Native Shelf Spine &bull; 0ms Lag)
+        Bookshelf: v22 (Scroll Gated Until Book Opened)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
