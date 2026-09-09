@@ -244,45 +244,40 @@ export default function BookshelfHero() {
       },
     });
 
-    // 1. Smoothly pulls STRAIGHT forward along Z-axis until it completely clears the shelf row
+    // 1. Smoothly pulls straight forward along Z-axis out of the shelf slot
     tl.to(book, {
-      duration: 0.65,
-      z: 160,
-      ease: "power2.out",
+      duration: 0.45,
+      z: 140,
+      ease: "power1.in",
       force3D: true,
     });
 
-    // 2. Now fully clear of the shelf row, gracefully glides to center and rotates to present cover
-    tl.to(
-      book,
-      {
-        duration: 1.25,
-        scale: 0.95,
-        x: 0,
-        y: 0,
-        z: 240,
-        rotationX: 7,
-        rotationY: -7,
-        rotationZ: -1.5,
-        boxShadow: "-20px 30px 55px rgba(0,0,0,0.75)",
-        ease: "power3.out",
-        force3D: true,
-      },
-      "-=0.15"
-    );
+    // 2. Fluidly continues momentum, glides to center and rotates to present cover
+    tl.to(book, {
+      duration: 1.15,
+      scale: 0.95,
+      x: 0,
+      y: 0,
+      z: 240,
+      rotationX: 7,
+      rotationY: -7,
+      rotationZ: -1.5,
+      ease: "power2.out",
+      force3D: true,
+    });
 
     // 3. Background shelves soften gently with GPU-accelerated opacity and subtle scale
     if (shelf) {
       tl.to(
         shelf,
         {
-          duration: 1.2,
+          duration: 1.15,
           opacity: 0.4,
           scale: 0.985,
           ease: "power2.out",
           force3D: true,
         },
-        "<0.1"
+        "<0.05"
       );
     }
 
@@ -291,8 +286,8 @@ export default function BookshelfHero() {
       tl.fromTo(
         badge,
         { opacity: 0, y: 20, scale: 0.85 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.6, ease: "back.out(1.7)" },
-        "-=0.3"
+        { opacity: 1, y: 0, scale: 1, duration: 0.5, ease: "back.out(1.7)" },
+        "-=0.2"
       );
 
       gsap.to(badge, {
