@@ -18,12 +18,29 @@ This document tracks animation states and version history across components. If 
 - **Behavior**: The book starts showing only its narrow spine in the shelf row, pulls forward, and rotates 90° to face the user.
 - **Git Commit Reference**: `9aae53a`
 
-### **Version 4: Clean Front-Angle Display + 2-Second Still Pause + Polished Spines (Current)**
-- **Behavior**:
-  - **Clean Presentation**: The entire portfolio book is displayed prominently on the middle shelf at an elegant **front-angled perspective** (full front cover visible, with 3D spine and page edge depth).
-  - **2-Second Still Pause**: The scene stays calm and completely sharp for 2 seconds upon load, letting visitors take in the shelf environment.
-  - **Forward Flight**: The book smoothly glides forward out of the bookshelf, facing the user the entire time, expanding into the foreground center with realistic perspective easing.
-  - **Clean Spines**: All background book spine titles redesigned with proper typography and vertical orientation so no text is cut off or awkwardly wrapped.
+### **Version 4: Front-Angle Display + 2s Pause**
+- **Behavior**: Book displayed at front-angle, pauses for 2s, then glides forward.
+- **Git Commit Reference**: `223dffb`
+
+### **Version 5: Unified 3D Physical Book Object + Natural Shelf Pull-Out + Comfortable Camera Distance (Current)**
+- **Unified 3D Physical Object**:
+  - The front cover, spine, pages/thickness edges, and back are constructed as **one cohesive physical 3D book object**.
+  - No disconnected spine or detached rectangle pieces.
+  - Visible thickness, gilded cream page edges, and natural beveling along the spine hinge.
+- **Initial State (Belongs to Shelf)**:
+  - The book rests naturally **inside the middle shelf row** alongside adjacent books.
+  - Matches the scale, depth, and ledge alignment of surrounding books.
+  - Seen at a subtle natural 3D angle showing front cover, page thickness, and spine edge.
+  - Sits still for 1.8 seconds.
+- **Pull-Out Motion**:
+  - Slides forward out from its actual shelf position along the Z-axis.
+  - Tumbles forward toward the viewer with organic physical deceleration.
+- **Comfortable Foreground Distance**:
+  - **Does NOT fill the screen**. Leaves generous breathing space on all sides (above, below, left, right).
+  - The entire outline of the physical book and its shadow are comfortably in view.
+- **Interactive Opening**:
+  - On user click, the front cover swings open on its spine hinge (`rotateY: -165°`).
+  - Dual pages spread and editorial scrapbook elements emerge.
 - **Git Commit Reference**: Current
 
 ---
