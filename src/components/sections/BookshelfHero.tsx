@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
-import { Sparkles, BookOpen, ChevronDown, Compass, Code, FolderGit2, Hand } from "lucide-react";
+import { Sparkles, BookOpen, ChevronDown, Compass, Code, FolderGit2 } from "lucide-react";
 
 interface ShelfBook {
   id: number;
@@ -14,7 +14,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 = 8;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 = 9;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ export default function BookshelfHero() {
   const [bookState, setBookState] = useState<"on-shelf" | "pulling" | "in-foreground" | "opening" | "opened">(
     "on-shelf"
   );
-  const [initialCoords, setInitialCoords] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
+  const [isMounted, setIsMounted] = useState(false);
 
   // Background shelf books
   const topShelfBooks: ShelfBook[] = [
@@ -74,7 +74,7 @@ export default function BookshelfHero() {
     { id: 29, title: "Full Stack", bg: "bg-[#651F35]", text: "text-[#FFF8F0]", height: "h-42 sm:h-46", width: "w-10 sm:w-11" },
   ];
 
-  // Initial Placement: Calculate pixel-perfect alignment so bottom rests flush on shelf ledge
+  // Set initial position precisely on mount (Zero flash & flush shelf bottom)
   useEffect(() => {
     const slot = shelfSlotRef.current;
     const adj = adjacentBookRef.current;
@@ -83,36 +83,38 @@ export default function BookshelfHero() {
     if (!book) return;
 
     let initX = 0;
-    let initY = 8; // Default calibrated shelf baseline offset
+    let initY = 0;
 
     if (slot && container && adj) {
       const slotRect = slot.getBoundingClientRect();
       const contRect = container.getBoundingClientRect();
       const adjRect = adj.getBoundingClientRect();
 
-      // Horizontally center in slot
+      // Horizontally center inside the shelf slot
       initX = (slotRect.left + slotRect.width / 2) - (contRect.left + contRect.width / 2);
 
-      // Vertically match the exact bottom baseline of Spring Boot
-      const scaledBookHeight = 330 * 0.52; // ~171.6px
-      const targetCenterY = adjRect.bottom - (scaledBookHeight / 2);
+      // Vertically: using transformOrigin: "center bottom",
+      // the unshifted bottom of the book is at (contCenterY + book.offsetHeight / 2).
+      // We translate by (adjRect.bottom - (contCenterY + book.offsetHeight / 2))
+      // so the book's bottom edge EXACTLY touches the shelf ledge flush with Spring Boot!
       const contCenterY = contRect.top + contRect.height / 2;
-      initY = targetCenterY - contCenterY;
+      const naturalBottom = contCenterY + (book.offsetHeight / 2);
+      initY = adjRect.bottom - naturalBottom;
     }
 
-    setInitialCoords({ x: initX, y: initY });
-
-    // Position book resting flush on the shelf ledge with LEFT SPINE facing viewer
+    // Position directly on shelf before displaying (prevents flash)
     gsap.set(book, {
-      scale: 0.52,
+      scale: 0.5,
       x: initX,
       y: initY,
       z: 0,
       rotationX: 0,
-      rotationY: 90, // Left spine facing forward!
+      rotationY: 90, // Left spine forward facing viewer!
       rotationZ: 0,
       boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
     });
+
+    setIsMounted(true);
   }, []);
 
   // Action: Triggered when mouse touches (hovers) or clicks the glowing golden spine!
@@ -131,7 +133,7 @@ export default function BookshelfHero() {
         },
       });
 
-      // 1. Book slides forward out of shelf row along Z
+      // 1. Slides straight forward along Z-axis out from shelf row
       tl.to(book, {
         duration: 0.7,
         z: 130,
@@ -139,12 +141,12 @@ export default function BookshelfHero() {
         ease: "power2.inOut",
       });
 
-      // 2. Rotates 90° to reveal front cover and glides into center foreground at comfortable distance
+      // 2. Rotates 90° so spine swings to left and front cover faces viewer, settling in foreground
       tl.to(
         book,
         {
           duration: 1.3,
-          scale: 0.95, // Comfortable distance, leaves breathing space around all edges
+          scale: 0.95, // Comfortable distance with generous space all around
           x: 0,
           y: 0,
           z: 220,
@@ -157,7 +159,7 @@ export default function BookshelfHero() {
         "-=0.1"
       );
 
-      // 3. Shelf blurs softly in background
+      // 3. Background shelf softens gently
       tl.to(
         shelf,
         {
@@ -329,7 +331,7 @@ export default function BookshelfHero() {
             {/* Shelf Slot between API Design and Spring Boot */}
             <div
               ref={shelfSlotRef}
-              className="w-10 sm:w-12 h-42 sm:h-46 border-l border-r border-[#1a1012] bg-[#140b0d]/70 rounded-t-sm flex items-center justify-center shadow-inner"
+              className="w-10 sm:w-12 h-40 sm:h-44 border-l border-r border-[#1a1012] bg-[#140b0d]/70 rounded-t-sm flex items-center justify-center shadow-inner"
             >
               <span className="text-[7px] font-mono uppercase text-dustyRose/20 rotate-90 whitespace-nowrap">
                 VACANT
@@ -385,12 +387,12 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v8 (Golden Spine &bull; Touch to Pull)
+        Bookshelf: v9 (Zero-Flash &bull; Steady Golden Glow)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
       {bookState === "on-shelf" && (
-        <div className="absolute bottom-10 z-30 flex items-center space-x-2 px-4 py-2 rounded-full bg-burgundy/80 text-cream border border-[#d8a47f]/60 shadow-lg backdrop-blur-sm pointer-events-none animate-bounce">
+        <div className="absolute bottom-10 z-30 flex items-center space-x-2 px-4 py-2 rounded-full bg-burgundy/80 text-cream border border-[#d8a47f]/60 shadow-lg backdrop-blur-sm pointer-events-none">
           <Sparkles className="w-3.5 h-3.5 text-[#d8a47f]" />
           <span className="text-xs font-mono tracking-wider uppercase font-semibold text-[#FFF8F0]">
             Touch the glowing book to pull it out
@@ -399,7 +401,7 @@ export default function BookshelfHero() {
       )}
 
       {/* ========================================================================= */}
-      {/* UNIFIED 3D PHYSICAL BOOK OBJECT                                           */}
+      {/* UNIFIED 3D PHYSICAL BOOK OBJECT (ZERO FLASH & FLUSH BASELINE)              */}
       {/* ========================================================================= */}
       <div
         ref={bookRef}
@@ -409,9 +411,10 @@ export default function BookshelfHero() {
         onClick={handleBookClick}
         style={{
           transformStyle: "preserve-3d",
-          transformOrigin: "center center",
+          transformOrigin: "center bottom",
+          opacity: isMounted ? 1 : 0,
         }}
-        className={`relative z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[360px] transition-all duration-300 ${
+        className={`relative z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[360px] transition-opacity duration-200 ${
           bookState === "on-shelf" ? "group" : ""
         }`}
       >
@@ -424,7 +427,7 @@ export default function BookshelfHero() {
             className="absolute inset-0 bg-[#290c15] rounded-l-md border-2 border-[#57192a] shadow-2xl pointer-events-none"
           />
 
-          {/* 2. LEFT SPINE FACE (FACES VIEWER ON SHELF WITH GOLDEN OUTLINE GLOW) */}
+          {/* 2. LEFT SPINE FACE (FACES VIEWER ON SHELF WITH STEADY GOLDEN OUTLINE GLOW) */}
           <div
             style={{
               width: "32px",
@@ -432,9 +435,9 @@ export default function BookshelfHero() {
               transform: "rotateY(-90deg)",
               transformOrigin: "center center",
             }}
-            className={`absolute top-0 bottom-0 bg-gradient-to-r from-[#210911] via-[#651F35] to-[#3a101d] border-t border-b border-[#822744] flex flex-col justify-between items-center py-4 pointer-events-auto select-none transition-all duration-500 ${
+            className={`absolute top-0 bottom-0 bg-gradient-to-r from-[#210911] via-[#651F35] to-[#3a101d] border-t border-b border-[#822744] flex flex-col justify-between items-center py-4 pointer-events-auto select-none transition-all duration-300 ${
               bookState === "on-shelf"
-                ? "ring-2 ring-[#d8a47f] shadow-[0_0_25px_rgba(216,164,127,0.9),inset_0_0_15px_rgba(216,164,127,0.4)] animate-pulse"
+                ? "ring-2 ring-[#d8a47f] shadow-[0_0_20px_rgba(216,164,127,0.85)] border-[#d8a47f]"
                 : "shadow-md"
             }`}
           >
@@ -443,7 +446,7 @@ export default function BookshelfHero() {
             
             {/* Vertical spine title */}
             <div className="flex flex-col items-center space-y-1.5">
-              <Sparkles className="w-3 h-3 text-[#d8a47f] animate-spin" />
+              <Sparkles className="w-3 h-3 text-[#d8a47f]" />
               <span
                 style={{ writingMode: "vertical-rl" }}
                 className="text-[10px] sm:text-[11px] font-serif tracking-[0.22em] text-[#FFF8F0] uppercase font-bold rotate-180 whitespace-nowrap drop-shadow"

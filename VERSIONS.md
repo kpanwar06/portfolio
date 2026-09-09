@@ -34,16 +34,21 @@ This document tracks animation states and version history across components. If 
 - **Behavior**: Anchored beside API Design and Spring Boot.
 - **Git Commit Reference**: `26129ad`
 
-### **Version 8: Golden Glowing Spine + Touch/Hover Pull-Out + Flush Shelf Baseline (Current)**
-- **Flush Shelf Baseline**:
-  - The bottom of the portfolio book rests cleanly and flush ON TOP of the wooden shelf ledge, matching the exact bottom baseline of `Spring Boot` and `API Design` (no hanging below the ledge).
-- **Golden Glowing Spine**:
-  - Upon loading, the bookshelf scene stays calm and fully interactive.
-  - The portfolio book spine pulses with an alluring **golden aura / shimmer** (`#d8a47f` glow and subtle sparkles), inviting the visitor to interact.
-- **Interactive Mouse Touch / Hover Trigger**:
-  - The pull-out animation is triggered **when the visitor touches/hovers the mouse over the glowing spine** (or clicks it).
-  - The book dislodges from the shelf, slides forward along Z, rotates 90° to reveal the front cover, and settles into the center foreground at a comfortable distance.
-  - Then clicking the book swings open the front cover to reveal the portfolio.
+### **Version 8: Golden Glowing Spine + Touch/Hover Pull-Out**
+- **Behavior**: Pulses with golden glow, touch to pull out.
+- **Git Commit Reference**: `b9596d0`
+
+### **Version 9: Zero-Flash Shelf Spawn + Steady Golden Glow + Pixel-Perfect Bottom Alignment (Current)**
+- **Zero-Flash Shelf Spawn**:
+  - Eliminated the reload jump (where the book briefly showed outside the shelf before moving in).
+  - The book is pre-anchored so it appears **already resting inside the shelf on the very first frame**, with no teleportation or snapping.
+- **Pixel-Perfect Bottom Baseline**:
+  - Uses `transform-origin: center bottom` and dynamic baseline alignment to ensure the bottom edge of the book rests **flush on the wooden shelf ledge**, perfectly level with `Spring Boot` and `API Design`.
+- **Steady Golden Glow (No Pulsing)**:
+  - Removed pulsing animation.
+  - The spine has a clean, steady, elegant golden glow outline (`ring-2 ring-[#d8a47f] shadow-[0_0_20px_rgba(216,164,127,0.85)]`).
+- **Interactive Mouse Touch**:
+  - When the visitor touches/hovers or clicks the glowing spine, it slides forward along Z, rotates 90° to reveal the front cover, and settles into the center foreground at a comfortable distance.
 - **Git Commit Reference**: Current
 
 ---
