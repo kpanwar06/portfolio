@@ -14,11 +14,12 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 = 6;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 = 7;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
   const shelfRef = useRef<HTMLDivElement>(null);
+  const shelfSlotRef = useRef<HTMLDivElement>(null);
   const bookRef = useRef<HTMLDivElement>(null);
   const frontCoverRef = useRef<HTMLDivElement>(null);
   const pagesBlockRef = useRef<HTMLDivElement>(null);
@@ -71,53 +72,70 @@ export default function BookshelfHero() {
     { id: 29, title: "Full Stack", bg: "bg-[#651F35]", text: "text-[#FFF8F0]", height: "h-42 sm:h-46", width: "w-10 sm:w-11" },
   ];
 
-  // Sequence: Book starts inside shelf row (spine-facing) -> slides out -> rotates 90° to front face
+  // Sequence: Exact alignment between API Design & Spring Boot, Left Spine forward -> slide out -> rotate
   useEffect(() => {
     const ctx = gsap.context(() => {
       const book = bookRef.current;
       const shelf = shelfRef.current;
+      const slot = shelfSlotRef.current;
+      const container = containerRef.current;
       const badge = promptBadgeRef.current;
       if (!book) return;
 
-      // =========================================================================
-      // VERSION 6: TRUE SHELF BOOK (SPINE-FACING) -> SLIDES OUT -> ROTATES 90°
-      // =========================================================================
-      // 1. Initial State: Inside middle shelf row between books, spine facing outward!
+      // Calculate pixel-perfect coordinates to sit flush on the shelf ledge beside API Design & Spring Boot
+      let initX = 0;
+      let initY = 28; // Fallback shelf baseline offset
+
+      if (slot && container) {
+        const slotRect = slot.getBoundingClientRect();
+        const contRect = container.getBoundingClientRect();
+        
+        // Exact horizontal center of the slot between API Design and Spring Boot
+        initX = (slotRect.left + slotRect.width / 2) - (contRect.left + contRect.width / 2);
+
+        // Exact vertical baseline: book's bottom sits flush on the shelf bottom
+        const scaledBookHeight = 330 * 0.52;
+        const targetCenterY = slotRect.bottom - (scaledBookHeight / 2);
+        const contCenterY = contRect.top + contRect.height / 2;
+        initY = targetCenterY - contCenterY;
+      }
+
+      // 1. Initial State: Inside shelf row, resting on ledge beside API Design & Spring Boot.
+      // rotationY: 90deg brings the LEFT SPINE directly to face the viewer!
       gsap.set(book, {
         scale: 0.52,
-        y: -38,
-        x: -4, // Aligned with the middle shelf row
+        x: initX,
+        y: initY,
         z: 0,
         rotationX: 0,
-        rotationY: -90, // Exactly facing spine-forward like all other shelf books!
+        rotationY: 90, // LEFT SPINE FACES VIEWER!
         rotationZ: 0,
-        boxShadow: "0 6px 15px rgba(0,0,0,0.6)",
+        boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
       });
 
       const tl = gsap.timeline({
-        delay: 1.8, // Sits naturally on the shelf for 1.8s
+        delay: 1.8, // Sits naturally in the shelf row for 1.8s
         onComplete: () => {
           setBookState("in-foreground");
         },
       });
 
-      // 2. Physical slide forward along Z-axis out from between the books
+      // 2. Physical slide forward out from between API Design and Spring Boot
       tl.to(book, {
         duration: 0.8,
         z: 130,
-        y: -42,
-        rotationY: -80, // Slight tip as it slides out
-        ease: "power2.in",
+        rotationY: 82, // Slight tilt as it slides forward along Z
+        ease: "power2.inOut",
       });
 
-      // 3. Once clear of the shelf row, rotates 90° to reveal front cover and glides into foreground
+      // 3. Rotates 90° so spine swings to the left and front cover faces viewer, while centering in foreground
       tl.to(
         book,
         {
           duration: 1.4,
-          scale: 0.95, // Comfortable distance (does NOT fill the screen!)
-          y: 0,
+          scale: 0.95, // Comfortable distance with generous space all around (NOT filling screen!)
           x: 0,
+          y: 0,
           z: 220,
           rotationX: 8,
           rotationY: -8, // Settles with gentle front presentation perspective
@@ -275,10 +293,10 @@ export default function BookshelfHero() {
           <div className="h-3 w-full bg-[#52383e] rounded-b-sm border-t border-[#6b4c53]/40" />
         </div>
 
-        {/* Middle Shelf (Houses the book row) */}
+        {/* Middle Shelf (Houses the book row with API Design on left & Spring Boot on right) */}
         <div className="relative w-full">
           <div className="flex items-end justify-center space-x-2 sm:space-x-3 border-b-[20px] border-[#38262a] pb-1 shadow-[0_16px_25px_rgba(0,0,0,0.8)] px-4">
-            {/* Left Cluster Books */}
+            {/* Left Cluster Books ending with API Design */}
             {middleLeftBooks.map((b) => (
               <div
                 key={b.id}
@@ -295,14 +313,17 @@ export default function BookshelfHero() {
               </div>
             ))}
 
-            {/* Gap on shelf revealed when portfolio book is pulled forward */}
-            <div className="w-10 sm:w-12 h-44 sm:h-48 border-l border-r border-[#1a1012] bg-[#140b0d]/70 rounded-t-sm flex items-center justify-center shadow-inner">
+            {/* Exactly positioned slot between API Design and Spring Boot */}
+            <div
+              ref={shelfSlotRef}
+              className="w-9 sm:w-11 h-42 sm:h-46 border-l border-r border-[#1a1012] bg-[#140b0d]/70 rounded-t-sm flex items-center justify-center shadow-inner"
+            >
               <span className="text-[7px] font-mono uppercase text-dustyRose/20 rotate-90 whitespace-nowrap">
                 VACANT
               </span>
             </div>
 
-            {/* Right Cluster Books */}
+            {/* Right Cluster Books starting with Spring Boot */}
             {middleRightBooks.map((b) => (
               <div
                 key={b.id}
@@ -350,7 +371,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v6 (True Shelf Book &bull; Pull-Out &amp; Rotate)
+        Bookshelf: v7 (Left Spine Forward &bull; Beside API Design)
       </div>
 
       {/* ========================================================================= */}
@@ -374,7 +395,7 @@ export default function BookshelfHero() {
             className="absolute inset-0 bg-[#290c15] rounded-l-md border-2 border-[#57192a] shadow-2xl pointer-events-none"
           />
 
-          {/* 2. LEFT SPINE FACE (PHYSICALLY ATTACHED ALONG LEFT EDGE, SEEN FIRST ON SHELF!) */}
+          {/* 2. LEFT SPINE FACE (FACES VIEWER FIRST ON SHELF VIA ROTATIONY: 90DEG) */}
           <div
             style={{
               width: "32px",
@@ -382,7 +403,7 @@ export default function BookshelfHero() {
               transform: "rotateY(-90deg)",
               transformOrigin: "center center",
             }}
-            className="absolute top-0 bottom-0 bg-gradient-to-r from-[#210911] via-[#651F35] to-[#3a101d] border-t border-b border-[#822744] flex flex-col justify-between items-center py-4 shadow-md pointer-events-none"
+            className="absolute top-0 bottom-0 bg-gradient-to-r from-[#210911] via-[#651F35] to-[#3a101d] border-t border-b border-[#822744] flex flex-col justify-between items-center py-4 shadow-md pointer-events-none select-none"
           >
             <div className="w-full h-1 bg-[#d8a47f]/50 border-t border-b border-black/40" />
             <div className="flex flex-col items-center space-y-1">
@@ -397,7 +418,7 @@ export default function BookshelfHero() {
             <div className="w-full h-1 bg-[#d8a47f]/50 border-t border-b border-black/40" />
           </div>
 
-          {/* 3. RIGHT PAGE-EDGES BLOCK (PHYSICAL PAGES THICKNESS) */}
+          {/* 3. RIGHT PAGE-EDGES BLOCK (PAGES THICKNESS - FACES INSIDE SHELF INITIALLY) */}
           <div
             style={{
               width: "32px",
@@ -484,7 +505,7 @@ export default function BookshelfHero() {
             }}
             className="absolute inset-0 w-full h-full"
           >
-            {/* FRONT OF COVER (CLOSED VIEW - REVEALED ONCE ROTATED) */}
+            {/* FRONT OF COVER (REVEALED ONCE ROTATED) */}
             <div
               style={{ backfaceVisibility: "hidden" }}
               className="absolute inset-0 bg-[#3a101d] rounded-r-md border-2 border-[#822744] shadow-xl p-5 flex flex-col justify-between"
@@ -521,7 +542,7 @@ export default function BookshelfHero() {
               </div>
             </div>
 
-            {/* BACK OF COVER (REVEALED WHEN COVER OPENS -> LEFT PAGE) */}
+            {/* BACK OF COVER (LEFT PAGE WHEN OPENED) */}
             <div
               style={{
                 backfaceVisibility: "hidden",

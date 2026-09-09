@@ -26,19 +26,22 @@ This document tracks animation states and version history across components. If 
 - **Behavior**: Unified 3D box model with front cover visible on shelf.
 - **Git Commit Reference**: `5f5635c`
 
-### **Version 6: True Shelf-Docked Book (Spine-Outward in Shelf Row → Slides Out → Rotates 90° to Front Cover → Settles at Comfortable Distance) (Current)**
-- **True Shelf Integration**:
-  - Initially, the portfolio book is **standing in the shelf row shoulder-to-shoulder with adjacent books, with its spine facing outward** (`rotationY: -90°`).
-  - To the viewer, it looks like a natural, beautiful leather-bound book spine standing in the middle row (no pre-existing empty gap).
-  - Matches the exact spine width, height, and ledge placement of surrounding books (`API Design` on left, `Spring Boot` on right).
-- **Physical Pull-Out & Rotation**:
-  - Pauses naturally for 1.8 seconds in the shelf row.
-  - Slides straight forward out from between the books along the Z-axis.
-  - Once clear of the shelf row, it **rotates 90°** from spine-view to front-cover view.
-  - The shelf gap where the book used to sit is revealed behind it.
-- **Comfortable Foreground Distance**:
-  - Settles in the center foreground with generous breathing room on all sides (does NOT fill the screen).
-  - User clicks → front cover swings open → portfolio elements emerge.
+### **Version 6: True Shelf-Docked Book**
+- **Behavior**: Shelf-docked rotation test.
+- **Git Commit Reference**: `0b8585e`
+
+### **Version 7: Exact Shelf Docking (Left Spine Forward next to API Design & Spring Boot) (Current)**
+- **Left Spine Facing Viewer**:
+  - The **left spine** (rich burgundy leather, embossed gold bands, vertical gold title *"KRITIKA PANWAR • PORTFOLIO"*) faces the viewer directly (`rotationY: 90°`).
+  - The white page edges are on the hidden side inside the shelf.
+- **Exact Placement Beside API Design & Spring Boot**:
+  - Mathematically anchored to the middle shelf ledge between `API Design` and `Spring Boot`.
+  - Sits flush on the wooden shelf edge, matching the surrounding books' baseline and height (no floating, no clipping into top shelf).
+- **Physical Pull-Out & 90° Rotation**:
+  - Sits naturally in the shelf row for 1.8 seconds.
+  - Slides forward along the Z-axis out from between `API Design` and `Spring Boot`.
+  - Rotates from `90°` to `-8°` so the spine swings to the left and the front cover faces the viewer.
+  - Settles in the center foreground at a comfortable distance (ample breathing room on all sides).
 - **Git Commit Reference**: Current
 
 ---
