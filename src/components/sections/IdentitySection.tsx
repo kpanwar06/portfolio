@@ -112,10 +112,11 @@ export default function IdentitySection() {
         className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden"
       >
         <span
-          className="text-[18vw] sm:text-[16vw] font-serif font-black uppercase tracking-[0.18em] text-[#C96F82]/30 select-none whitespace-nowrap blur-[3px] sm:blur-[5px] scale-110 transform transition-all duration-300"
+          className="text-[18vw] sm:text-[16vw] font-serif font-black uppercase tracking-[0.18em] text-[#C96F82]/30 select-none whitespace-nowrap blur-[3px] sm:blur-[5px] scale-110 transform will-change-transform"
           style={{
             textShadow: "0 0 40px rgba(201, 111, 130, 0.25)",
             WebkitTextStroke: "1px rgba(101, 31, 53, 0.2)",
+            transform: "translateZ(0)",
           }}
         >
           PORTFOLIO

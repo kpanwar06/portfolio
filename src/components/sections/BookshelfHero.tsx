@@ -15,7 +15,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 = 24;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 = 25;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -145,6 +145,28 @@ export default function BookshelfHero() {
     };
   }, []);
 
+  // Smooth scroll exit when transitioning from Hero to Identity
+  useEffect(() => {
+    if (bookState !== "opened") return;
+
+    const ctx = gsap.context(() => {
+      gsap.to(bookRef.current, {
+        y: -120,
+        opacity: 0.15,
+        ease: "none",
+        force3D: true,
+        scrollTrigger: {
+          trigger: containerRef.current,
+          start: "top top",
+          end: "bottom top",
+          scrub: 1.2,
+        },
+      });
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [bookState]);
+
   // Background shelf books
   const topShelfBooks: ShelfBook[] = [
     { id: 1, title: "Algorithms", bg: "bg-[#651F35]", text: "text-[#F7E6E8]", height: "h-36 sm:h-40", width: "w-8 sm:w-9", tilt: "-rotate-1" },
@@ -207,7 +229,7 @@ export default function BookshelfHero() {
     const contCenterY = contRect.top + contRect.height / 2;
     const initY = targetCenterY - contCenterY;
 
-    // Immediately snap 3D book box to the exact slot position and make visible
+    // Immediately snap 3D book box to the exact slot position and make visible with GPU acceleration
     gsap.set(book, {
       scale: 0.5,
       transformOrigin: "center center",
@@ -220,6 +242,7 @@ export default function BookshelfHero() {
       boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
       opacity: 1,
       visibility: "visible",
+      force3D: true,
     });
 
     setBookState("pulling");
@@ -230,42 +253,45 @@ export default function BookshelfHero() {
       },
     });
 
-    // 1. Slides straight forward along Z-axis out from shelf row
+    // 1. Slides straight forward along Z-axis out from shelf row smoothly
     tl.to(book, {
-      duration: 0.6,
-      z: 140,
-      ease: "power2.inOut",
+      duration: 0.45,
+      z: 110,
+      ease: "power1.inOut",
+      force3D: true,
     });
 
-    // 2. Glides smoothly to viewport center, scales to restored natural book size, rotates to present front cover
+    // 2. Continuous fluid glide & arc to center (seamless blend without stop-start jerk)
     tl.to(
       book,
       {
-        duration: 1.2,
-        scale: 0.95, // The exact comfortable foreground size from before!
+        duration: 1.15,
+        scale: 0.95,
         x: 0,
         y: 0,
         z: 220,
         rotationX: 8,
-        rotationY: -8, // Gentle natural presentation angle
+        rotationY: -8,
         rotationZ: -1.5,
         boxShadow: "-20px 30px 55px rgba(0,0,0,0.8)",
-        ease: "power3.out",
+        ease: "power2.out",
+        force3D: true,
       },
-      "-=0.1"
+      "-=0.25"
     );
 
-    // 3. Background shelves soften gently
+    // 3. Background shelves soften gently with GPU-accelerated opacity and subtle scale
     if (shelf) {
       tl.to(
         shelf,
         {
-          duration: 1.2,
-          filter: "blur(5px)",
-          opacity: 0.45,
+          duration: 1.1,
+          opacity: 0.4,
+          scale: 0.985,
           ease: "power2.out",
+          force3D: true,
         },
-        "<0.1"
+        "<0.05"
       );
     }
 
@@ -527,7 +553,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v24 (Seamless Scrollbar &bull; Active from Section 2)
+        Bookshelf: v25 (Silky Smooth Motion &bull; Fluid Section Transition)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}

@@ -132,15 +132,25 @@ This document tracks animation states and version history across components. If 
   - Set `rotationX: 0`, `rotationY: 0`, `rotationZ: 0` and front cover `rotationY: -180` so both pages lie flat and level with zero crooked slant.
 - **Git Commit Reference**: `9216c0d`
 
-### **Version 24: Seamless Scrollbar Active from Section 2 & Zero-Shift Lock (Current)**
+### **Version 24: Seamless Scrollbar Active from Section 2 & Zero-Shift Lock**
 - **Zero-Flash Initial Load**:
-  - Added `hero-active` class to `<body>` on server render (`layout.tsx`), keeping scrollbar track and thumb `transparent` from frame 0 so it never flickers or vanishes on reload.
+  - Added `hero-active` class to `<html>` and `<body>` on server render (`layout.tsx`), keeping scrollbar track and thumb `transparent` from frame 0 so it never flickers or vanishes on reload.
 - **Zero Layout Shifts**:
   - Eliminated toggling of `document.body.style.overflow = "hidden"` which previously altered viewport width by 8px and caused screen jumping.
   - Scroll locking while the book is closed is now managed entirely via Lenis controls and non-destructive event interception (`wheel`, `touchmove`, `keydown`).
 - **Scrollbar Activated on Section 2**:
   - Section 1 (Bookshelf Hero) remains completely clean with an invisible scrollbar.
   - As the user explores past the bookshelf into Section 2 (Identity), the custom editorial pink scrollbar smoothly transitions into view on the cream background.
+- **Git Commit Reference**: `54f5379`
+
+### **Version 25: Silky Smooth Motion & Fluid Section Transition (Current)**
+- **Continuous Pull-Out Velocity & Arc**:
+  - Replaced the two-phase start-stop pull with a blended continuous velocity curve (`power1.inOut` forward into `power2.out` arc with `-0.25s` overlap).
+  - Added hardware GPU compositing (`force3D: true`) and replaced CPU-heavy `filter: blur()` with GPU-accelerated opacity/scale for smooth 60/120fps motion.
+- **Fluid Scroll Transition to Identity (Section 2)**:
+  - Removed conflicting CSS `transition-all duration-300` from `IdentitySection`'s scrubbed background text (`PORTFOLIO`), eliminating thread contention and micro-stutters during scroll.
+  - Tuned Lenis smooth scroll responsiveness (`duration: 1.1`, `wheelMultiplier: 1.15`, `touchMultiplier: 1.8`).
+  - Added a graceful scroll exit parallax on the opened book as the user scrolls into Section 2.
 - **Git Commit Reference**: Current
 
 ---
