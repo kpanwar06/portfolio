@@ -72,9 +72,14 @@ This document tracks animation states and version history across components. If 
   - Pull-out animation slides forward and expands book to comfortable full foreground reading size (`scale: 0.95`, `w-[240px] sm:w-[260px] h-[330px] sm:h-[355px]`).
 - **Git Commit Reference**: `c495474`
 
-### **Version 15: Shifted Up for Flush Wooden Ledge Baseline (Current)**
+### **Version 15: Shifted Up for Flush Wooden Ledge Baseline**
 - **Exact Ledge Alignment**:
-  - Shifted book vertically up by 12px on the shelf so its bottom edge rests flush on the wooden shelf ledge baseline, matching `Spring Boot` and `API Design` without dipping below the shelf line.
+  - Shifted book vertically up by 12px on the shelf.
+- **Git Commit Reference**: `e3f6ada`
+
+### **Version 16: Fine-Tuned Baseline Down 6px (Exact Shelf Match) (Current)**
+- **Sub-Pixel Shelf Touch**:
+  - Shifted down by 6px (`targetCenterY - contCenterY - 6`) from v15 so its bottom edge rests squarely on the shelf line in exact alignment with `Spring Boot` and `API Design`.
 - **Git Commit Reference**: Current
 
 ---
