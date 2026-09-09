@@ -93,9 +93,14 @@ This document tracks animation states and version history across components. If 
   - Standardized both the portfolio book and all shelf books to high-contrast, bold, crisp monospace uppercase lettering (`font-mono tracking-[0.22em] font-bold text-[#FFF8F0]`).
 - **Git Commit Reference**: `063afb2`
 
-### **Version 18: Shifted Up 14px (Aligned Directly to Shelf Base) (Current)**
+### **Version 18: Shifted Up 14px (Aligned Directly to Shelf Base)**
 - **Elevated to Shelf Base**:
   - Shifted the portfolio book vertically up by 14px (`targetCenterY - contCenterY - 14`) so its bottom edge rests directly on top of the shelf plank, flush with `Spring Boot` and `API Design`.
+- **Git Commit Reference**: `4bd5cdf`
+
+### **Version 19: Fine-Tuned Baseline (7px Down from v18) (Current)**
+- **Precision Ledge Placement**:
+  - Brought the portfolio book down 7px from v18 (`targetCenterY - contCenterY - 7`) for balanced resting position on the shelf base.
 - **Git Commit Reference**: Current
 
 ---
