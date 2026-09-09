@@ -16,16 +16,19 @@ export default function IdentitySection() {
 
     const ctx = gsap.context(() => {
       // Parallax scroll effect:
-      // Pure hardware translate along Y (no scale/opacity thrashing) preserves GPU blur texture cache for 120fps smooth scrolling
+      // Background PORTFOLIO drifts gently with blur, while KRITIKA stays anchored and crisp
       gsap.fromTo(
         bgWordRef.current,
         {
-          yPercent: -12,
+          yPercent: -15,
+          scale: 0.95,
+          opacity: 0.25,
         },
         {
-          yPercent: 12,
+          yPercent: 15,
+          scale: 1.05,
+          opacity: 0.45,
           ease: "none",
-          force3D: true,
           scrollTrigger: {
             trigger: sectionRef.current,
             start: "top bottom",
@@ -106,7 +109,7 @@ export default function IdentitySection() {
       <div
         ref={bgWordRef}
         aria-hidden="true"
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden will-change-transform"
+        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden"
       >
         <span
           className="text-[18vw] sm:text-[16vw] font-serif font-black uppercase tracking-[0.18em] text-[#C96F82]/30 select-none whitespace-nowrap blur-[3px] sm:blur-[5px] scale-110 transform will-change-transform"
