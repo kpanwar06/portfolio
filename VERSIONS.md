@@ -82,7 +82,7 @@ This document tracks animation states and version history across components. If 
   - Shifted down by 6px (`targetCenterY - contCenterY - 6`) from v15 so its bottom edge rests squarely on the shelf line in exact alignment with `Spring Boot` and `API Design`.
 - **Git Commit Reference**: `d96e6b5`
 
-### **Version 17: Unified Shelf Baseline, Gold Spine Ribs & Crisp Typography (Current)**
+### **Version 17: Unified Shelf Baseline, Gold Spine Ribs & Crisp Typography**
 - **Unified Natural Shelf Baseline**:
   - Removed container bottom borders and padding gaps across all shelf tiers.
   - All background books now drop down and rest squarely on the wooden shelf plank (`bg-[#52383e]`), sharing the exact physical baseline with the portfolio book.
@@ -91,6 +91,11 @@ This document tracks animation states and version history across components. If 
 - **Crystal-Clear & Unified Typography**:
   - Removed blurry serif font and murky drop-shadow from the portfolio book's spine.
   - Standardized both the portfolio book and all shelf books to high-contrast, bold, crisp monospace uppercase lettering (`font-mono tracking-[0.22em] font-bold text-[#FFF8F0]`).
+- **Git Commit Reference**: `063afb2`
+
+### **Version 18: Shifted Up 14px (Aligned Directly to Shelf Base) (Current)**
+- **Elevated to Shelf Base**:
+  - Shifted the portfolio book vertically up by 14px (`targetCenterY - contCenterY - 14`) so its bottom edge rests directly on top of the shelf plank, flush with `Spring Boot` and `API Design`.
 - **Git Commit Reference**: Current
 
 ---
