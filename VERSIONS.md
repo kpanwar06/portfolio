@@ -50,20 +50,24 @@ This document tracks animation states and version history across components. If 
 - **Immediate All-Together Display**: Removed delay timer, removed golden glow outline.
 - **Git Commit Reference**: `df21ce1`
 
-### **Version 12: Direct Shelf Integration & Zero Shadow Gap (Current)**
+### **Version 12: Direct Shelf Integration & Zero Shadow Gap**
 - **Unified Book and Shelf (One Single Part)**:
-  - The portfolio book is embedded **directly inside the shelf row slot** (`shelfSlotRef`) between `API Design` and `Spring Boot`.
+  - The portfolio book is embedded directly inside the shelf row slot (`shelfSlotRef`) between `API Design` and `Spring Boot`.
   - On page load / reload, the book is rendered directly in the HTML—no delays, no mounting wait, and no missing book on first paint.
 - **Zero Empty Shadow Gap**:
-  - The book spine now matches the exact width (`w-10 sm:w-12`, ~44px to 48px) and height (`h-40 sm:h-44`) of the shelf slot.
-  - Covers the entire slot space snugly with zero gaps on left or right and zero shadow peaking through while docked.
-  - The vacant dark shadow slot is revealed behind it **only when the book is pulled forward** into the foreground.
-- **Natural Shelf Resting**:
-  - Because it is part of the `flex items-end pb-1` shelf row, its bottom edge rests cleanly and naturally on top of the wooden shelf ledge alongside all neighboring books.
-- **Seamless Pull-Out & Presentation**:
-  - Hovering/touching or clicking slides the book forward from its slot along the Z-axis, flies it smoothly to the screen center, expands it to comfortable foreground reading size, and rotates 90° to present the front cover.
-  - Background shelves blur gently (`.shelf-blur-target`).
-  - Clicking the book swings the front cover open on its left spine hinge to reveal the prologue, table of contents, and emerging scrapbook cards.
+  - The book spine matched slot width (`w-10 sm:w-12`, ~44px to 48px) and height (`h-40 sm:h-44`).
+- **Git Commit Reference**: `342f09d`
+
+### **Version 13: Clean PORTFOLIO Spine & Restored Original Foreground Book Proportions (Current)**
+- **Clean Spine Typography**:
+  - Only **`PORTFOLIO`** is written vertically on the spine (in bold serif font with `tracking-[0.35em]`, bordered by top and bottom gold ribs and sparkles). Full name and subtitle removed from spine to prevent any overflow or cut-off.
+- **Restored Original Classic Foreground Proportions**:
+  - Completely restored the natural, authentic book proportions (`w-[240px] sm:w-[260px] h-[330px] sm:h-[355px]`, depth `76px`) that the user loved.
+  - When pulled out to the foreground, the book scales to `scale: 0.95` at `rotationX: 8, rotationY: -8`, revealing the rich burgundy cover with gold/dusty-rose accents ("Vol. 2026", "Interactive Portfolio", "KRITIKA PANWAR", "Full Stack • Python / Django", "Tap to Open") with zero distortion or weird aspect ratio.
+- **Zero-Shadow Shelf Docking & Flush Resting**:
+  - When docked on the shelf between `API Design` and `Spring Boot`, the shelf slot is clean and transparent without dark shadow boxes or borders.
+  - The vacant dark shadow slot (`VACANT`) is revealed behind it only when the book is pulled forward.
+  - The book's bottom edge aligns flush on top of the wooden shelf ledge alongside `Spring Boot`.
 - **Git Commit Reference**: Current
 
 ---
