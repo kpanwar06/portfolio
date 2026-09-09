@@ -30,18 +30,20 @@ This document tracks animation states and version history across components. If 
 - **Behavior**: Shelf-docked rotation test.
 - **Git Commit Reference**: `0b8585e`
 
-### **Version 7: Exact Shelf Docking (Left Spine Forward next to API Design & Spring Boot) (Current)**
-- **Left Spine Facing Viewer**:
-  - The **left spine** (rich burgundy leather, embossed gold bands, vertical gold title *"KRITIKA PANWAR • PORTFOLIO"*) faces the viewer directly (`rotationY: 90°`).
-  - The white page edges are on the hidden side inside the shelf.
-- **Exact Placement Beside API Design & Spring Boot**:
-  - Mathematically anchored to the middle shelf ledge between `API Design` and `Spring Boot`.
-  - Sits flush on the wooden shelf edge, matching the surrounding books' baseline and height (no floating, no clipping into top shelf).
-- **Physical Pull-Out & 90° Rotation**:
-  - Sits naturally in the shelf row for 1.8 seconds.
-  - Slides forward along the Z-axis out from between `API Design` and `Spring Boot`.
-  - Rotates from `90°` to `-8°` so the spine swings to the left and the front cover faces the viewer.
-  - Settles in the center foreground at a comfortable distance (ample breathing room on all sides).
+### **Version 7: Exact Shelf Docking**
+- **Behavior**: Anchored beside API Design and Spring Boot.
+- **Git Commit Reference**: `26129ad`
+
+### **Version 8: Golden Glowing Spine + Touch/Hover Pull-Out + Flush Shelf Baseline (Current)**
+- **Flush Shelf Baseline**:
+  - The bottom of the portfolio book rests cleanly and flush ON TOP of the wooden shelf ledge, matching the exact bottom baseline of `Spring Boot` and `API Design` (no hanging below the ledge).
+- **Golden Glowing Spine**:
+  - Upon loading, the bookshelf scene stays calm and fully interactive.
+  - The portfolio book spine pulses with an alluring **golden aura / shimmer** (`#d8a47f` glow and subtle sparkles), inviting the visitor to interact.
+- **Interactive Mouse Touch / Hover Trigger**:
+  - The pull-out animation is triggered **when the visitor touches/hovers the mouse over the glowing spine** (or clicks it).
+  - The book dislodges from the shelf, slides forward along Z, rotates 90° to reveal the front cover, and settles into the center foreground at a comfortable distance.
+  - Then clicking the book swings open the front cover to reveal the portfolio.
 - **Git Commit Reference**: Current
 
 ---
