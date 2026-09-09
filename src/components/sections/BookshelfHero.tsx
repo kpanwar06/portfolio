@@ -14,7 +14,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 = 19;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 = 20;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -87,6 +87,12 @@ export default function BookshelfHero() {
       const contRect = container.getBoundingClientRect();
       const adjRect = adj.getBoundingClientRect();
 
+      // Guard against zero dimensions before full layout pass
+      if (slotRect.width === 0 || adjRect.height === 0) {
+        requestAnimationFrame(updatePosition);
+        return;
+      }
+
       // Horizontally center inside shelf slot
       const initX = slotRect.left + slotRect.width / 2 - (contRect.left + contRect.width / 2);
 
@@ -106,6 +112,7 @@ export default function BookshelfHero() {
         rotationY: 90, // Left spine forward facing viewer on shelf!
         rotationZ: 0,
         boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
+        opacity: 1, // Reveal smoothly only once position is perfectly locked
       });
     };
 
@@ -394,7 +401,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v19 (Fine-Tuned Baseline &bull; -7px Offset)
+        Bookshelf: v20 (Glitch-Free Instant Shelf Docking)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
@@ -425,6 +432,7 @@ export default function BookshelfHero() {
         style={{
           transformStyle: "preserve-3d",
           transformOrigin: "center center",
+          opacity: 0,
         }}
         className={`absolute z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[355px] select-none ${
           bookState === "on-shelf" ? "group" : ""

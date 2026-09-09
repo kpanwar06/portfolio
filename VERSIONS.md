@@ -98,9 +98,16 @@ This document tracks animation states and version history across components. If 
   - Shifted the portfolio book vertically up by 14px (`targetCenterY - contCenterY - 14`) so its bottom edge rests directly on top of the shelf plank, flush with `Spring Boot` and `API Design`.
 - **Git Commit Reference**: `4bd5cdf`
 
-### **Version 19: Fine-Tuned Baseline (7px Down from v18) (Current)**
+### **Version 19: Fine-Tuned Baseline (7px Down from v18)**
 - **Precision Ledge Placement**:
   - Brought the portfolio book down 7px from v18 (`targetCenterY - contCenterY - 7`) for balanced resting position on the shelf base.
+- **Git Commit Reference**: `22f69d1`
+
+### **Version 20: Glitch-Free Instant Shelf Docking (Current)**
+- **Zero Flash/Glitch on Page Reload**:
+  - Default `opacity: 0` on `bookRef` prevents the book from momentarily appearing at viewport center during hydration before GSAP positions it.
+  - Dimension readiness guard with `requestAnimationFrame` ensures accurate coordinate measurements.
+  - Book reveals smoothly (`opacity: 1`) only when its position and rotation are fully locked into the shelf slot.
 - **Git Commit Reference**: Current
 
 ---
