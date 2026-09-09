@@ -42,18 +42,24 @@ This document tracks animation states and version history across components. If 
 - **Behavior**: Steady glow without pulse.
 - **Git Commit Reference**: `79ea936`
 
-### **Version 10: 1-Second Delayed Shelf Appearance + Flush Ledge Baseline Alignment (Current)**
-- **1-Second Delayed Appearance on Shelf**:
-  - When the page loads/reloads, the bookshelf is displayed cleanly.
-  - After **exactly 1 second**, the portfolio book fades in smoothly directly **inside its shelf position** between `API Design` and `Spring Boot`.
-  - It never renders in the foreground or outside the shelf; its first appearance is already nestled inside the shelf with its golden glow.
-- **Flush Bottom Shelf Ledge Alignment**:
-  - Calibrated vertical baseline lifted by 12px to account for spine ribbing and 3D box bevels.
-  - The bottom of `KRITIKA PANWAR • PORTFOLIO` rests **completely flush on top of the wooden shelf ledge**, matching the exact bottom baseline of `Spring Boot` and `API Design`.
-- **Steady Golden Glow (No Pulsing)**:
-  - Clean, elegant, steady golden outline shimmer (`#d8a47f`).
-- **Interactive Mouse Touch**:
-  - Touching/hovering or clicking the glowing spine pulls it forward out of the shelf row, rotates 90° to reveal the front cover, and settles into the center foreground at a comfortable distance.
+### **Version 10: 1-Second Delayed Shelf Appearance + Flush Ledge Baseline Alignment**
+- **1-Second Delayed Appearance on Shelf**: Faded in after 1s.
+- **Git Commit Reference**: `3e68c06`
+
+### **Version 11: Immediate All-Together Display + Glow Removed (Current)**
+- **Immediate All-Together Display on Reload**:
+  - Removed 1s/2s delayed appearance timer.
+  - The portfolio book appears **immediately alongside all background books** from frame 1 when the page loads, perfectly integrated into the shelf row with the background.
+- **Removed Golden Glow**:
+  - The golden glowing outline and shadow ring on the book spine have been completely removed.
+  - Features authentic burgundy leather binding with crisp gold foil typography and gold spine ribs, blending naturally with adjacent shelf books.
+- **Dynamic Slot State**:
+  - The shelf slot backing sits cleanly behind the book while docked.
+  - The subtle "VACANT" label only appears once the book is pulled forward into the foreground.
+- **Maintained Flush Bottom Ledge**:
+  - Retained the calibrated baseline so the bottom edge rests completely flush on the wooden shelf ledge.
+- **Interactive Mouse Touch / Hover**:
+  - Touching/hovering or clicking the portfolio book pulls it smoothly forward, rotates it 90° to the front cover, and opens on click.
 - **Git Commit Reference**: Current
 
 ---

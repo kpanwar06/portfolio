@@ -14,7 +14,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 = 10;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 = 11;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -30,7 +30,7 @@ export default function BookshelfHero() {
   const [bookState, setBookState] = useState<"on-shelf" | "pulling" | "in-foreground" | "opening" | "opened">(
     "on-shelf"
   );
-  const [isVisible, setIsVisible] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
 
   // Background shelf books
   const topShelfBooks: ShelfBook[] = [
@@ -74,7 +74,7 @@ export default function BookshelfHero() {
     { id: 29, title: "Full Stack", bg: "bg-[#651F35]", text: "text-[#FFF8F0]", height: "h-42 sm:h-46", width: "w-10 sm:w-11" },
   ];
 
-  // Set initial position precisely on mount (Zero flash & flush shelf bottom)
+  // Set initial position precisely on mount (Immediate all-together display & flush shelf bottom)
   useEffect(() => {
     const slot = shelfSlotRef.current;
     const adj = adjacentBookRef.current;
@@ -115,14 +115,7 @@ export default function BookshelfHero() {
       boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
     });
 
-    // Exactly 1 second after page load, the book smoothly fades in directly in its shelf slot
-    const timer = setTimeout(() => {
-      setIsVisible(true);
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
+    setIsMounted(true);
   }, []);
 
   // Action: Triggered when mouse touches (hovers) or clicks the glowing golden spine!
@@ -341,9 +334,11 @@ export default function BookshelfHero() {
               ref={shelfSlotRef}
               className="w-10 sm:w-12 h-40 sm:h-44 border-l border-r border-[#1a1012] bg-[#140b0d]/70 rounded-t-sm flex items-center justify-center shadow-inner"
             >
-              <span className="text-[7px] font-mono uppercase text-dustyRose/20 rotate-90 whitespace-nowrap">
-                VACANT
-              </span>
+              {bookState !== "on-shelf" && (
+                <span className="text-[7px] font-mono uppercase text-dustyRose/20 rotate-90 whitespace-nowrap">
+                  VACANT
+                </span>
+              )}
             </div>
 
             {/* Right Cluster Books starting with Spring Boot (Reference Baseline) */}
@@ -395,38 +390,38 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v10 (1s Shelf Appearance &bull; Flush Ledge Baseline)
+        Bookshelf: v11 (Immediate All-Together Display &bull; Glow Removed)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
-      {bookState === "on-shelf" && isVisible && (
-        <div className="absolute bottom-10 z-30 flex items-center space-x-2 px-4 py-2 rounded-full bg-burgundy/80 text-cream border border-[#d8a47f]/60 shadow-lg backdrop-blur-sm pointer-events-none transition-opacity duration-500">
+      {bookState === "on-shelf" && isMounted && (
+        <div className="absolute bottom-10 z-30 flex items-center space-x-2 px-4 py-2 rounded-full bg-burgundy/80 text-cream border border-blush/20 shadow-lg backdrop-blur-sm pointer-events-none transition-opacity duration-300">
           <Sparkles className="w-3.5 h-3.5 text-[#d8a47f]" />
           <span className="text-xs font-mono tracking-wider uppercase font-semibold text-[#FFF8F0]">
-            Touch the glowing book to pull it out
+            Touch the portfolio book to pull it out
           </span>
         </div>
       )}
 
       {/* ========================================================================= */}
-      {/* UNIFIED 3D PHYSICAL BOOK OBJECT (1S DELAY & FLUSH BASELINE)                 */}
+      {/* UNIFIED 3D PHYSICAL BOOK OBJECT (IMMEDIATE & FLUSH BASELINE)                */}
       {/* ========================================================================= */}
       <div
         ref={bookRef}
         onMouseEnter={() => {
-          if (bookState === "on-shelf" && isVisible) triggerBookPullOut();
+          if (bookState === "on-shelf" && isMounted) triggerBookPullOut();
         }}
         onClick={() => {
-          if (!isVisible) return;
+          if (!isMounted) return;
           handleBookClick();
         }}
         style={{
           transformStyle: "preserve-3d",
           transformOrigin: "center bottom",
-          opacity: isVisible ? 1 : 0,
+          opacity: isMounted ? 1 : 0,
         }}
-        className={`relative z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[360px] transition-opacity duration-700 ease-out ${
-          !isVisible ? "pointer-events-none" : ""
+        className={`relative z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[360px] transition-opacity duration-150 ${
+          !isMounted ? "pointer-events-none" : ""
         } ${bookState === "on-shelf" ? "group" : ""}`}
       >
         {/* Physical 3D Book Box Container (Depth: 32px) */}
@@ -438,7 +433,7 @@ export default function BookshelfHero() {
             className="absolute inset-0 bg-[#290c15] rounded-l-md border-2 border-[#57192a] shadow-2xl pointer-events-none"
           />
 
-          {/* 2. LEFT SPINE FACE (FACES VIEWER ON SHELF WITH STEADY GOLDEN OUTLINE GLOW) */}
+          {/* 2. LEFT SPINE FACE (FACES VIEWER ON SHELF - AUTHENTIC LEATHER BINDING) */}
           <div
             style={{
               width: "32px",
@@ -446,11 +441,7 @@ export default function BookshelfHero() {
               transform: "rotateY(-90deg)",
               transformOrigin: "center center",
             }}
-            className={`absolute top-0 bottom-0 bg-gradient-to-r from-[#210911] via-[#651F35] to-[#3a101d] border-t border-b border-[#822744] flex flex-col justify-between items-center py-4 pointer-events-auto select-none transition-all duration-300 ${
-              bookState === "on-shelf"
-                ? "ring-2 ring-[#d8a47f] shadow-[0_0_20px_rgba(216,164,127,0.85)] border-[#d8a47f]"
-                : "shadow-md"
-            }`}
+            className="absolute top-0 bottom-0 bg-gradient-to-r from-[#210911] via-[#651F35] to-[#3a101d] border-t border-b border-[#822744] rounded-t-sm shadow-md flex flex-col justify-between items-center py-4 pointer-events-auto select-none transition-all duration-300 border-r border-[#822744]/40"
           >
             {/* Top gold spine rib */}
             <div className="w-full h-1 bg-[#d8a47f]/70 border-t border-b border-black/40" />
