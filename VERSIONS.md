@@ -153,7 +153,7 @@ This document tracks animation states and version history across components. If 
   - Added a graceful scroll exit parallax on the opened book as the user scrolls into Section 2.
 - **Git Commit Reference**: `f9f0246`
 
-### **Version 26: Calibrated Pull-Out Arc • Zero Collision & Physical Depth (Current)**
+### **Version 26: Calibrated Pull-Out Arc • Zero Collision & Physical Depth**
 - **Full Shelf Row Clearance Before Center Arc**:
   - The book now glides straight forward 160px along the Z-axis, completely clearing adjacent books (`API Design` & `Spring Boot`) before beginning its turn toward the screen center.
   - Eliminates premature 3D rotation collisions inside the shelf slot that previously made the motion feel rough.
@@ -161,6 +161,15 @@ This document tracks animation states and version history across components. If 
   - Calibrated the 3D book box depth to 56px (`translateZ(±28px)`), matching slot width at 0.5 scale so the spine never shrinks into a thin sliver upon touch.
   - Initialized with `boxShadow: "none"` while facing 90°, fading into a rich natural drop shadow as it turns toward the viewer, eliminating 2D shadow render artifacts on 3D elements.
   - Cleaned slot vacant state into a soft dark cavity without popping text.
+- **Git Commit Reference**: `5138131`
+
+### **Version 27: Zero-Lag Synchronized Scroll & Smooth Parallax (Current)**
+- **Eliminated 1.2-Second Scroll Drag**:
+  - Switched `scrub: 1.2` to `scrub: true` on both the opened book exit and Identity Section background text, allowing elements to track smooth-scroll directly with zero delayed catch-up lag.
+- **Removed Duplicate Scroll Handlers & Redundant DOM Updates**:
+  - Stopped listening to duplicate native + Lenis scroll events; guarded `hero-active` class toggling to only fire when crossing the threshold rather than executing on every scroll tick.
+- **Adaptive Lag Smoothing**:
+  - Re-enabled GSAP's adaptive lag smoothing (`500, 33`) instead of hard 0, allowing browser performance hiccups to be absorbed smoothly without dropping animation frames.
 - **Git Commit Reference**: Current
 
 ---

@@ -15,7 +15,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 = 26;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 = 27;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -117,35 +117,26 @@ export default function BookshelfHero() {
       const scrollY = window.scrollY || document.documentElement.scrollTop;
       const heroHeight = containerRef.current?.offsetHeight || window.innerHeight;
       const threshold = heroHeight * 0.35;
+      const shouldBeHeroActive = scrollY <= threshold;
+      const isCurrentlyActive = document.documentElement.classList.contains("hero-active");
 
-      if (scrollY > threshold) {
-        document.documentElement.classList.remove("hero-active");
-        document.body.classList.remove("hero-active");
-      } else {
-        document.documentElement.classList.add("hero-active");
-        document.body.classList.add("hero-active");
+      if (shouldBeHeroActive !== isCurrentlyActive) {
+        document.documentElement.classList.toggle("hero-active", shouldBeHeroActive);
+        document.body.classList.toggle("hero-active", shouldBeHeroActive);
       }
     };
 
     window.addEventListener("scroll", handleScroll, { passive: true });
-    const lenis = (window as any).__lenis;
-    if (lenis) {
-      lenis.on("scroll", handleScroll);
-    }
-
     handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
-      if (lenis) {
-        lenis.off("scroll", handleScroll);
-      }
       document.documentElement.classList.remove("hero-active");
       document.body.classList.remove("hero-active");
     };
   }, []);
 
-  // Smooth scroll exit when transitioning from Hero to Identity
+  // Smooth scroll exit when transitioning from Hero to Identity (zero-lag synchronized scrub)
   useEffect(() => {
     if (bookState !== "opened") return;
 
@@ -159,7 +150,7 @@ export default function BookshelfHero() {
           trigger: containerRef.current,
           start: "top top",
           end: "bottom top",
-          scrub: 1.2,
+          scrub: true,
         },
       });
     }, containerRef);
@@ -549,7 +540,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v26 (Calibrated Pull-Out Arc &bull; Zero Collision &amp; Physical Depth)
+        Bookshelf: v27 (Zero-Lag Synchronized Scroll &bull; Smooth Parallax)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}

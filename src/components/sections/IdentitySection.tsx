@@ -33,7 +33,7 @@ export default function IdentitySection() {
             trigger: sectionRef.current,
             start: "top bottom",
             end: "bottom top",
-            scrub: 1.2,
+            scrub: true,
           },
         }
       );
