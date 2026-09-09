@@ -163,14 +163,28 @@ This document tracks animation states and version history across components. If 
   - Cleaned slot vacant state into a soft dark cavity without popping text.
 - **Git Commit Reference**: `5138131`
 
-### **Version 27: Zero-Lag Synchronized Scroll & Smooth Parallax (Current)**
+### **Version 27: Zero-Lag Synchronized Scroll & Smooth Parallax**
 - **Eliminated 1.2-Second Scroll Drag**:
   - Switched `scrub: 1.2` to `scrub: true` on both the opened book exit and Identity Section background text, allowing elements to track smooth-scroll directly with zero delayed catch-up lag.
 - **Removed Duplicate Scroll Handlers & Redundant DOM Updates**:
   - Stopped listening to duplicate native + Lenis scroll events; guarded `hero-active` class toggling to only fire when crossing the threshold rather than executing on every scroll tick.
 - **Adaptive Lag Smoothing**:
   - Re-enabled GSAP's adaptive lag smoothing (`500, 33`) instead of hard 0, allowing browser performance hiccups to be absorbed smoothly without dropping animation frames.
+- **Git Commit Reference**: `32d2600`
+
+### **Version 28: Zero-Lag Pull-Out • Direct GPU Handoff & Pre-Cached Geometry (Current)**
+- **Eliminated Frame-0 Synchronous React Re-render on Pull**:
+  - Previously, calling `setBookState("pulling")` triggered a synchronous React 18 re-render of the entire 850-line component (all 29 shelf books, DOM reconciliation, unmounting badges) right as GSAP began its timeline, freezing the JS main thread for 50–100ms and causing GSAP to drop frames and jump abruptly.
+  - Now, both the vacant shelf cavity and native spine exist in the DOM from frame 0. On pull, GSAP immediately hides the native spine (`gsap.set(nativeSpineRef.current, { opacity: 0 })`) and starts the 3D book animation with 0ms delay and zero React re-render. `setBookState("in-foreground")` is deferred until `tl.onComplete` when the book is already at rest in the center.
+- **Pre-Cached Geometry (Zero Forced Reflows)**:
+  - Pre-calculates shelf slot coordinates (`initX`, `initY`) on mount and resize, completely eliminating `getBoundingClientRect()` forced layout reflows on `onMouseEnter`.
+- **Continuous Mathematical Velocity (Zero Z-Tween Collision)**:
+  - Eliminated conflicting overlapping tweens on the `z` axis. Phase 1 (smooth pull-out along Z to z: 140) transitions cleanly into Phase 2 (glide to center and rotate to cover) with unbroken momentum.
+- **Hardware-Composited Parallax & Style Invalidation Clean-up**:
+  - Removed continuous `scale` and `opacity` thrashing during scroll scrub on `IdentitySection`'s blurred background text (`PORTFOLIO`), switching to pure hardware `yPercent` translation with `force3D: true` and `will-change: transform`, preserving GPU texture cache and eliminating Gaussian blur convolution re-rasterization spikes.
+  - Cleaned up universal `*` selectors in `globals.css` to eliminate DOM-wide style invalidation spikes when scrolling into Section 2.
 - **Git Commit Reference**: Current
+
 
 ---
 
