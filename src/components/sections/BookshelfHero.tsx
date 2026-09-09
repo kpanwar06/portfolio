@@ -15,7 +15,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 = 25;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 = 26;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -239,7 +239,7 @@ export default function BookshelfHero() {
       rotationX: 0,
       rotationY: 90,
       rotationZ: 0,
-      boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
+      boxShadow: "none",
       opacity: 1,
       visibility: "visible",
       force3D: true,
@@ -253,31 +253,31 @@ export default function BookshelfHero() {
       },
     });
 
-    // 1. Slides straight forward along Z-axis out from shelf row smoothly
+    // 1. Smoothly pulls STRAIGHT forward along Z-axis until it completely clears the shelf row
     tl.to(book, {
-      duration: 0.45,
-      z: 110,
-      ease: "power1.inOut",
+      duration: 0.65,
+      z: 160,
+      ease: "power2.out",
       force3D: true,
     });
 
-    // 2. Continuous fluid glide & arc to center (seamless blend without stop-start jerk)
+    // 2. Now fully clear of the shelf row, gracefully glides to center and rotates to present cover
     tl.to(
       book,
       {
-        duration: 1.15,
+        duration: 1.25,
         scale: 0.95,
         x: 0,
         y: 0,
-        z: 220,
-        rotationX: 8,
-        rotationY: -8,
+        z: 240,
+        rotationX: 7,
+        rotationY: -7,
         rotationZ: -1.5,
-        boxShadow: "-20px 30px 55px rgba(0,0,0,0.8)",
-        ease: "power2.out",
+        boxShadow: "-20px 30px 55px rgba(0,0,0,0.75)",
+        ease: "power3.out",
         force3D: true,
       },
-      "-=0.25"
+      "-=0.15"
     );
 
     // 3. Background shelves soften gently with GPU-accelerated opacity and subtle scale
@@ -285,13 +285,13 @@ export default function BookshelfHero() {
       tl.to(
         shelf,
         {
-          duration: 1.1,
+          duration: 1.2,
           opacity: 0.4,
           scale: 0.985,
           ease: "power2.out",
           force3D: true,
         },
-        "<0.05"
+        "<0.1"
       );
     }
 
@@ -496,11 +496,7 @@ export default function BookshelfHero() {
                   <div className="w-full h-1 bg-[#d8a47f]/75 border-t border-b border-black/40" />
                 </div>
               ) : (
-                <div className="w-full h-full border-l border-r border-[#1a1012] bg-[#140b0d]/80 rounded-t-sm flex items-center justify-center shadow-inner">
-                  <span className="text-[7px] font-mono uppercase text-dustyRose/20 rotate-90 whitespace-nowrap">
-                    VACANT
-                  </span>
-                </div>
+                <div className="w-full h-full border-l border-r border-[#1a1012] bg-[#120a0d]/90 rounded-t-sm shadow-inner" />
               )}
             </div>
 
@@ -553,7 +549,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v25 (Silky Smooth Motion &bull; Fluid Section Transition)
+        Bookshelf: v26 (Calibrated Pull-Out Arc &bull; Zero Collision &amp; Physical Depth)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}

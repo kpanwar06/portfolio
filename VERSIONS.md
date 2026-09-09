@@ -143,7 +143,7 @@ This document tracks animation states and version history across components. If 
   - As the user explores past the bookshelf into Section 2 (Identity), the custom editorial pink scrollbar smoothly transitions into view on the cream background.
 - **Git Commit Reference**: `54f5379`
 
-### **Version 25: Silky Smooth Motion & Fluid Section Transition (Current)**
+### **Version 25: Silky Smooth Motion & Fluid Section Transition**
 - **Continuous Pull-Out Velocity & Arc**:
   - Replaced the two-phase start-stop pull with a blended continuous velocity curve (`power1.inOut` forward into `power2.out` arc with `-0.25s` overlap).
   - Added hardware GPU compositing (`force3D: true`) and replaced CPU-heavy `filter: blur()` with GPU-accelerated opacity/scale for smooth 60/120fps motion.
@@ -151,6 +151,16 @@ This document tracks animation states and version history across components. If 
   - Removed conflicting CSS `transition-all duration-300` from `IdentitySection`'s scrubbed background text (`PORTFOLIO`), eliminating thread contention and micro-stutters during scroll.
   - Tuned Lenis smooth scroll responsiveness (`duration: 1.1`, `wheelMultiplier: 1.15`, `touchMultiplier: 1.8`).
   - Added a graceful scroll exit parallax on the opened book as the user scrolls into Section 2.
+- **Git Commit Reference**: `f9f0246`
+
+### **Version 26: Calibrated Pull-Out Arc • Zero Collision & Physical Depth (Current)**
+- **Full Shelf Row Clearance Before Center Arc**:
+  - The book now glides straight forward 160px along the Z-axis, completely clearing adjacent books (`API Design` & `Spring Boot`) before beginning its turn toward the screen center.
+  - Eliminates premature 3D rotation collisions inside the shelf slot that previously made the motion feel rough.
+- **Calibrated Physical Depth & Zero Shadow Glitch**:
+  - Calibrated the 3D book box depth to 56px (`translateZ(±28px)`), matching slot width at 0.5 scale so the spine never shrinks into a thin sliver upon touch.
+  - Initialized with `boxShadow: "none"` while facing 90°, fading into a rich natural drop shadow as it turns toward the viewer, eliminating 2D shadow render artifacts on 3D elements.
+  - Cleaned slot vacant state into a soft dark cavity without popping text.
 - **Git Commit Reference**: Current
 
 ---
