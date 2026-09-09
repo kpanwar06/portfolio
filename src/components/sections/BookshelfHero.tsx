@@ -14,7 +14,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 = 13;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 = 14;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -73,7 +73,7 @@ export default function BookshelfHero() {
     { id: 29, title: "Full Stack", bg: "bg-[#651F35]", text: "text-[#FFF8F0]", height: "h-42 sm:h-46", width: "w-10 sm:w-11" },
   ];
 
-  // Set initial position precisely on shelf before paint
+  // Set initial position precisely on shelf before paint (Part 1: proper fit shelf spine)
   useEffect(() => {
     const updatePosition = () => {
       if (bookState !== "on-shelf") return;
@@ -90,20 +90,22 @@ export default function BookshelfHero() {
       // Horizontally center inside shelf slot
       const initX = slotRect.left + slotRect.width / 2 - (contRect.left + contRect.width / 2);
 
-      // Vertically: align flush on wooden shelf ledge baseline
+      // Vertically match the exact bottom baseline of Spring Boot
+      const scaledBookHeight = (book.offsetHeight || 345) * 0.5;
+      const targetCenterY = adjRect.bottom - scaledBookHeight / 2;
       const contCenterY = contRect.top + contRect.height / 2;
-      const naturalBottom = contCenterY + book.offsetHeight / 2;
-      const initY = adjRect.bottom - naturalBottom - 12;
+      const initY = targetCenterY - contCenterY;
 
       gsap.set(book, {
-        scale: 0.49,
-        transformOrigin: "50% 100% 0px",
+        scale: 0.5,
+        transformOrigin: "center center",
         x: initX,
         y: initY,
         z: 0,
         rotationX: 0,
         rotationY: 90, // Left spine forward facing viewer on shelf!
         rotationZ: 0,
+        boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
       });
     };
 
@@ -332,7 +334,7 @@ export default function BookshelfHero() {
             {/* Shelf Slot (Between API Design and Spring Boot) */}
             <div
               ref={shelfSlotRef}
-              className="w-10 sm:w-11 h-40 sm:h-44 rounded-t-sm flex items-end justify-center"
+              className="w-8 sm:w-9 h-40 sm:h-44 rounded-t-sm flex items-end justify-center"
             >
               {bookState !== "on-shelf" && (
                 <div className="w-full h-full border-l border-r border-[#1a1012] bg-[#140b0d]/80 rounded-t-sm flex items-center justify-center shadow-inner">
@@ -392,7 +394,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v13 (Clean PORTFOLIO Spine &bull; Restored Classic Proportions)
+        Bookshelf: v14 (Proper Fit Shelf Spine &bull; Expands on Pull-Out)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
@@ -406,7 +408,7 @@ export default function BookshelfHero() {
       )}
 
       {/* ========================================================================= */}
-      {/* UNIFIED 3D PHYSICAL BOOK OBJECT (RESTORED ORIGINAL PROPORTIONS & SIZE)   */}
+      {/* UNIFIED 3D PHYSICAL BOOK OBJECT (SLIM SHELF FIT & EXPANDED FOREGROUND)   */}
       {/* ========================================================================= */}
       <div
         ref={bookRef}
@@ -422,43 +424,43 @@ export default function BookshelfHero() {
         }}
         style={{
           transformStyle: "preserve-3d",
-          transformOrigin: "50% 100% 0px",
+          transformOrigin: "center center",
         }}
         className={`absolute z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[355px] select-none ${
           bookState === "on-shelf" ? "group" : ""
         }`}
       >
-        {/* Physical 3D Book Box Container (Depth: 76px) */}
+        {/* Physical 3D Book Box Container (Depth: 32px - Standard Slim Shelf Fit) */}
         <div className="relative w-full h-full preserve-3d">
           {/* 1. BACK COVER FACE */}
           <div
-            style={{ transform: "translateZ(-38px)" }}
+            style={{ transform: "translateZ(-16px)" }}
             className="absolute inset-0 bg-[#290c15] rounded-l-md border-2 border-[#57192a] shadow-2xl pointer-events-none"
           />
 
-          {/* 2. LEFT SPINE FACE (FACES VIEWER ON SHELF - AUTHENTIC LEATHER BINDING) */}
+          {/* 2. LEFT SPINE FACE (FACES VIEWER ON SHELF - AUTHENTIC SLIM LEATHER BINDING) */}
           <div
             style={{
-              width: "76px",
-              left: "-38px",
+              width: "32px",
+              left: "-16px",
               transform: "rotateY(-90deg)",
               transformOrigin: "center center",
             }}
-            className="absolute top-0 bottom-0 bg-gradient-to-r from-[#210911] via-[#651F35] to-[#3a101d] border-t border-b border-[#822744] rounded-t-sm shadow-md flex flex-col justify-between items-center py-5 pointer-events-auto select-none border-r border-[#822744]/40"
+            className="absolute top-0 bottom-0 bg-gradient-to-r from-[#210911] via-[#651F35] to-[#3a101d] border-t border-b border-[#822744] rounded-t-sm shadow-md flex flex-col justify-between items-center py-4 pointer-events-auto select-none border-r border-[#822744]/40"
           >
             {/* Top gold spine rib */}
             <div className="w-full h-1 bg-[#d8a47f]/70 border-t border-b border-black/40" />
 
             {/* Vertical spine title: ONLY "PORTFOLIO" */}
-            <div className="flex flex-col items-center justify-center space-y-3">
-              <Sparkles className="w-4 h-4 text-[#d8a47f]" />
+            <div className="flex flex-col items-center justify-center space-y-2">
+              <Sparkles className="w-3 h-3 text-[#d8a47f]" />
               <span
                 style={{ writingMode: "vertical-rl" }}
-                className="text-[13px] sm:text-[14px] font-serif tracking-[0.35em] text-[#FFF8F0] uppercase font-bold rotate-180 whitespace-nowrap drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]"
+                className="text-[10px] sm:text-[11px] font-serif tracking-[0.25em] text-[#FFF8F0] uppercase font-bold rotate-180 whitespace-nowrap drop-shadow"
               >
                 PORTFOLIO
               </span>
-              <Sparkles className="w-4 h-4 text-[#d8a47f]" />
+              <Sparkles className="w-3 h-3 text-[#d8a47f]" />
             </div>
 
             {/* Bottom gold spine rib */}
@@ -468,14 +470,13 @@ export default function BookshelfHero() {
           {/* 3. RIGHT PAGE-EDGES BLOCK (PAGES THICKNESS) */}
           <div
             style={{
-              width: "76px",
-              right: "-38px",
+              width: "32px",
+              right: "-16px",
               transform: "rotateY(90deg)",
               transformOrigin: "center center",
             }}
-            className="absolute top-1 bottom-1 bg-[#f7eedf] border-t border-b border-[#ded2bd] flex flex-col justify-around py-3 shadow-inner pointer-events-none opacity-95"
+            className="absolute top-1 bottom-1 bg-[#f7eedf] border-t border-b border-[#ded2bd] flex flex-col justify-around py-2 shadow-inner pointer-events-none opacity-95"
           >
-            <div className="w-full h-[1px] bg-[#d9cbb0]/60" />
             <div className="w-full h-[1px] bg-[#d9cbb0]/60" />
             <div className="w-full h-[1px] bg-[#d9cbb0]/60" />
             <div className="w-full h-[1px] bg-[#d9cbb0]/60" />
@@ -484,8 +485,8 @@ export default function BookshelfHero() {
           {/* 4. TOP & BOTTOM EDGES */}
           <div
             style={{
-              height: "76px",
-              top: "-38px",
+              height: "32px",
+              top: "-16px",
               transform: "rotateX(90deg)",
               transformOrigin: "center center",
             }}
@@ -493,8 +494,8 @@ export default function BookshelfHero() {
           />
           <div
             style={{
-              height: "76px",
-              bottom: "-38px",
+              height: "32px",
+              bottom: "-16px",
               transform: "rotateX(-90deg)",
               transformOrigin: "center center",
             }}
@@ -505,7 +506,7 @@ export default function BookshelfHero() {
           <div
             ref={pagesBlockRef}
             style={{
-              transform: "translateZ(37px)",
+              transform: "translateZ(15px)",
             }}
             className={`absolute inset-0 bg-[#FFF8F0] text-espresso rounded-r-md p-5 flex flex-col justify-between border border-blush shadow-inner transition-opacity duration-300 ${
               bookState === "opened" ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -549,7 +550,7 @@ export default function BookshelfHero() {
           <div
             ref={frontCoverRef}
             style={{
-              transform: "translateZ(38px)",
+              transform: "translateZ(16px)",
               transformOrigin: "left center",
               transformStyle: "preserve-3d",
             }}

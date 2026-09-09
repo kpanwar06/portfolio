@@ -58,16 +58,21 @@ This document tracks animation states and version history across components. If 
   - The book spine matched slot width (`w-10 sm:w-12`, ~44px to 48px) and height (`h-40 sm:h-44`).
 - **Git Commit Reference**: `342f09d`
 
-### **Version 13: Clean PORTFOLIO Spine & Restored Original Foreground Book Proportions (Current)**
+### **Version 13: Clean PORTFOLIO Spine & Restored Original Foreground Book Proportions**
 - **Clean Spine Typography**:
-  - Only **`PORTFOLIO`** is written vertically on the spine (in bold serif font with `tracking-[0.35em]`, bordered by top and bottom gold ribs and sparkles). Full name and subtitle removed from spine to prevent any overflow or cut-off.
-- **Restored Original Classic Foreground Proportions**:
-  - Completely restored the natural, authentic book proportions (`w-[240px] sm:w-[260px] h-[330px] sm:h-[355px]`, depth `76px`) that the user loved.
-  - When pulled out to the foreground, the book scales to `scale: 0.95` at `rotationX: 8, rotationY: -8`, revealing the rich burgundy cover with gold/dusty-rose accents ("Vol. 2026", "Interactive Portfolio", "KRITIKA PANWAR", "Full Stack • Python / Django", "Tap to Open") with zero distortion or weird aspect ratio.
-- **Zero-Shadow Shelf Docking & Flush Resting**:
-  - When docked on the shelf between `API Design` and `Spring Boot`, the shelf slot is clean and transparent without dark shadow boxes or borders.
-  - The vacant dark shadow slot (`VACANT`) is revealed behind it only when the book is pulled forward.
-  - The book's bottom edge aligns flush on top of the wooden shelf ledge alongside `Spring Boot`.
+  - Only **`PORTFOLIO`** is written vertically on the spine.
+- **Git Commit Reference**: `4da29a0`
+
+### **Version 14: Proper Fit Shelf Spine & Expands on Pull-Out (Current)**
+- **Part 1: Proper Fit Shelf Spine**:
+  - Calibrated spine depth to slim 32px (`w-8 sm:w-9`, `width: 32px`, `left: -16px`) matching standard bookshelf book dimensions (`Algorithms` 32px, `Modern JS` 32px, `Django Master` 36px).
+  - Eliminates fat spine and overlapping on `API Design` and `Spring Boot`.
+  - Shelf slot set to `w-8 sm:w-9` with transparent dock state and vacant shadow box upon pull-out.
+  - Flush bottom edge alignment with `Spring Boot` along wooden shelf ledge.
+- **Part 2: Expands on Pull-Out**:
+  - Pull-out animation slides forward and expands book to comfortable full foreground reading size (`scale: 0.95`, `w-[240px] sm:w-[260px] h-[330px] sm:h-[355px]`).
+  - Rotates to present front cover with full typography ("Vol. 2026", "Interactive Portfolio", "KRITIKA PANWAR", "Full Stack • Python / Django", "Tap to Open").
+  - Clicking swings the front cover open (`scale: 1.05`, `rotationY: -165`) to reveal prologue, table of contents, and emerging scrapbook cards.
 - **Git Commit Reference**: Current
 
 ---
