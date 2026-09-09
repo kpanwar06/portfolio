@@ -14,7 +14,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 = 14;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 = 15;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -90,11 +90,11 @@ export default function BookshelfHero() {
       // Horizontally center inside shelf slot
       const initX = slotRect.left + slotRect.width / 2 - (contRect.left + contRect.width / 2);
 
-      // Vertically match the exact bottom baseline of Spring Boot
+      // Vertically match the exact bottom baseline of Spring Boot (shifted up 12px to rest flush on ledge)
       const scaledBookHeight = (book.offsetHeight || 345) * 0.5;
       const targetCenterY = adjRect.bottom - scaledBookHeight / 2;
       const contCenterY = contRect.top + contRect.height / 2;
-      const initY = targetCenterY - contCenterY;
+      const initY = targetCenterY - contCenterY - 12;
 
       gsap.set(book, {
         scale: 0.5,
@@ -394,7 +394,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v14 (Proper Fit Shelf Spine &bull; Expands on Pull-Out)
+        Bookshelf: v15 (Shifted Up &bull; Flush Ledge Baseline)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}

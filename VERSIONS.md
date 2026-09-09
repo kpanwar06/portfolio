@@ -63,16 +63,18 @@ This document tracks animation states and version history across components. If 
   - Only **`PORTFOLIO`** is written vertically on the spine.
 - **Git Commit Reference**: `4da29a0`
 
-### **Version 14: Proper Fit Shelf Spine & Expands on Pull-Out (Current)**
+### **Version 14: Proper Fit Shelf Spine & Expands on Pull-Out**
 - **Part 1: Proper Fit Shelf Spine**:
   - Calibrated spine depth to slim 32px (`w-8 sm:w-9`, `width: 32px`, `left: -16px`) matching standard bookshelf book dimensions (`Algorithms` 32px, `Modern JS` 32px, `Django Master` 36px).
   - Eliminates fat spine and overlapping on `API Design` and `Spring Boot`.
   - Shelf slot set to `w-8 sm:w-9` with transparent dock state and vacant shadow box upon pull-out.
-  - Flush bottom edge alignment with `Spring Boot` along wooden shelf ledge.
 - **Part 2: Expands on Pull-Out**:
   - Pull-out animation slides forward and expands book to comfortable full foreground reading size (`scale: 0.95`, `w-[240px] sm:w-[260px] h-[330px] sm:h-[355px]`).
-  - Rotates to present front cover with full typography ("Vol. 2026", "Interactive Portfolio", "KRITIKA PANWAR", "Full Stack • Python / Django", "Tap to Open").
-  - Clicking swings the front cover open (`scale: 1.05`, `rotationY: -165`) to reveal prologue, table of contents, and emerging scrapbook cards.
+- **Git Commit Reference**: `c495474`
+
+### **Version 15: Shifted Up for Flush Wooden Ledge Baseline (Current)**
+- **Exact Ledge Alignment**:
+  - Shifted book vertically up by 12px on the shelf so its bottom edge rests flush on the wooden shelf ledge baseline, matching `Spring Boot` and `API Design` without dipping below the shelf line.
 - **Git Commit Reference**: Current
 
 ---
