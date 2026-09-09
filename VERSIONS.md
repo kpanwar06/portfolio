@@ -22,25 +22,23 @@ This document tracks animation states and version history across components. If 
 - **Behavior**: Book displayed at front-angle, pauses for 2s, then glides forward.
 - **Git Commit Reference**: `223dffb`
 
-### **Version 5: Unified 3D Physical Book Object + Natural Shelf Pull-Out + Comfortable Camera Distance (Current)**
-- **Unified 3D Physical Object**:
-  - The front cover, spine, pages/thickness edges, and back are constructed as **one cohesive physical 3D book object**.
-  - No disconnected spine or detached rectangle pieces.
-  - Visible thickness, gilded cream page edges, and natural beveling along the spine hinge.
-- **Initial State (Belongs to Shelf)**:
-  - The book rests naturally **inside the middle shelf row** alongside adjacent books.
-  - Matches the scale, depth, and ledge alignment of surrounding books.
-  - Seen at a subtle natural 3D angle showing front cover, page thickness, and spine edge.
-  - Sits still for 1.8 seconds.
-- **Pull-Out Motion**:
-  - Slides forward out from its actual shelf position along the Z-axis.
-  - Tumbles forward toward the viewer with organic physical deceleration.
+### **Version 5: Unified 3D Physical Book Object + Natural Distance**
+- **Behavior**: Unified 3D box model with front cover visible on shelf.
+- **Git Commit Reference**: `5f5635c`
+
+### **Version 6: True Shelf-Docked Book (Spine-Outward in Shelf Row → Slides Out → Rotates 90° to Front Cover → Settles at Comfortable Distance) (Current)**
+- **True Shelf Integration**:
+  - Initially, the portfolio book is **standing in the shelf row shoulder-to-shoulder with adjacent books, with its spine facing outward** (`rotationY: -90°`).
+  - To the viewer, it looks like a natural, beautiful leather-bound book spine standing in the middle row (no pre-existing empty gap).
+  - Matches the exact spine width, height, and ledge placement of surrounding books (`API Design` on left, `Spring Boot` on right).
+- **Physical Pull-Out & Rotation**:
+  - Pauses naturally for 1.8 seconds in the shelf row.
+  - Slides straight forward out from between the books along the Z-axis.
+  - Once clear of the shelf row, it **rotates 90°** from spine-view to front-cover view.
+  - The shelf gap where the book used to sit is revealed behind it.
 - **Comfortable Foreground Distance**:
-  - **Does NOT fill the screen**. Leaves generous breathing space on all sides (above, below, left, right).
-  - The entire outline of the physical book and its shadow are comfortably in view.
-- **Interactive Opening**:
-  - On user click, the front cover swings open on its spine hinge (`rotateY: -165°`).
-  - Dual pages spread and editorial scrapbook elements emerge.
+  - Settles in the center foreground with generous breathing room on all sides (does NOT fill the screen).
+  - User clicks → front cover swings open → portfolio elements emerge.
 - **Git Commit Reference**: Current
 
 ---
