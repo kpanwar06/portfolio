@@ -46,20 +46,24 @@ This document tracks animation states and version history across components. If 
 - **1-Second Delayed Appearance on Shelf**: Faded in after 1s.
 - **Git Commit Reference**: `3e68c06`
 
-### **Version 11: Immediate All-Together Display + Glow Removed (Current)**
-- **Immediate All-Together Display on Reload**:
-  - Removed 1s/2s delayed appearance timer.
-  - The portfolio book appears **immediately alongside all background books** from frame 1 when the page loads, perfectly integrated into the shelf row with the background.
-- **Removed Golden Glow**:
-  - The golden glowing outline and shadow ring on the book spine have been completely removed.
-  - Features authentic burgundy leather binding with crisp gold foil typography and gold spine ribs, blending naturally with adjacent shelf books.
-- **Dynamic Slot State**:
-  - The shelf slot backing sits cleanly behind the book while docked.
-  - The subtle "VACANT" label only appears once the book is pulled forward into the foreground.
-- **Maintained Flush Bottom Ledge**:
-  - Retained the calibrated baseline so the bottom edge rests completely flush on the wooden shelf ledge.
-- **Interactive Mouse Touch / Hover**:
-  - Touching/hovering or clicking the portfolio book pulls it smoothly forward, rotates it 90° to the front cover, and opens on click.
+### **Version 11: Immediate All-Together Display + Glow Removed**
+- **Immediate All-Together Display**: Removed delay timer, removed golden glow outline.
+- **Git Commit Reference**: `df21ce1`
+
+### **Version 12: Direct Shelf Integration & Zero Shadow Gap (Current)**
+- **Unified Book and Shelf (One Single Part)**:
+  - The portfolio book is embedded **directly inside the shelf row slot** (`shelfSlotRef`) between `API Design` and `Spring Boot`.
+  - On page load / reload, the book is rendered directly in the HTML—no delays, no mounting wait, and no missing book on first paint.
+- **Zero Empty Shadow Gap**:
+  - The book spine now matches the exact width (`w-10 sm:w-12`, ~44px to 48px) and height (`h-40 sm:h-44`) of the shelf slot.
+  - Covers the entire slot space snugly with zero gaps on left or right and zero shadow peaking through while docked.
+  - The vacant dark shadow slot is revealed behind it **only when the book is pulled forward** into the foreground.
+- **Natural Shelf Resting**:
+  - Because it is part of the `flex items-end pb-1` shelf row, its bottom edge rests cleanly and naturally on top of the wooden shelf ledge alongside all neighboring books.
+- **Seamless Pull-Out & Presentation**:
+  - Hovering/touching or clicking slides the book forward from its slot along the Z-axis, flies it smoothly to the screen center, expands it to comfortable foreground reading size, and rotates 90° to present the front cover.
+  - Background shelves blur gently (`.shelf-blur-target`).
+  - Clicking the book swings the front cover open on its left spine hinge to reveal the prologue, table of contents, and emerging scrapbook cards.
 - **Git Commit Reference**: Current
 
 ---
