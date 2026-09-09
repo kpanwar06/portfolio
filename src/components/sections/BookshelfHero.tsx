@@ -14,7 +14,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 = 20;
+export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 = 21;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -73,63 +73,42 @@ export default function BookshelfHero() {
     { id: 29, title: "Full Stack", bg: "bg-[#651F35]", text: "text-[#FFF8F0]", height: "h-42 sm:h-46", width: "w-10 sm:w-11" },
   ];
 
-  // Set initial position precisely on shelf before paint (Part 1: proper fit shelf spine)
-  useEffect(() => {
-    const updatePosition = () => {
-      if (bookState !== "on-shelf") return;
-      const slot = shelfSlotRef.current;
-      const adj = adjacentBookRef.current;
-      const container = containerRef.current;
-      const book = bookRef.current;
-      if (!slot || !container || !adj || !book) return;
-
-      const slotRect = slot.getBoundingClientRect();
-      const contRect = container.getBoundingClientRect();
-      const adjRect = adj.getBoundingClientRect();
-
-      // Guard against zero dimensions before full layout pass
-      if (slotRect.width === 0 || adjRect.height === 0) {
-        requestAnimationFrame(updatePosition);
-        return;
-      }
-
-      // Horizontally center inside shelf slot
-      const initX = slotRect.left + slotRect.width / 2 - (contRect.left + contRect.width / 2);
-
-      // Vertically match the exact bottom baseline of Spring Boot & API Design
-      const scaledBookHeight = (book.offsetHeight || 345) * 0.5;
-      const targetCenterY = adjRect.bottom - scaledBookHeight / 2;
-      const contCenterY = contRect.top + contRect.height / 2;
-      const initY = targetCenterY - contCenterY - 7;
-
-      gsap.set(book, {
-        scale: 0.5,
-        transformOrigin: "center center",
-        x: initX,
-        y: initY,
-        z: 0,
-        rotationX: 0,
-        rotationY: 90, // Left spine forward facing viewer on shelf!
-        rotationZ: 0,
-        boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
-        opacity: 1, // Reveal smoothly only once position is perfectly locked
-      });
-    };
-
-    updatePosition();
-    window.addEventListener("resize", updatePosition);
-    return () => window.removeEventListener("resize", updatePosition);
-  }, [bookState]);
-
   // Action: Triggered when mouse touches (hovers) or clicks the portfolio book on shelf!
   const triggerBookPullOut = () => {
     if (bookState !== "on-shelf") return;
-    setBookState("pulling");
 
     const book = bookRef.current;
     const shelf = shelfRef.current;
     const badge = promptBadgeRef.current;
-    if (!book) return;
+    const slot = shelfSlotRef.current;
+    const container = containerRef.current;
+    if (!book || !slot || !container) return;
+
+    const slotRect = slot.getBoundingClientRect();
+    const contRect = container.getBoundingClientRect();
+
+    const initX = slotRect.left + slotRect.width / 2 - (contRect.left + contRect.width / 2);
+    const scaledBookHeight = (book.offsetHeight || 355) * 0.5;
+    const targetCenterY = slotRect.bottom - scaledBookHeight / 2;
+    const contCenterY = contRect.top + contRect.height / 2;
+    const initY = targetCenterY - contCenterY;
+
+    // Immediately snap 3D book box to the exact slot position and make visible
+    gsap.set(book, {
+      scale: 0.5,
+      transformOrigin: "center center",
+      x: initX,
+      y: initY,
+      z: 0,
+      rotationX: 0,
+      rotationY: 90,
+      rotationZ: 0,
+      boxShadow: "0 6px 16px rgba(0,0,0,0.6)",
+      opacity: 1,
+      visibility: "visible",
+    });
+
+    setBookState("pulling");
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -341,9 +320,36 @@ export default function BookshelfHero() {
             {/* Shelf Slot (Between API Design and Spring Boot) */}
             <div
               ref={shelfSlotRef}
-              className="w-8 sm:w-9 h-40 sm:h-44 rounded-t-sm flex items-end justify-center"
+              onMouseEnter={() => {
+                if (bookState === "on-shelf") triggerBookPullOut();
+              }}
+              onClick={() => {
+                if (bookState === "on-shelf") triggerBookPullOut();
+              }}
+              className="w-8 sm:w-9 h-40 sm:h-44 rounded-t-sm flex items-end justify-center pointer-events-auto cursor-pointer group select-none"
             >
-              {bookState !== "on-shelf" && (
+              {bookState === "on-shelf" ? (
+                /* Native Shelf Book Spine - Paints INSTANTLY on first HTML paint (0ms delay) */
+                <div className="w-full h-full bg-gradient-to-r from-[#210911] via-[#651F35] to-[#3a101d] border-t border-b border-[#822744] rounded-t-sm shadow-md flex flex-col justify-between items-center py-4 select-none border-r border-[#822744]/40">
+                  {/* Top gold spine rib */}
+                  <div className="w-full h-1 bg-[#d8a47f]/75 border-t border-b border-black/40" />
+
+                  {/* Vertical spine title: ONLY "PORTFOLIO" */}
+                  <div className="flex flex-col items-center justify-center space-y-2">
+                    <Sparkles className="w-3 h-3 text-[#d8a47f]" />
+                    <span
+                      style={{ writingMode: "vertical-rl" }}
+                      className="text-[10px] sm:text-[11px] font-mono tracking-[0.22em] text-[#FFF8F0] uppercase font-bold rotate-180 whitespace-nowrap"
+                    >
+                      PORTFOLIO
+                    </span>
+                    <Sparkles className="w-3 h-3 text-[#d8a47f]" />
+                  </div>
+
+                  {/* Bottom gold spine rib */}
+                  <div className="w-full h-1 bg-[#d8a47f]/75 border-t border-b border-black/40" />
+                </div>
+              ) : (
                 <div className="w-full h-full border-l border-r border-[#1a1012] bg-[#140b0d]/80 rounded-t-sm flex items-center justify-center shadow-inner">
                   <span className="text-[7px] font-mono uppercase text-dustyRose/20 rotate-90 whitespace-nowrap">
                     VACANT
@@ -401,7 +407,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v20 (Glitch-Free Instant Shelf Docking)
+        Bookshelf: v21 (Instant Native Shelf Spine &bull; 0ms Lag)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
@@ -419,24 +425,18 @@ export default function BookshelfHero() {
       {/* ========================================================================= */}
       <div
         ref={bookRef}
-        onMouseEnter={() => {
-          if (bookState === "on-shelf") triggerBookPullOut();
-        }}
         onClick={() => {
-          if (bookState === "on-shelf") {
-            triggerBookPullOut();
-          } else {
+          if (bookState === "in-foreground") {
             handleBookClick();
           }
         }}
         style={{
           transformStyle: "preserve-3d",
           transformOrigin: "center center",
-          opacity: 0,
+          visibility: bookState === "on-shelf" ? "hidden" : "visible",
+          opacity: bookState === "on-shelf" ? 0 : 1,
         }}
-        className={`absolute z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[355px] select-none ${
-          bookState === "on-shelf" ? "group" : ""
-        }`}
+        className="absolute z-30 cursor-pointer w-[240px] sm:w-[260px] h-[330px] sm:h-[355px] select-none"
       >
         {/* Physical 3D Book Box Container (Depth: 32px - Standard Slim Shelf Fit) */}
         <div className="relative w-full h-full preserve-3d">

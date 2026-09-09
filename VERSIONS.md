@@ -103,11 +103,18 @@ This document tracks animation states and version history across components. If 
   - Brought the portfolio book down 7px from v18 (`targetCenterY - contCenterY - 7`) for balanced resting position on the shelf base.
 - **Git Commit Reference**: `22f69d1`
 
-### **Version 20: Glitch-Free Instant Shelf Docking (Current)**
+### **Version 20: Glitch-Free Instant Shelf Docking**
 - **Zero Flash/Glitch on Page Reload**:
   - Default `opacity: 0` on `bookRef` prevents the book from momentarily appearing at viewport center during hydration before GSAP positions it.
   - Dimension readiness guard with `requestAnimationFrame` ensures accurate coordinate measurements.
   - Book reveals smoothly (`opacity: 1`) only when its position and rotation are fully locked into the shelf slot.
+- **Git Commit Reference**: `35a6999`
+
+### **Version 21: Instant Native Shelf Spine & Seamless 3D Hand-off (Current)**
+- **True Zero-Delay Native Shelf Integration**:
+  - Rendered the resting spine directly inside `shelfSlotRef` in the initial server HTML.
+  - The book is rendered simultaneously with the bookshelf at millisecond 0—no hydration delay, no 1-second appearance lag, and no center flash.
+  - On hover or touch, `triggerBookPullOut()` dynamically measures the slot, initializes the 3D book box at that exact coordinate, switches the slot to `VACANT`, and seamlessly animates forward into the foreground.
 - **Git Commit Reference**: Current
 
 ---
