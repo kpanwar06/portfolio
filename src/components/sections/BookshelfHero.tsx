@@ -866,35 +866,11 @@ export default function BookshelfHero() {
                   A curated collection of full-stack engineering, scalable systems, and creative problem solving.
                 </p>
 
-                {/* Handwritten Signature & Gold Fountain Pen Nib */}
-                <div className="pt-1 flex items-center justify-between border-t border-blush/60 select-none">
-                  <span className="font-serif italic font-semibold text-[12.5px] sm:text-[13.5px] text-burgundy tracking-wide">
+                {/* Handwritten Author Sign-off */}
+                <div className="pt-1.5 flex items-center justify-end border-t border-blush/60 select-none">
+                  <span className="font-serif italic font-semibold text-[13px] sm:text-[14px] text-burgundy tracking-wide">
                     &mdash; Kritika Panwar
                   </span>
-                  <svg
-                    width="22"
-                    height="14"
-                    viewBox="0 0 24 14"
-                    fill="none"
-                    className="opacity-85 -rotate-12 drop-shadow-2xs flex-shrink-0 ml-2"
-                  >
-                    <path
-                      d="M1 7 L7 2 L22 2 C23 2 24 3 23 4 L14 12 L7 12 Z"
-                      fill="url(#gold-nib)"
-                      stroke="#9E6D2B"
-                      strokeWidth="0.8"
-                      strokeLinejoin="round"
-                    />
-                    <line x1="1" y1="7" x2="8" y2="7" stroke="#3A101D" strokeWidth="0.8" />
-                    <circle cx="8" cy="7" r="0.9" fill="#3A101D" />
-                    <defs>
-                      <linearGradient id="gold-nib" x1="1" y1="7" x2="23" y2="7" gradientUnits="userSpaceOnUse">
-                        <stop stopColor="#F5D7A1" />
-                        <stop offset="0.4" stopColor="#D4A359" />
-                        <stop offset="1" stopColor="#9E6D2B" />
-                      </linearGradient>
-                    </defs>
-                  </svg>
                 </div>
 
                 {/* Two Authentic Perforated Postage Stamps (GitHub & LinkedIn) */}
