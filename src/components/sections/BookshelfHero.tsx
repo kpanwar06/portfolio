@@ -676,13 +676,13 @@ export default function BookshelfHero() {
             {/* Brass Paperclip holding Parchment Tag ("Updated • 2026") */}
             <div className="absolute -top-2.5 right-4 sm:right-5 z-20 pointer-events-none select-none flex flex-col items-center">
               <div className="relative">
-                {/* Paperclip wire clasping down over the page edge and tag (shifted down 4px) */}
+                {/* Paperclip wire clasping down over the page edge and tag (shifted down 6px) */}
                 <svg
                   width="18"
                   height="32"
                   viewBox="0 0 18 32"
                   fill="none"
-                  className="drop-shadow-[0_2px_3px_rgba(0,0,0,0.3)] relative z-10 translate-y-1"
+                  className="drop-shadow-[0_2px_3px_rgba(0,0,0,0.3)] relative z-10 translate-y-[6px]"
                 >
                   <path
                     d="M5 9 V24 C5 26.5 7 28.5 9.5 28.5 C12 28.5 14 26.5 14 24 V5 C14 3 12.5 1.5 10 1.5 C7.5 1.5 6 3 6 5 V21 C6 22.5 7 23.5 8.5 23.5 C10 23.5 11 22.5 11 21 V8"
@@ -869,24 +869,6 @@ export default function BookshelfHero() {
               </div>
             </div>
           </div>
-
-          {/* Satin Ribbon Bookmark (Draped from the center spine fold) */}
-          <svg
-            width="24"
-            height="76"
-            viewBox="0 0 24 76"
-            fill="none"
-            className="absolute -bottom-16 left-0 -translate-x-1/2 drop-shadow-md pointer-events-none z-30"
-          >
-            <path d="M4 0 L20 0 L20 66 L12 56 L4 66 Z" fill="url(#ribbon-grad)" />
-            <defs>
-              <linearGradient id="ribbon-grad" x1="4" y1="0" x2="20" y2="76" gradientUnits="userSpaceOnUse">
-                <stop stopColor="#822744" />
-                <stop offset="0.65" stopColor="#651F35" />
-                <stop offset="1" stopColor="#3d101e" />
-              </linearGradient>
-            </defs>
-          </svg>
         </div>
       </div>
 
