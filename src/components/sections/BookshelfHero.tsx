@@ -562,11 +562,6 @@ export default function BookshelfHero() {
       {/* Atmospheric Vignette & Warm Spotlight */}
       <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(circle_at_center,rgba(201,111,130,0.16)_0%,rgba(24,16,18,0.96)_75%)]" />
 
-      {/* Version Tag Indicator (top right) */}
-      <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v29 (Calligraphic Monogram &bull; Brass Clip, Wax Seal &amp; Interactive Index)
-      </div>
-
       {/* Touch / Hover Cue while sitting on shelf */}
       {bookState === "on-shelf" && (
         <div className="absolute bottom-10 z-30 flex items-center space-x-2 px-4 py-2 rounded-full bg-burgundy/80 text-cream border border-blush/20 shadow-lg backdrop-blur-sm pointer-events-none transition-opacity duration-300">
