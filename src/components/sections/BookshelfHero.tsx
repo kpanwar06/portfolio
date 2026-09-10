@@ -866,28 +866,28 @@ export default function BookshelfHero() {
                   A curated collection of full-stack engineering, scalable systems, and creative problem solving.
                 </p>
 
-                {/* Handwritten Author Sign-off */}
-                <div className="pt-1.5 flex items-center justify-end border-t border-blush/60 select-none">
+                {/* Handwritten Author Sign-off (Left-aligned as before) */}
+                <div className="pt-1.5 flex items-center justify-start border-t border-blush/60 select-none">
                   <span className="font-serif italic font-semibold text-[13px] sm:text-[14px] text-burgundy tracking-wide">
                     &mdash; Kritika Panwar
                   </span>
                 </div>
 
-                {/* Two Authentic Perforated Postage Stamps (GitHub & LinkedIn) - shifted 14px left */}
-                <div className="pt-2 flex items-center justify-center space-x-6 sm:space-x-8 select-none -translate-x-[14px]">
+                {/* Two Dainty Perforated Postage Stamps (GitHub & LinkedIn) - scaled down, shifted 14px left */}
+                <div className="pt-2 flex items-center justify-center space-x-5 sm:space-x-6 select-none -translate-x-[14px]">
                   {/* GitHub Postage Stamp */}
                   <a
                     href="https://github.com/Kritika-Panwar-151/"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="group relative w-[56px] h-[68px] flex items-center justify-center -rotate-2 hover:rotate-0 hover:-translate-y-1 transition-all duration-200 cursor-pointer drop-shadow-[0_2px_4px_rgba(0,0,0,0.12)]"
+                    className="group relative w-[42px] h-[52px] flex items-center justify-center -rotate-2 hover:rotate-0 hover:-translate-y-1 transition-all duration-200 cursor-pointer drop-shadow-[0_2px_4px_rgba(0,0,0,0.12)]"
                     title="GitHub: Kritika-Panwar-151"
                   >
                     {/* SVG Scalloped Perforated Stamp Base */}
                     <svg
-                      width="56"
-                      height="68"
+                      width="42"
+                      height="52"
                       viewBox="-1 -1 58 70"
                       fill="none"
                       className="absolute inset-0 w-full h-full pointer-events-none"
@@ -914,21 +914,21 @@ export default function BookshelfHero() {
                     </svg>
 
                     {/* Stamp Interior Artwork */}
-                    <div className="relative z-10 flex flex-col items-center justify-between h-[48px] py-0.5">
-                      <span className="text-[5.5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
+                    <div className="relative z-10 flex flex-col items-center justify-between h-[38px] py-0.5">
+                      <span className="text-[4.5px] sm:text-[5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
                         GIT &bull; 2026
                       </span>
-                      <div className="w-5 h-5 rounded-full bg-burgundy/5 flex items-center justify-center group-hover:bg-burgundy/10 transition-colors">
-                        <Github className="w-3.5 h-3.5 text-burgundy group-hover:scale-110 transition-transform" />
+                      <div className="w-4 h-4 rounded-full bg-burgundy/5 flex items-center justify-center group-hover:bg-burgundy/10 transition-colors">
+                        <Github className="w-2.5 h-2.5 text-burgundy group-hover:scale-110 transition-transform" />
                       </div>
-                      <span className="text-[6.5px] font-mono tracking-wider font-bold text-burgundy uppercase">
+                      <span className="text-[5.5px] font-mono tracking-wider font-bold text-burgundy uppercase">
                         GitHub
                       </span>
                     </div>
 
                     {/* Faint Wavy Cancellation Postmark lines */}
                     <svg
-                      className="absolute -top-1 -right-1 w-7 h-7 pointer-events-none opacity-35"
+                      className="absolute -top-0.5 -right-0.5 w-5 h-5 pointer-events-none opacity-35"
                       viewBox="0 0 28 28"
                       fill="none"
                     >
@@ -946,13 +946,13 @@ export default function BookshelfHero() {
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="group relative w-[56px] h-[68px] flex items-center justify-center rotate-2 hover:rotate-0 hover:-translate-y-1 transition-all duration-200 cursor-pointer drop-shadow-[0_2px_4px_rgba(0,0,0,0.12)]"
+                    className="group relative w-[42px] h-[52px] flex items-center justify-center rotate-2 hover:rotate-0 hover:-translate-y-1 transition-all duration-200 cursor-pointer drop-shadow-[0_2px_4px_rgba(0,0,0,0.12)]"
                     title="LinkedIn: Kritika Panwar"
                   >
                     {/* SVG Scalloped Perforated Stamp Base */}
                     <svg
-                      width="56"
-                      height="68"
+                      width="42"
+                      height="52"
                       viewBox="-1 -1 58 70"
                       fill="none"
                       className="absolute inset-0 w-full h-full pointer-events-none"
@@ -979,21 +979,21 @@ export default function BookshelfHero() {
                     </svg>
 
                     {/* Stamp Interior Artwork */}
-                    <div className="relative z-10 flex flex-col items-center justify-between h-[48px] py-0.5">
-                      <span className="text-[5.5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
+                    <div className="relative z-10 flex flex-col items-center justify-between h-[38px] py-0.5">
+                      <span className="text-[4.5px] sm:text-[5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
                         NET &bull; 2026
                       </span>
-                      <div className="w-5 h-5 rounded-full bg-burgundy/5 flex items-center justify-center group-hover:bg-burgundy/10 transition-colors">
-                        <Linkedin className="w-3.5 h-3.5 text-burgundy group-hover:scale-110 transition-transform" />
+                      <div className="w-4 h-4 rounded-full bg-burgundy/5 flex items-center justify-center group-hover:bg-burgundy/10 transition-colors">
+                        <Linkedin className="w-2.5 h-2.5 text-burgundy group-hover:scale-110 transition-transform" />
                       </div>
-                      <span className="text-[6.5px] font-mono tracking-wider font-bold text-burgundy uppercase">
+                      <span className="text-[5.5px] font-mono tracking-wider font-bold text-burgundy uppercase">
                         LinkedIn
                       </span>
                     </div>
 
                     {/* Faint Wavy Cancellation Postmark lines */}
                     <svg
-                      className="absolute -top-1 -right-1 w-7 h-7 pointer-events-none opacity-35"
+                      className="absolute -top-0.5 -right-0.5 w-5 h-5 pointer-events-none opacity-35"
                       viewBox="0 0 28 28"
                       fill="none"
                     >
