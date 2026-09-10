@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Sparkles, BookOpen, ChevronDown, Compass, Code, FolderGit2 } from "lucide-react";
+import { Sparkles, BookOpen, ChevronDown, Compass, Code, FolderGit2, Github, Linkedin, Mail } from "lucide-react";
 
 interface ShelfBook {
   id: number;
@@ -814,12 +814,12 @@ export default function BookshelfHero() {
                 <span>PROLOGUE</span>
               </div>
 
-              <div className="my-auto space-y-2.5">
+              <div className="my-auto space-y-2">
                 {/* Stylized Calligraphic Cursive "K" Monogram (Clean Drop-Cap) */}
                 <div className="py-0.5">
                   <svg
-                    width="54"
-                    height="66"
+                    width="46"
+                    height="56"
                     viewBox="0 0 100 130"
                     fill="none"
                     className="drop-shadow-xs select-none"
@@ -858,9 +858,92 @@ export default function BookshelfHero() {
                 <h3 className="font-serif text-base sm:text-lg text-burgundy leading-snug font-bold">
                   Welcome to my living portfolio.
                 </h3>
-                <p className="text-[11px] text-espresso/80 leading-relaxed font-sans">
+                <p className="text-[10.5px] sm:text-[11px] text-espresso/80 leading-relaxed font-sans">
                   A curated collection of full-stack engineering, scalable systems, and creative problem solving.
                 </p>
+
+                {/* Handwritten Signature & Gold Fountain Pen Nib */}
+                <div className="pt-1 flex items-center justify-between border-t border-blush/60 select-none">
+                  <span className="font-serif italic font-semibold text-[12.5px] sm:text-[13.5px] text-burgundy tracking-wide">
+                    &mdash; Kritika Panwar
+                  </span>
+                  <svg
+                    width="22"
+                    height="14"
+                    viewBox="0 0 24 14"
+                    fill="none"
+                    className="opacity-85 -rotate-12 drop-shadow-2xs flex-shrink-0 ml-2"
+                  >
+                    <path
+                      d="M1 7 L7 2 L22 2 C23 2 24 3 23 4 L14 12 L7 12 Z"
+                      fill="url(#gold-nib)"
+                      stroke="#9E6D2B"
+                      strokeWidth="0.8"
+                      strokeLinejoin="round"
+                    />
+                    <line x1="1" y1="7" x2="8" y2="7" stroke="#3A101D" strokeWidth="0.8" />
+                    <circle cx="8" cy="7" r="0.9" fill="#3A101D" />
+                    <defs>
+                      <linearGradient id="gold-nib" x1="1" y1="7" x2="23" y2="7" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#F5D7A1" />
+                        <stop offset="0.4" stopColor="#D4A359" />
+                        <stop offset="1" stopColor="#9E6D2B" />
+                      </linearGradient>
+                    </defs>
+                  </svg>
+                </div>
+
+                {/* Three Minimal Circular Postmark Stamps (Clickable Socials) */}
+                <div className="pt-1.5 flex items-center justify-between px-1 select-none">
+                  {/* GitHub Stamp */}
+                  <a
+                    href="https://github.com/kpanwar06"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="group flex flex-col items-center space-y-0.5"
+                    title="GitHub: @kpanwar06"
+                  >
+                    <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full border border-dashed border-burgundy/45 bg-[#FFF8F0] hover:bg-[#F9E8EC] hover:border-burgundy flex items-center justify-center shadow-2xs hover:scale-110 active:scale-95 transition-all duration-200">
+                      <Github className="w-3.5 h-3.5 text-burgundy/80 group-hover:text-burgundy transition-colors" />
+                    </div>
+                    <span className="text-[6.5px] sm:text-[7px] font-mono tracking-wider uppercase text-mauve group-hover:text-burgundy font-semibold">
+                      GitHub
+                    </span>
+                  </a>
+
+                  {/* LinkedIn Stamp */}
+                  <a
+                    href="https://www.linkedin.com/in/kpanwar06"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="group flex flex-col items-center space-y-0.5"
+                    title="LinkedIn Profile"
+                  >
+                    <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full border border-dashed border-burgundy/45 bg-[#FFF8F0] hover:bg-[#F9E8EC] hover:border-burgundy flex items-center justify-center shadow-2xs hover:scale-110 active:scale-95 transition-all duration-200">
+                      <Linkedin className="w-3.5 h-3.5 text-burgundy/80 group-hover:text-burgundy transition-colors" />
+                    </div>
+                    <span className="text-[6.5px] sm:text-[7px] font-mono tracking-wider uppercase text-mauve group-hover:text-burgundy font-semibold">
+                      LinkedIn
+                    </span>
+                  </a>
+
+                  {/* Email Stamp */}
+                  <a
+                    href="mailto:kritika20.panwar@gmail.com"
+                    onClick={(e) => e.stopPropagation()}
+                    className="group flex flex-col items-center space-y-0.5"
+                    title="Email: kritika20.panwar@gmail.com"
+                  >
+                    <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full border border-dashed border-burgundy/45 bg-[#FFF8F0] hover:bg-[#F9E8EC] hover:border-burgundy flex items-center justify-center shadow-2xs hover:scale-110 active:scale-95 transition-all duration-200">
+                      <Mail className="w-3.5 h-3.5 text-burgundy/80 group-hover:text-burgundy transition-colors" />
+                    </div>
+                    <span className="text-[6.5px] sm:text-[7px] font-mono tracking-wider uppercase text-mauve group-hover:text-burgundy font-semibold">
+                      Dispatch
+                    </span>
+                  </a>
+                </div>
               </div>
 
               {/* Clean Footer: ONLY pg. 01 */}
