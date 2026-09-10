@@ -793,7 +793,7 @@ export default function BookshelfHero() {
 
                 <div className="text-[9px] font-mono text-[#d8a47f]/90 uppercase tracking-widest flex items-center space-x-1.5">
                   <BookOpen className="w-3 h-3" />
-                  <span>Tap to Open</span>
+                  <span>Step Inside</span>
                 </div>
               </div>
             </div>
@@ -1018,7 +1018,7 @@ export default function BookshelfHero() {
           <div className="px-5 py-2 rounded-full bg-burgundy/95 text-cream border border-dustyRose shadow-xl backdrop-blur-sm flex items-center space-x-2 animate-pulse">
             <BookOpen className="w-3.5 h-3.5 text-dustyRose-light" />
             <span className="text-xs font-mono tracking-wider uppercase font-semibold">
-              Click the book to open
+              Click the book to step inside
             </span>
           </div>
         )}
