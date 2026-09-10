@@ -771,15 +771,13 @@ export default function BookshelfHero() {
               <div className="absolute left-0 top-0 bottom-0 w-6 bg-gradient-to-r from-black/40 to-transparent pointer-events-none" />
 
               <div className="h-full w-full border border-dashed border-[#d8a47f]/45 p-3 flex flex-col justify-between rounded items-center text-center">
-                <div className="flex items-center space-x-1 text-[#d8a47f] text-[10px] font-mono tracking-widest uppercase">
-                  <Sparkles className="w-3 h-3 text-dustyRose" />
-                  <span>Vol. 2026</span>
-                  <Sparkles className="w-3 h-3 text-dustyRose" />
+                <div className="flex items-center space-x-1 text-[#d8a47f] text-[9.5px] font-mono tracking-widest uppercase">
+                  <span>✦ PERSONAL ARCHIVE ✦</span>
                 </div>
 
                 <div>
                   <span className="text-[10px] tracking-[0.25em] font-mono text-dustyRose uppercase block">
-                    Interactive Portfolio
+                    THE STORY SO FAR
                   </span>
                   <h1 className="text-2xl sm:text-3xl font-serif text-[#FFF8F0] tracking-wide mt-1 font-bold">
                     KRITIKA
@@ -788,8 +786,8 @@ export default function BookshelfHero() {
                     PANWAR
                   </h2>
                   <div className="w-10 h-0.5 bg-[#d8a47f]/60 mx-auto my-2" />
-                  <p className="text-[10px] font-mono text-blush/80">
-                    Full Stack &bull; Python / Django
+                  <p className="text-[9.5px] font-mono text-blush/80">
+                    Technology &bull; Creativity &bull; Curiosity
                   </p>
                 </div>
 
