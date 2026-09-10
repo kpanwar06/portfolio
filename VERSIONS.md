@@ -163,13 +163,30 @@ This document tracks animation states and version history across components. If 
   - Cleaned slot vacant state into a soft dark cavity without popping text.
 - **Git Commit Reference**: `5138131`
 
-### **Version 27: Zero-Lag Synchronized Scroll & Smooth Parallax (Current)**
+### **Version 27: Zero-Lag Synchronized Scroll & Smooth Parallax**
 - **Eliminated 1.2-Second Scroll Drag**:
   - Switched `scrub: 1.2` to `scrub: true` on both the opened book exit and Identity Section background text, allowing elements to track smooth-scroll directly with zero delayed catch-up lag.
 - **Removed Duplicate Scroll Handlers & Redundant DOM Updates**:
   - Stopped listening to duplicate native + Lenis scroll events; guarded `hero-active` class toggling to only fire when crossing the threshold rather than executing on every scroll tick.
 - **Adaptive Lag Smoothing**:
   - Re-enabled GSAP's adaptive lag smoothing (`500, 33`) instead of hard 0, allowing browser performance hiccups to be absorbed smoothly without dropping animation frames.
+- **Git Commit Reference**: `32d2600`
+
+### **Version 29: Editorial Scrapbook Interior • Calligraphic Monogram & Interactive Keepsakes (Current)**
+- **Stylized Calligraphic Cursive "K"**:
+  - Replaced the circular avatar badge with an exquisite Spencerian cursive **𝒦** monogram with flourishing loops, rendered in deep burgundy with subtle gold hairlines.
+- **Cleaned Up Book Footers**:
+  - Removed "Kritika Panwar" and "Scroll to Explore" from the bottom footers, leaving only crisp, minimal page numbers (`pg. 01` & `pg. 02`).
+- **Updated 6-Chapter Interactive Index**:
+  - Replaced static text with an interactive 6-chapter index:
+    `01. Identity`, `02. Memory Archive`, `03. Featured Projects`, `04. 3D Tech Stack`, `05. Certifications`, `06. Journey Trail`.
+  - Every row is clickable, smoothly gliding the visitor straight to that section on the page via Lenis smooth scroll.
+- **Tactile Scrapbook Keepsakes**:
+  - Pinned a delicate **Brass Paperclip** holding an `"Updated • 2026"` parchment tag on the top of the right page.
+  - Attached a **Washi Tape Sticky Note** below the index (*"P.S. Click any chapter to jump directly to that archive."*).
+  - Cascading **Satin Ribbon Bookmark** with swallowtail notch draping from the center spine fold.
+  - Embossed **Burgundy Wax Seal** with golden feather quill resting near the bottom corner.
+  - Removed generic floating software containers.
 - **Git Commit Reference**: Current
 
 ---

@@ -15,7 +15,7 @@ interface ShelfBook {
   tilt?: string;
 }
 
-export const BOOKSHELF_VERSION: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19 | 20 | 21 | 22 | 23 | 24 | 25 | 26 | 27 = 27;
+export const BOOKSHELF_VERSION: number = 29;
 
 export default function BookshelfHero() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -386,6 +386,31 @@ export default function BookshelfHero() {
     }
   };
 
+  const chapters = [
+    { num: "01", title: "Identity", page: "p. 02", targetId: "identity" },
+    { num: "02", title: "Memory Archive", page: "p. 04", targetId: "envelope" },
+    { num: "03", title: "Featured Projects", page: "p. 06", targetId: "projects" },
+    { num: "04", title: "3D Tech Stack", page: "p. 08", targetId: "tech-stack" },
+    { num: "05", title: "Certifications", page: "p. 10", targetId: "certifications" },
+    { num: "06", title: "Journey Trail", page: "p. 12", targetId: "journey" },
+  ];
+
+  const navigateToSection = (targetId: string) => {
+    const lenis = (window as any).__lenis;
+    const target = document.getElementById(targetId);
+    if (lenis) {
+      lenis.start();
+      if (target) {
+        lenis.scrollTo(target, { offset: 0, duration: 1.5 });
+      } else {
+        const fallback = document.getElementById("identity");
+        if (fallback) lenis.scrollTo(fallback, { offset: 0, duration: 1.5 });
+      }
+    } else if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const handleScrollToNext = () => {
     const lenis = (window as any).__lenis;
     const nextSection = document.getElementById("identity");
@@ -535,7 +560,7 @@ export default function BookshelfHero() {
 
       {/* Version Tag Indicator (top right) */}
       <div className="absolute top-4 right-4 z-40 text-[10px] font-mono text-dustyRose/60 bg-espresso/60 px-2.5 py-1 rounded border border-blush/10">
-        Bookshelf: v27 (Zero-Lag Synchronized Scroll &bull; Smooth Parallax)
+        Bookshelf: v29 (Calligraphic Monogram &bull; Brass Clip, Wax Seal &amp; Interactive Index)
       </div>
 
       {/* Touch / Hover Cue while sitting on shelf */}
@@ -644,40 +669,66 @@ export default function BookshelfHero() {
             style={{
               transform: "translateZ(15px)",
             }}
-            className={`absolute inset-0 bg-[#FFF8F0] text-espresso rounded-r-md p-5 flex flex-col justify-between border border-blush shadow-inner transition-opacity duration-300 ${
-              bookState === "opened" ? "opacity-100" : "opacity-0 pointer-events-none"
+            className={`absolute inset-0 bg-[#FFF8F0] text-espresso rounded-r-md p-4 sm:p-5 flex flex-col justify-between border border-blush shadow-inner transition-opacity duration-300 ${
+              bookState === "opened" ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
             }`}
           >
-            <div className="flex justify-between items-center text-[9px] font-mono text-mauve uppercase border-b border-blush pb-1.5">
+            {/* Brass Paperclip with Parchment Tag ("Updated • 2026") */}
+            <div className="absolute -top-3.5 right-6 z-30 flex items-center pointer-events-none select-none drop-shadow-sm">
+              <svg width="16" height="26" viewBox="0 0 18 28" fill="none" className="drop-shadow-xs">
+                <path
+                  d="M5 2V21C5 23.2 6.8 25 9 25C11.2 25 13 23.2 13 21V6C13 4.3 11.7 3 10 3C8.3 3 7 4.3 7 6V18"
+                  stroke="url(#brass-clip-grad)"
+                  strokeWidth="2.2"
+                  strokeLinecap="round"
+                />
+                <defs>
+                  <linearGradient id="brass-clip-grad" x1="0" y1="0" x2="18" y2="28" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#e7c89d" />
+                    <stop offset="0.5" stopColor="#b3824b" />
+                    <stop offset="1" stopColor="#f3deb8" />
+                  </linearGradient>
+                </defs>
+              </svg>
+              <div className="ml-1 px-1.5 py-0.5 bg-[#f7eedf] border border-[#d8c3a5] text-[7.5px] font-mono uppercase tracking-wider text-[#651F35] font-bold rounded-xs shadow-xs -rotate-2">
+                Updated &bull; 2026
+              </div>
+            </div>
+
+            <div className="flex justify-between items-center text-[9px] font-mono text-mauve uppercase border-b border-blush pb-1">
               <span>CONTENTS</span>
               <span>INDEX</span>
             </div>
 
-            <div className="my-auto space-y-2 text-[10px] font-mono">
-              <div className="flex justify-between py-1 border-b border-blush/60">
-                <span className="text-burgundy font-semibold">01. Identity</span>
-                <span className="text-mauve text-[9px]">p. 02</span>
-              </div>
-              <div className="flex justify-between py-1 border-b border-blush/60">
-                <span className="text-burgundy font-semibold">02. Memories</span>
-                <span className="text-mauve text-[9px]">p. 04</span>
-              </div>
-              <div className="flex justify-between py-1 border-b border-blush/60">
-                <span className="text-burgundy font-semibold">03. Certificates</span>
-                <span className="text-mauve text-[9px]">p. 06</span>
-              </div>
-              <div className="flex justify-between py-1 border-b border-blush/60">
-                <span className="text-burgundy font-semibold">04. Journey Path</span>
-                <span className="text-mauve text-[9px]">p. 08</span>
-              </div>
-              <div className="flex justify-between py-1 border-b border-blush/60">
-                <span className="text-burgundy font-semibold">05. 3D Tech Box</span>
-                <span className="text-mauve text-[9px]">p. 10</span>
-              </div>
+            {/* 6 Interactive Chapters */}
+            <div className="my-auto space-y-1.5 text-[9.5px] font-mono">
+              {chapters.map((ch) => (
+                <div
+                  key={ch.num}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    navigateToSection(ch.targetId);
+                  }}
+                  className="flex justify-between items-center py-0.5 px-1.5 rounded hover:bg-[#F7E6E8]/80 hover:text-burgundy transition-colors cursor-pointer border-b border-blush/40 group select-none"
+                >
+                  <span className="text-burgundy font-semibold group-hover:translate-x-0.5 transition-transform">
+                    {ch.num}. {ch.title}
+                  </span>
+                  <span className="text-mauve text-[8.5px] group-hover:text-burgundy">{ch.page}</span>
+                </div>
+              ))}
             </div>
 
-            <div className="pt-1.5 border-t border-blush flex justify-between text-[10px] font-mono text-dustyRose">
-              <span>Scroll to Explore</span>
+            {/* Washi Tape Note */}
+            <div className="relative px-2 py-1 bg-[#fefcf8] border border-[#f0e3d0] rounded-sm shadow-2xs rotate-0.5 text-center select-none my-0.5">
+              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-14 h-2.5 bg-[#C96F82]/30 backdrop-blur-[1px] border-t border-b border-[#C96F82]/40 -rotate-1 pointer-events-none" />
+              <p className="text-[8px] font-serif italic text-burgundy/90 leading-tight">
+                &ldquo;P.S. Click any chapter to jump directly to that archive.&rdquo;
+              </p>
+            </div>
+
+            {/* Clean Footer: ONLY pg. 02 */}
+            <div className="pt-1 border-t border-blush flex justify-end text-[9.5px] font-mono text-dustyRose">
               <span>pg. 02</span>
             </div>
           </div>
@@ -735,76 +786,112 @@ export default function BookshelfHero() {
                 backfaceVisibility: "hidden",
                 transform: "rotateY(180deg)",
               }}
-              className="absolute inset-0 bg-[#FFF8F0] rounded-l-md border border-blush p-5 flex flex-col justify-between text-espresso shadow-lg"
+              className="absolute inset-0 bg-[#FFF8F0] rounded-l-md border border-blush p-4 sm:p-5 flex flex-col justify-between text-espresso shadow-lg"
             >
-              <div className="flex justify-between items-center text-[9px] font-mono text-mauve uppercase border-b border-blush pb-1.5">
+              <div className="flex justify-between items-center text-[9px] font-mono text-mauve uppercase border-b border-blush pb-1">
                 <span>CHAPTER 01</span>
                 <span>PROLOGUE</span>
               </div>
 
               <div className="my-auto space-y-2">
-                <div className="w-8 h-8 rounded-full bg-blush flex items-center justify-center text-burgundy font-serif font-bold text-base border border-dustyRose/30">
-                  K
+                {/* Stylized Calligraphic Cursive "K" Monogram */}
+                <div className="flex items-center space-x-2.5">
+                  <svg
+                    width="44"
+                    height="56"
+                    viewBox="0 0 100 130"
+                    fill="none"
+                    className="flex-shrink-0 drop-shadow-xs select-none"
+                  >
+                    <path
+                      d="M12 28 C22 18, 32 38, 28 65 C24 88, 16 112, 22 124 C25 128, 29 124, 32 116 C38 98, 42 72, 33 60 C26 50, 16 58, 28 62"
+                      stroke="#651F35"
+                      strokeWidth="3.2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M29 60 C38 48, 48 24, 46 12 C45 6, 41 8, 38 18 C33 34, 28 52, 32 60"
+                      stroke="#651F35"
+                      strokeWidth="2.8"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M31 60 C38 68, 46 84, 56 102 C66 118, 78 126, 86 118 C92 112, 88 100, 78 98 C72 97, 68 102, 70 106"
+                      stroke="#651F35"
+                      strokeWidth="2.6"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M46 12 C40 28, 32 50, 31 60 C36 72, 48 94, 62 110"
+                      stroke="#d8a47f"
+                      strokeWidth="0.8"
+                      strokeLinecap="round"
+                      opacity="0.75"
+                    />
+                  </svg>
+                  <div className="h-8 w-[1px] bg-blush" />
+                  <span className="text-[9.5px] font-serif italic text-mauve">
+                    Kritika Panwar &bull; Prologue
+                  </span>
                 </div>
+
                 <h3 className="font-serif text-base sm:text-lg text-burgundy leading-snug">
                   Welcome to my living portfolio.
                 </h3>
-                <p className="text-[11px] text-espresso/80 leading-relaxed font-sans">
+                <p className="text-[10.5px] text-espresso/80 leading-relaxed font-sans">
                   A curated collection of full-stack engineering, scalable systems, and creative problem solving.
                 </p>
               </div>
 
-              <div className="pt-1.5 border-t border-blush flex justify-between text-[10px] font-mono text-dustyRose">
-                <span>Kritika Panwar</span>
+              {/* Clean Footer: ONLY pg. 01 */}
+              <div className="pt-1 border-t border-blush flex justify-end text-[9.5px] font-mono text-dustyRose">
                 <span>pg. 01</span>
               </div>
             </div>
           </div>
-        </div>
 
-        {/* EMERGING ELEMENTS (FLY OUT OF THE BOOK ON OPEN) */}
-        {bookState === "opened" && (
-          <div
-            ref={emergingElementsRef}
-            className="absolute inset-0 pointer-events-none z-40 overflow-visible"
+          {/* Satin Ribbon Bookmark (Draped from the center binding) */}
+          <svg
+            width="22"
+            height="70"
+            viewBox="0 0 24 70"
+            fill="none"
+            className="absolute -bottom-14 left-1/2 -translate-x-1/2 drop-shadow-md pointer-events-none z-20"
           >
-            <div className="emerging-item absolute -top-12 sm:-top-16 -left-16 sm:-left-28 bg-[#FFF8F0] text-burgundy p-3 rounded-xl shadow-2xl border border-dustyRose/40 w-44 -rotate-6 pointer-events-auto">
-              <div className="flex items-center space-x-1.5 text-xs font-mono font-bold">
-                <Code className="w-3.5 h-3.5 text-dustyRose" />
-                <span>Full Stack Developer</span>
-              </div>
-              <p className="text-[10px] text-espresso/70 mt-0.5 font-sans">
-                Python, Django &amp; Modern React
-              </p>
-            </div>
+            <path d="M4 0 L20 0 L20 60 L12 50 L4 60 Z" fill="url(#ribbon-grad)" />
+            <defs>
+              <linearGradient id="ribbon-grad" x1="4" y1="0" x2="20" y2="70" gradientUnits="userSpaceOnUse">
+                <stop stopColor="#822744" />
+                <stop offset="0.65" stopColor="#651F35" />
+                <stop offset="1" stopColor="#3d101e" />
+              </linearGradient>
+            </defs>
+          </svg>
 
-            <div className="emerging-item absolute -top-14 sm:-top-18 -right-12 sm:-right-24 bg-burgundy text-blush p-3 rounded-xl shadow-2xl border border-blush/30 w-40 rotate-10 pointer-events-auto">
-              <div className="flex items-center space-x-1.5 text-xs font-mono">
-                <Sparkles className="w-3 h-3 text-dustyRose-light" />
-                <span>Scrapbook Edition</span>
-              </div>
-              <p className="text-[10px] text-blush/90 mt-0.5 font-serif italic">
-                🌸 Dusty Pink &times; Burgundy
-              </p>
-            </div>
-
-            <div className="emerging-item absolute -bottom-10 sm:-bottom-14 -left-12 sm:-left-24 bg-blush text-burgundy p-2.5 rounded-lg shadow-xl border border-dustyRose w-36 rotate-3 pointer-events-auto flex items-center space-x-2">
-              <FolderGit2 className="w-3.5 h-3.5 text-burgundy" />
-              <div className="text-[10px] font-mono leading-tight">
-                <span className="font-bold block">@kpanwar06</span>
-                <span className="text-mauve text-[8px]">GitHub Repos</span>
-              </div>
-            </div>
-
-            <div className="emerging-item absolute -bottom-12 sm:-bottom-16 -right-10 sm:-right-20 bg-[#FFF8F0] text-espresso p-2.5 rounded-lg shadow-xl border border-blush w-40 -rotate-3 pointer-events-auto flex items-center space-x-2">
-              <Compass className="w-4 h-4 text-dustyRose" />
-              <div className="text-[10px] font-mono leading-tight">
-                <span className="font-bold text-burgundy block">Journey Path</span>
-                <span className="text-mauve text-[8px]">Scroll down</span>
-              </div>
+          {/* Burgundy Wax Seal with Embossed Gold Feather Quill */}
+          <div className="absolute -bottom-5 -right-5 sm:-bottom-6 sm:-right-6 w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-gradient-to-br from-[#7a223e] via-[#651F35] to-[#380e1b] shadow-[0_8px_18px_rgba(0,0,0,0.55),inset_0_2px_3px_rgba(255,255,255,0.2),inset_0_-2px_4px_rgba(0,0,0,0.6)] border-2 border-[#822744]/70 p-1 flex items-center justify-center pointer-events-none z-30 rotate-12 select-none">
+            <div className="w-full h-full rounded-full border border-dashed border-[#d8a47f]/45 flex items-center justify-center bg-radial from-[#7a223e] to-[#431221]">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="#d8a47f"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="drop-shadow-xs"
+              >
+                <path d="M20.24 12.24a6 6 0 0 0-8.49-8.49L5 10.5V19h8.5z" />
+                <line x1="16" y1="8" x2="2" y2="22" />
+                <line x1="17.5" y1="15" x2="9" y2="15" />
+              </svg>
             </div>
           </div>
-        )}
+        </div>
       </div>
 
       {/* PROMPT BADGE: "CLICK TO OPEN BOOK" (WHEN IN FOREGROUND) */}
