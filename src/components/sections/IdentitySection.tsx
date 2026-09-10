@@ -106,31 +106,33 @@ export default function IdentitySection() {
       {/* ========================================================================= */}
       {/* LAYER 1 (BACK): GIANT BLURRED "PORTFOLIO" */}
       {/* ========================================================================= */}
-      <div
-        ref={bgWordRef}
-        aria-hidden="true"
-        className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden"
-      >
-        <span
-          className="text-[18vw] sm:text-[16vw] font-serif font-black uppercase tracking-[0.18em] text-[#C96F82]/30 select-none whitespace-nowrap blur-[3px] sm:blur-[5px] scale-110 transform will-change-transform"
-          style={{
-            textShadow: "0 0 40px rgba(201, 111, 130, 0.25)",
-            WebkitTextStroke: "1px rgba(101, 31, 53, 0.2)",
-            transform: "translateZ(0)",
-          }}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden -translate-y-[14px]">
+        <div
+          ref={bgWordRef}
+          aria-hidden="true"
+          className="flex items-center justify-center"
         >
-          PORTFOLIO
-        </span>
+          <span
+            className="text-[18vw] sm:text-[16vw] font-serif font-black uppercase tracking-[0.18em] text-[#C96F82]/30 select-none whitespace-nowrap blur-[3px] sm:blur-[5px] scale-110 transform will-change-transform"
+            style={{
+              textShadow: "0 0 40px rgba(201, 111, 130, 0.25)",
+              WebkitTextStroke: "1px rgba(101, 31, 53, 0.2)",
+              transform: "translateZ(0)",
+            }}
+          >
+            PORTFOLIO
+          </span>
+        </div>
       </div>
 
       {/* ========================================================================= */}
       {/* LAYER 2 (FOREGROUND): CRISP & PROMINENT "KRITIKA" */}
       {/* ========================================================================= */}
-      <div className="relative z-10 flex flex-col items-center text-center max-w-5xl mx-auto">
+      <div className="relative z-10 flex flex-col items-center text-center max-w-5xl mx-auto -translate-y-[14px]">
         {/* Editorial Top Accent Ribbon */}
         <div className="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-blush border border-dustyRose/40 text-burgundy text-xs font-mono mb-4 sm:mb-6 shadow-sm">
           <span className="font-semibold tracking-wider uppercase">
-            SOFTWARE ENGINEER &bull; CREATIVE BUILDER
+            ENGINEER IN THE MAKING &bull; CLASS OF 2028
           </span>
         </div>
 
