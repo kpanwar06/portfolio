@@ -673,13 +673,52 @@ export default function BookshelfHero() {
               bookState === "opened" ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
             }`}
           >
-            <div className="flex justify-between items-center text-[9px] font-mono text-mauve uppercase border-b border-blush pb-1.5">
-              <span>CONTENTS</span>
-              <span>INDEX</span>
+            {/* Brass Paperclip holding Parchment Tag ("Updated • 2026") */}
+            <div className="absolute -top-2.5 right-4 sm:right-5 z-20 pointer-events-none select-none flex flex-col items-center">
+              <div className="relative">
+                {/* Paperclip wire clasping down over the page edge and tag */}
+                <svg
+                  width="18"
+                  height="32"
+                  viewBox="0 0 18 32"
+                  fill="none"
+                  className="drop-shadow-[0_2px_3px_rgba(0,0,0,0.3)] relative z-10"
+                >
+                  <path
+                    d="M5 9 V24 C5 26.5 7 28.5 9.5 28.5 C12 28.5 14 26.5 14 24 V5 C14 3 12.5 1.5 10 1.5 C7.5 1.5 6 3 6 5 V21 C6 22.5 7 23.5 8.5 23.5 C10 23.5 11 22.5 11 21 V8"
+                    stroke="url(#brass-clip-grad)"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <defs>
+                    <linearGradient id="brass-clip-grad" x1="5" y1="1.5" x2="14" y2="28.5" gradientUnits="userSpaceOnUse">
+                      <stop stopColor="#F5D7A1" />
+                      <stop offset="0.3" stopColor="#D4A359" />
+                      <stop offset="0.7" stopColor="#9E6D2B" />
+                      <stop offset="1" stopColor="#E2BD7E" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+
+                {/* Parchment Tag held under the clip on the page */}
+                <div className="absolute top-2.5 left-1/2 -translate-x-1/2 px-2 py-0.5 bg-[#FFFDF7] border border-[#DEC8A4] rounded-[2px] shadow-[0_2px_4px_rgba(0,0,0,0.12)] -rotate-1 whitespace-nowrap z-0">
+                  <span className="text-[7.5px] sm:text-[8px] font-mono tracking-wider text-burgundy font-bold uppercase">
+                    Updated &bull; 2026
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Header with right margin reserved for the clip */}
+            <div className="flex items-center space-x-1.5 text-[9px] font-mono text-mauve uppercase border-b border-blush pb-1.5 pr-22">
+              <span className="tracking-wider">CONTENTS</span>
+              <span className="text-blush">&bull;</span>
+              <span className="tracking-wider">INDEX</span>
             </div>
 
             {/* 6 Interactive Chapters */}
-            <div className="my-auto space-y-2 text-[10px] font-mono">
+            <div className="my-auto space-y-1 sm:space-y-1.5 text-[9.5px] font-mono">
               {chapters.map((ch) => (
                 <div
                   key={ch.num}
@@ -687,14 +726,23 @@ export default function BookshelfHero() {
                     e.stopPropagation();
                     navigateToSection(ch.targetId);
                   }}
-                  className="flex justify-between items-center py-1 px-1.5 rounded hover:bg-[#F7E6E8]/80 hover:text-burgundy transition-colors cursor-pointer border-b border-blush/40 group select-none"
+                  className="flex justify-between items-center py-0.5 sm:py-1 px-1.5 rounded hover:bg-[#F7E6E8]/80 hover:text-burgundy transition-colors cursor-pointer border-b border-blush/40 group select-none"
                 >
                   <span className="text-burgundy font-semibold group-hover:translate-x-0.5 transition-transform">
                     {ch.num}. {ch.title}
                   </span>
-                  <span className="text-mauve text-[9px] group-hover:text-burgundy">{ch.page}</span>
+                  <span className="text-mauve text-[8.5px] group-hover:text-burgundy">{ch.page}</span>
                 </div>
               ))}
+            </div>
+
+            {/* Tactile Washi Tape Note */}
+            <div className="relative mx-auto w-full max-w-[195px] px-2 py-1 bg-[#FFFDF8] border border-[#EADBCE] rounded-[2px] shadow-[0_1px_3px_rgba(0,0,0,0.06)] rotate-0.5 select-none my-0.5">
+              {/* Semi-translucent Washi Tape Strip */}
+              <div className="absolute -top-1.5 left-1/2 -translate-x-1/2 w-16 h-2.5 bg-[#C96F82]/35 border-t border-b border-[#C96F82]/45 backdrop-blur-[0.5px] -rotate-1 pointer-events-none shadow-2xs" />
+              <p className="text-[8px] sm:text-[8.5px] font-serif italic text-burgundy/90 text-center leading-tight">
+                &ldquo;P.S. Click any chapter to jump directly to that archive.&rdquo;
+              </p>
             </div>
 
             {/* Clean Footer: ONLY pg. 02 */}
