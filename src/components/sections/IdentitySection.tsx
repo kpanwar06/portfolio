@@ -87,7 +87,7 @@ export default function IdentitySection() {
     <section
       ref={sectionRef}
       id="identity"
-      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-cream overflow-hidden px-4 select-none"
+      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-cream overflow-hidden px-4 py-28 sm:py-36 select-none"
     >
       {/* Editorial Decorative Grid & Texture */}
       <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(#C96F82_1px,transparent_1px)] [background-size:20px_20px]" />
@@ -143,26 +143,22 @@ export default function IdentitySection() {
         </h1>
 
         {/* Metadata & Editorial Subtitle */}
-        <div ref={metaRef} className="mt-6 sm:mt-8 space-y-4">
-          <p className="text-base sm:text-xl md:text-2xl font-serif italic text-espresso/85 max-w-2xl mx-auto leading-relaxed">
-            Crafting elegant backend architectures, modern web systems, and interactive digital stories.
+        <div ref={metaRef} className="mt-6 sm:mt-8 space-y-4 max-w-3xl mx-auto">
+          {/* Headline Hook */}
+          <p className="text-lg sm:text-2xl md:text-3xl font-serif italic text-burgundy font-medium leading-snug">
+            &ldquo;I’m someone who loves to learn, dreams big, works hard, and is never quite satisfied with ordinary.&rdquo;
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-3 sm:gap-6 pt-3 text-xs sm:text-sm font-mono text-mauve-dark">
-            <span className="px-3 py-1 bg-white/70 rounded-md border border-blush shadow-xs">
-              📍 Bengaluru, India
-            </span>
-            <span className="px-3 py-1 bg-white/70 rounded-md border border-blush shadow-xs">
-              ⚡ Python &bull; Django &bull; React
-            </span>
-            <a
-              href="https://github.com/Kritika-Panwar-151/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-3 py-1 bg-burgundy text-cream hover:bg-burgundy-light rounded-md transition-colors shadow-xs"
-            >
-              GitHub: @Kritika-Panwar-151 ↗
-            </a>
+          {/* Extended Bio Paragraph */}
+          <p className="text-sm sm:text-base md:text-lg text-espresso/80 font-sans leading-relaxed pt-1 max-w-2xl mx-auto">
+            I’m a Computer Science Engineering student who enjoys turning ideas into practical solutions. Through projects and hands-on experiences, I’ve explored areas ranging from web and mobile development to backend systems, databases, and emerging technologies. I’m particularly drawn to understanding how things work behind the scenes, while always looking for opportunities to learn, build, and take on something new.
+          </p>
+
+          {/* Faint Artistic Rotated Quote (Watermark / Editorial Signature Layer) */}
+          <div className="pt-6 sm:pt-8 select-none">
+            <p className="font-serif italic text-2xl sm:text-3xl md:text-5xl text-burgundy/40 tracking-tight -rotate-1 transform inline-block drop-shadow-xs">
+              &ldquo;The harder I work, the luckier I get.&rdquo;
+            </p>
           </div>
         </div>
       </div>
