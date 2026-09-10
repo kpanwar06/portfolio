@@ -860,21 +860,21 @@ export default function BookshelfHero() {
                 </div>
 
                 <h3 className="font-serif text-base sm:text-lg text-burgundy leading-snug font-bold">
-                  Welcome to my living portfolio.
+                  Welcome to my little corner of the internet.
                 </h3>
-                <p className="text-[10.5px] sm:text-[11px] text-espresso/80 leading-relaxed font-sans">
-                  A curated collection of full-stack engineering, scalable systems, and creative problem solving.
+                <p className="text-[10px] sm:text-[10.5px] text-espresso/80 leading-relaxed font-sans">
+                  A curated collection of my journey &mdash; what I&rsquo;ve learned, built, explored, and experienced along the way.
                 </p>
 
-                {/* Handwritten Author Sign-off (Left-aligned as before) */}
+                {/* Handwritten Author Sign-off */}
                 <div className="pt-1.5 flex items-center justify-start border-t border-blush/60 select-none">
                   <span className="font-serif italic font-semibold text-[13px] sm:text-[14px] text-burgundy tracking-wide">
                     &mdash; Kritika Panwar
                   </span>
                 </div>
 
-                {/* Two Dainty Perforated Postage Stamps (GitHub & LinkedIn) - scaled down, shifted 14px left */}
-                <div className="pt-2 flex items-center justify-center space-x-5 sm:space-x-6 select-none -translate-x-[14px]">
+                {/* Two Dainty Perforated Postage Stamps (Aligned to left edge below the dash) */}
+                <div className="pt-2 flex items-center justify-start space-x-4 select-none">
                   {/* GitHub Postage Stamp */}
                   <a
                     href="https://github.com/Kritika-Panwar-151/"
@@ -915,8 +915,8 @@ export default function BookshelfHero() {
 
                     {/* Stamp Interior Artwork */}
                     <div className="relative z-10 flex flex-col items-center justify-between h-[38px] py-0.5">
-                      <span className="text-[4.5px] sm:text-[5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
-                        GIT &bull; 2026
+                      <span className="text-[5px] sm:text-[5.5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
+                        GIT
                       </span>
                       <div className="w-4 h-4 rounded-full bg-burgundy/5 flex items-center justify-center group-hover:bg-burgundy/10 transition-colors">
                         <Github className="w-2.5 h-2.5 text-burgundy group-hover:scale-110 transition-transform" />
@@ -980,8 +980,8 @@ export default function BookshelfHero() {
 
                     {/* Stamp Interior Artwork */}
                     <div className="relative z-10 flex flex-col items-center justify-between h-[38px] py-0.5">
-                      <span className="text-[4.5px] sm:text-[5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
-                        NET &bull; 2026
+                      <span className="text-[5px] sm:text-[5.5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
+                        NET
                       </span>
                       <div className="w-4 h-4 rounded-full bg-burgundy/5 flex items-center justify-center group-hover:bg-burgundy/10 transition-colors">
                         <Linkedin className="w-2.5 h-2.5 text-burgundy group-hover:scale-110 transition-transform" />
