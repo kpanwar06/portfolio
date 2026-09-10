@@ -310,7 +310,7 @@ export default function FramedCertifications() {
             <div className="flex justify-between items-center pt-2 border-t border-blush">
               <span className="text-xs font-mono text-mauve">Recipient: Kritika Panwar</span>
               <a
-                href="https://github.com/kpanwar06"
+                href="https://github.com/Kritika-Panwar-151/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center space-x-1.5 px-4 py-2 bg-burgundy hover:bg-burgundy-light text-cream rounded-md text-xs font-mono font-semibold transition-colors"

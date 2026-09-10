@@ -156,12 +156,12 @@ export default function IdentitySection() {
               ⚡ Python &bull; Django &bull; React
             </span>
             <a
-              href="https://github.com/kpanwar06"
+              href="https://github.com/Kritika-Panwar-151/"
               target="_blank"
               rel="noopener noreferrer"
               className="px-3 py-1 bg-burgundy text-cream hover:bg-burgundy-light rounded-md transition-colors shadow-xs"
             >
-              GitHub: @kpanwar06 ↗
+              GitHub: @Kritika-Panwar-151 ↗
             </a>
           </div>
         </div>

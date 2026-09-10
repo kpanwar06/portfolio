@@ -205,7 +205,7 @@ export default function EnvelopeGallery() {
                 Portfolio Archive &bull; Memories &amp; Milestones
               </p>
               <p className="text-[11px] font-mono text-dustyRose pt-1">
-                Bengaluru, KA &bull; github.com/kpanwar06
+                Bengaluru, KA &bull; github.com/Kritika-Panwar-151
               </p>
             </div>
 

@@ -3,7 +3,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Sparkles, BookOpen, ChevronDown, Compass, Code, FolderGit2, Github, Linkedin, Mail } from "lucide-react";
+import { Sparkles, BookOpen, ChevronDown, Compass, Code, FolderGit2, Github, Linkedin } from "lucide-react";
+
+// True perforated postage stamp SVG scalloped edge path (56x68)
+const STAMP_PATH =
+  "M 0 0 H 5.5 A 2.5 2.5 0 0 0 10.5 0 H 13.5 A 2.5 2.5 0 0 0 18.5 0 H 21.5 A 2.5 2.5 0 0 0 26.5 0 H 29.5 A 2.5 2.5 0 0 0 34.5 0 H 37.5 A 2.5 2.5 0 0 0 42.5 0 H 45.5 A 2.5 2.5 0 0 0 50.5 0 H 56 V 5.5 A 2.5 2.5 0 0 0 56 10.5 V 13.5 A 2.5 2.5 0 0 0 56 18.5 V 21.5 A 2.5 2.5 0 0 0 56 26.5 V 29.5 A 2.5 2.5 0 0 0 56 34.5 V 37.5 A 2.5 2.5 0 0 0 56 42.5 V 45.5 A 2.5 2.5 0 0 0 56 50.5 V 53.5 A 2.5 2.5 0 0 0 56 58.5 V 61.5 A 2.5 2.5 0 0 0 56 66.5 V 68 H 50.5 A 2.5 2.5 0 0 0 45.5 68 H 42.5 A 2.5 2.5 0 0 0 37.5 68 H 34.5 A 2.5 2.5 0 0 0 29.5 68 H 26.5 A 2.5 2.5 0 0 0 21.5 68 H 18.5 A 2.5 2.5 0 0 0 13.5 68 H 10.5 A 2.5 2.5 0 0 0 5.5 68 H 0 V 62.5 A 2.5 2.5 0 0 0 0 57.5 V 54.5 A 2.5 2.5 0 0 0 0 49.5 V 46.5 A 2.5 2.5 0 0 0 0 41.5 V 38.5 A 2.5 2.5 0 0 0 0 33.5 V 30.5 A 2.5 2.5 0 0 0 0 25.5 V 22.5 A 2.5 2.5 0 0 0 0 17.5 V 14.5 A 2.5 2.5 0 0 0 0 9.5 V 6.5 A 2.5 2.5 0 0 0 0 1.5 Z";
 
 interface ShelfBook {
   id: number;
@@ -893,55 +897,136 @@ export default function BookshelfHero() {
                   </svg>
                 </div>
 
-                {/* Three Minimal Circular Postmark Stamps (Clickable Socials) */}
-                <div className="pt-1.5 flex items-center justify-between px-1 select-none">
-                  {/* GitHub Stamp */}
+                {/* Two Authentic Perforated Postage Stamps (GitHub & LinkedIn) */}
+                <div className="pt-2 flex items-center justify-center space-x-6 sm:space-x-8 select-none">
+                  {/* GitHub Postage Stamp */}
                   <a
-                    href="https://github.com/kpanwar06"
+                    href="https://github.com/Kritika-Panwar-151/"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="group flex flex-col items-center space-y-0.5"
-                    title="GitHub: @kpanwar06"
+                    className="group relative w-[56px] h-[68px] flex items-center justify-center -rotate-2 hover:rotate-0 hover:-translate-y-1 transition-all duration-200 cursor-pointer drop-shadow-[0_2px_4px_rgba(0,0,0,0.12)]"
+                    title="GitHub: Kritika-Panwar-151"
                   >
-                    <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full border border-dashed border-burgundy/45 bg-[#FFF8F0] hover:bg-[#F9E8EC] hover:border-burgundy flex items-center justify-center shadow-2xs hover:scale-110 active:scale-95 transition-all duration-200">
-                      <Github className="w-3.5 h-3.5 text-burgundy/80 group-hover:text-burgundy transition-colors" />
+                    {/* SVG Scalloped Perforated Stamp Base */}
+                    <svg
+                      width="56"
+                      height="68"
+                      viewBox="-1 -1 58 70"
+                      fill="none"
+                      className="absolute inset-0 w-full h-full pointer-events-none"
+                    >
+                      <path
+                        d={STAMP_PATH}
+                        fill="#FFFDF7"
+                        stroke="#DEC8A4"
+                        strokeWidth="1"
+                        className="group-hover:fill-[#FBF5EC] transition-colors"
+                      />
+                      <rect
+                        x="5"
+                        y="5"
+                        width="46"
+                        height="58"
+                        rx="1.5"
+                        fill="none"
+                        stroke="#D8A47F"
+                        strokeWidth="0.75"
+                        strokeDasharray="2 1.5"
+                        opacity="0.8"
+                      />
+                    </svg>
+
+                    {/* Stamp Interior Artwork */}
+                    <div className="relative z-10 flex flex-col items-center justify-between h-[48px] py-0.5">
+                      <span className="text-[5.5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
+                        GIT &bull; 2026
+                      </span>
+                      <div className="w-5 h-5 rounded-full bg-burgundy/5 flex items-center justify-center group-hover:bg-burgundy/10 transition-colors">
+                        <Github className="w-3.5 h-3.5 text-burgundy group-hover:scale-110 transition-transform" />
+                      </div>
+                      <span className="text-[6.5px] font-mono tracking-wider font-bold text-burgundy uppercase">
+                        GitHub
+                      </span>
                     </div>
-                    <span className="text-[6.5px] sm:text-[7px] font-mono tracking-wider uppercase text-mauve group-hover:text-burgundy font-semibold">
-                      GitHub
-                    </span>
+
+                    {/* Faint Wavy Cancellation Postmark lines */}
+                    <svg
+                      className="absolute -top-1 -right-1 w-7 h-7 pointer-events-none opacity-35"
+                      viewBox="0 0 28 28"
+                      fill="none"
+                    >
+                      <path
+                        d="M2 8 Q 8 4, 14 8 T 26 8 M2 14 Q 8 10, 14 14 T 26 14 M2 20 Q 8 16, 14 20 T 26 20"
+                        stroke="#651F35"
+                        strokeWidth="0.8"
+                      />
+                    </svg>
                   </a>
 
-                  {/* LinkedIn Stamp */}
+                  {/* LinkedIn Postage Stamp */}
                   <a
-                    href="https://www.linkedin.com/in/kpanwar06"
+                    href="https://www.linkedin.com/in/kritika-panwar-601721312/"
                     target="_blank"
                     rel="noopener noreferrer"
                     onClick={(e) => e.stopPropagation()}
-                    className="group flex flex-col items-center space-y-0.5"
-                    title="LinkedIn Profile"
+                    className="group relative w-[56px] h-[68px] flex items-center justify-center rotate-2 hover:rotate-0 hover:-translate-y-1 transition-all duration-200 cursor-pointer drop-shadow-[0_2px_4px_rgba(0,0,0,0.12)]"
+                    title="LinkedIn: Kritika Panwar"
                   >
-                    <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full border border-dashed border-burgundy/45 bg-[#FFF8F0] hover:bg-[#F9E8EC] hover:border-burgundy flex items-center justify-center shadow-2xs hover:scale-110 active:scale-95 transition-all duration-200">
-                      <Linkedin className="w-3.5 h-3.5 text-burgundy/80 group-hover:text-burgundy transition-colors" />
-                    </div>
-                    <span className="text-[6.5px] sm:text-[7px] font-mono tracking-wider uppercase text-mauve group-hover:text-burgundy font-semibold">
-                      LinkedIn
-                    </span>
-                  </a>
+                    {/* SVG Scalloped Perforated Stamp Base */}
+                    <svg
+                      width="56"
+                      height="68"
+                      viewBox="-1 -1 58 70"
+                      fill="none"
+                      className="absolute inset-0 w-full h-full pointer-events-none"
+                    >
+                      <path
+                        d={STAMP_PATH}
+                        fill="#FFFDF7"
+                        stroke="#DEC8A4"
+                        strokeWidth="1"
+                        className="group-hover:fill-[#FBF5EC] transition-colors"
+                      />
+                      <rect
+                        x="5"
+                        y="5"
+                        width="46"
+                        height="58"
+                        rx="1.5"
+                        fill="none"
+                        stroke="#D8A47F"
+                        strokeWidth="0.75"
+                        strokeDasharray="2 1.5"
+                        opacity="0.8"
+                      />
+                    </svg>
 
-                  {/* Email Stamp */}
-                  <a
-                    href="mailto:kritika20.panwar@gmail.com"
-                    onClick={(e) => e.stopPropagation()}
-                    className="group flex flex-col items-center space-y-0.5"
-                    title="Email: kritika20.panwar@gmail.com"
-                  >
-                    <div className="w-7 h-7 sm:w-7.5 sm:h-7.5 rounded-full border border-dashed border-burgundy/45 bg-[#FFF8F0] hover:bg-[#F9E8EC] hover:border-burgundy flex items-center justify-center shadow-2xs hover:scale-110 active:scale-95 transition-all duration-200">
-                      <Mail className="w-3.5 h-3.5 text-burgundy/80 group-hover:text-burgundy transition-colors" />
+                    {/* Stamp Interior Artwork */}
+                    <div className="relative z-10 flex flex-col items-center justify-between h-[48px] py-0.5">
+                      <span className="text-[5.5px] font-mono tracking-widest text-[#9E6D2B] font-bold uppercase">
+                        NET &bull; 2026
+                      </span>
+                      <div className="w-5 h-5 rounded-full bg-burgundy/5 flex items-center justify-center group-hover:bg-burgundy/10 transition-colors">
+                        <Linkedin className="w-3.5 h-3.5 text-burgundy group-hover:scale-110 transition-transform" />
+                      </div>
+                      <span className="text-[6.5px] font-mono tracking-wider font-bold text-burgundy uppercase">
+                        LinkedIn
+                      </span>
                     </div>
-                    <span className="text-[6.5px] sm:text-[7px] font-mono tracking-wider uppercase text-mauve group-hover:text-burgundy font-semibold">
-                      Dispatch
-                    </span>
+
+                    {/* Faint Wavy Cancellation Postmark lines */}
+                    <svg
+                      className="absolute -top-1 -right-1 w-7 h-7 pointer-events-none opacity-35"
+                      viewBox="0 0 28 28"
+                      fill="none"
+                    >
+                      <path
+                        d="M2 8 Q 8 4, 14 8 T 26 8 M2 14 Q 8 10, 14 14 T 26 14 M2 20 Q 8 16, 14 20 T 26 20"
+                        stroke="#651F35"
+                        strokeWidth="0.8"
+                      />
+                    </svg>
                   </a>
                 </div>
               </div>
