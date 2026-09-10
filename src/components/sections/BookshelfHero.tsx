@@ -873,8 +873,8 @@ export default function BookshelfHero() {
                   </span>
                 </div>
 
-                {/* Two Authentic Perforated Postage Stamps (GitHub & LinkedIn) */}
-                <div className="pt-2 flex items-center justify-center space-x-6 sm:space-x-8 select-none">
+                {/* Two Authentic Perforated Postage Stamps (GitHub & LinkedIn) - shifted 14px left */}
+                <div className="pt-2 flex items-center justify-center space-x-6 sm:space-x-8 select-none -translate-x-[14px]">
                   {/* GitHub Postage Stamp */}
                   <a
                     href="https://github.com/Kritika-Panwar-151/"
