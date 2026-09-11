@@ -87,7 +87,7 @@ export default function IdentitySection() {
     <section
       ref={sectionRef}
       id="identity"
-      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-cream overflow-hidden px-4 py-20 sm:py-28 select-none border-b border-dustyRose/25"
+      className="relative w-full min-h-screen flex flex-col items-center justify-center bg-cream overflow-hidden px-4 py-28 sm:py-36 select-none border-b border-dustyRose/25"
     >
       {/* Editorial Decorative Grid & Texture */}
       <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(#C96F82_1px,transparent_1px)] [background-size:20px_20px]" />
@@ -113,10 +113,10 @@ export default function IdentitySection() {
           className="flex items-center justify-center"
         >
           <span
-            className="text-[13vw] sm:text-[11vw] font-serif font-black uppercase tracking-[0.08em] sm:tracking-[0.12em] text-[#C96F82]/25 select-none whitespace-nowrap blur-[2px] sm:blur-[3.5px] transform will-change-transform"
+            className="text-[18vw] sm:text-[16vw] font-serif font-black uppercase tracking-[0.18em] text-[#C96F82]/30 select-none whitespace-nowrap blur-[3px] sm:blur-[5px] scale-110 transform will-change-transform"
             style={{
-              textShadow: "0 0 35px rgba(201, 111, 130, 0.25)",
-              WebkitTextStroke: "1px rgba(101, 31, 53, 0.15)",
+              textShadow: "0 0 40px rgba(201, 111, 130, 0.25)",
+              WebkitTextStroke: "1px rgba(101, 31, 53, 0.2)",
               transform: "translateZ(0)",
             }}
           >
