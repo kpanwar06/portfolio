@@ -19,18 +19,18 @@ export default function IdentitySection() {
 
     const ctx = gsap.context(() => {
       // Parallax scroll effect:
-      // Background PORTFOLIO drifts gently with blur behind KRITIKA
+      // Background PORTFOLIO drifts gently with subtle blur behind KRITIKA
       gsap.fromTo(
         bgWordRef.current,
         {
-          yPercent: -15,
-          scale: 0.95,
-          opacity: 0.25,
+          yPercent: -6,
+          scale: 0.98,
+          opacity: 0.18,
         },
         {
-          yPercent: 15,
-          scale: 1.05,
-          opacity: 0.45,
+          yPercent: 6,
+          scale: 1.02,
+          opacity: 0.3,
           ease: "none",
           scrollTrigger: {
             trigger: frame1Ref.current,
@@ -143,32 +143,28 @@ export default function IdentitySection() {
             </span>
           </div>
 
-          {/* NAME CLUSTER: Shifted "PORTFOLIO" Behind "KRITIKA" */}
-          <div className="relative flex items-center justify-center my-3">
-            {/* Background PORTFOLIO */}
-            <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden -translate-y-[59px] translate-x-[5px]">
-              <div
-                ref={bgWordRef}
-                aria-hidden="true"
-                className="flex items-center justify-center"
+          {/* NAME CLUSTER: Perfectly Centered Architectural Watermark */}
+          <div className="relative flex items-center justify-center my-2 sm:my-4">
+            {/* Background PORTFOLIO: centered directly behind KRITIKA */}
+            <div
+              ref={bgWordRef}
+              aria-hidden="true"
+              className="absolute inset-0 flex items-center justify-center pointer-events-none select-none z-0 overflow-visible"
+            >
+              <span
+                className="text-5xl sm:text-7xl md:text-8xl lg:text-[10.5rem] font-serif font-bold uppercase tracking-[0.06em] sm:tracking-[0.1em] text-[#C96F82]/22 select-none whitespace-nowrap blur-[1.5px] sm:blur-[2.5px] transform will-change-transform"
+                style={{
+                  transform: "translateZ(0)",
+                }}
               >
-                <span
-                  className="text-[18vw] sm:text-[16vw] font-serif font-black uppercase tracking-[0.18em] text-[#C96F82]/30 select-none whitespace-nowrap blur-[3px] sm:blur-[5px] scale-110 transform will-change-transform"
-                  style={{
-                    textShadow: "0 0 40px rgba(201, 111, 130, 0.25)",
-                    WebkitTextStroke: "1px rgba(101, 31, 53, 0.2)",
-                    transform: "translateZ(0)",
-                  }}
-                >
-                  PORTFOLIO
-                </span>
-              </div>
+                PORTFOLIO
+              </span>
             </div>
 
             {/* Crisp Foreground Name */}
             <h1
               ref={nameRef}
-              className="relative z-10 text-6xl sm:text-8xl md:text-9xl lg:text-[12rem] font-serif font-bold text-burgundy tracking-tight leading-none drop-shadow-sm select-text"
+              className="relative z-10 text-6xl sm:text-8xl md:text-9xl lg:text-[11.5rem] font-serif font-bold text-burgundy tracking-tight leading-none drop-shadow-sm select-text"
             >
               KRITIKA
             </h1>
