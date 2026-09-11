@@ -140,21 +140,15 @@ export default function EnvelopeGallery() {
       id="envelope"
       className="relative w-full min-h-screen py-24 px-4 sm:px-8 bg-cream overflow-hidden flex flex-col justify-center border-b border-blush"
     >
-      {/* Background Section Header */}
-      <div className="max-w-6xl mx-auto w-full mb-12 sm:mb-16 flex flex-col sm:flex-row items-start sm:items-end justify-between border-b border-blush pb-4">
-        <div>
-          <span className="text-xs font-mono uppercase tracking-widest text-burgundy flex items-center space-x-2">
-            <span className="w-2 h-2 rounded-full bg-dustyRose" />
-            <span>SEC. 03 &bull; MEMORY ENVELOPE</span>
-          </span>
-          <h2 className="text-3xl sm:text-5xl font-serif text-espresso mt-1">
-            Moments &amp; Memories
-          </h2>
-        </div>
-        <p className="text-xs sm:text-sm font-mono text-mauve mt-2 sm:mt-0 flex items-center space-x-1.5">
-          <Sparkles className="w-3.5 h-3.5 text-dustyRose" />
-          <span>Tap any Polaroid to enlarge</span>
-        </p>
+      {/* Section Header: Matching Section 2 Style */}
+      <div className="absolute top-8 sm:top-10 left-8 sm:left-14 flex items-center space-x-2 text-xs font-mono text-dustyRose uppercase tracking-widest z-20">
+        <span className="w-2 h-2 rounded-full bg-burgundy" />
+        <span>SEC. 03 &bull; MEMORY ENVELOPE</span>
+      </div>
+
+      <div className="absolute top-8 sm:top-10 right-8 sm:right-14 hidden sm:flex items-center space-x-2 text-xs font-mono text-mauve z-20">
+        <Sparkles className="w-3.5 h-3.5 text-dustyRose" />
+        <span>Tap any Polaroid to enlarge</span>
       </div>
 
       {/* Main Composition: LEFT Envelope -> RIGHT Images Spilling */}

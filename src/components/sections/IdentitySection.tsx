@@ -109,7 +109,7 @@ export default function IdentitySection() {
     <section
       ref={sectionRef}
       id="identity"
-      className="relative w-full bg-cream overflow-hidden select-none"
+      className="relative w-full bg-cream overflow-hidden select-none border-b border-dustyRose/25"
     >
       {/* Editorial Decorative Grid & Texture */}
       <div className="absolute inset-0 pointer-events-none opacity-40 bg-[radial-gradient(#C96F82_1px,transparent_1px)] [background-size:20px_20px]" />
@@ -193,19 +193,10 @@ export default function IdentitySection() {
       {/* ========================================================================= */}
       <div
         ref={frame2Ref}
-        className="relative w-full min-h-screen flex flex-col justify-between items-center px-4 sm:px-8 py-8 sm:py-10 z-10 border-t border-dustyRose/15"
+        className="relative w-full min-h-screen flex flex-col justify-between items-center px-4 sm:px-8 py-8 sm:py-10 z-10"
       >
-        {/* Frame 2 Top Chapter Marker */}
-        <div className="w-full max-w-6xl mx-auto flex justify-between items-center text-xs font-mono text-dustyRose uppercase tracking-widest pt-2">
-          <div className="flex items-center space-x-2">
-            <span className="w-2 h-2 rounded-full bg-burgundy" />
-            <span>CHAPTER &bull; BACKGROUND &amp; CREED</span>
-          </div>
-
-          <div className="hidden sm:flex items-center space-x-2 text-xs font-mono text-mauve">
-            <span>VOL. 2026 &bull; PERSPECTIVE</span>
-          </div>
-        </div>
+        {/* Top Spacer for balanced vertical centering */}
+        <div className="w-full max-w-6xl mx-auto h-6" />
 
         {/* Center Spread: 2-Column Summary + Centered Quote */}
         <div ref={summaryRef} className="w-full max-w-4xl mx-auto my-auto py-4 text-center space-y-8">
