@@ -106,7 +106,7 @@ export default function IdentitySection() {
       {/* ========================================================================= */}
       {/* LAYER 1 (BACK): GIANT BLURRED "PORTFOLIO" */}
       {/* ========================================================================= */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden -translate-y-[14px]">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden -translate-y-[39px]">
         <div
           ref={bgWordRef}
           aria-hidden="true"
