@@ -99,11 +99,11 @@ export default function EnvelopeGallery() {
 
     // Desktop/Laptop spread layout: distributes across the right canvas
     const sectionW = sectionRef.current ? sectionRef.current.clientWidth : window.innerWidth;
-    const envelopeW = window.innerWidth >= 1024 ? 380 : 320;
-    const availableW = Math.max(sectionW - envelopeW - 240, 480);
+    const envelopeW = window.innerWidth >= 1024 ? 360 : 310;
+    const availableW = Math.max(sectionW - envelopeW - 200, 420);
     const step = availableW / (total - 0.5);
 
-    const yOffsets = [-85, 75, -80, 85, -50];
+    const yOffsets = [-55, 45, -50, 50, -30];
     const rotations = [-7, 6, -4, 8, -5];
 
     return {
@@ -264,15 +264,15 @@ export default function EnvelopeGallery() {
     <section
       ref={sectionRef}
       id="envelope"
-      className="relative w-full min-h-screen py-20 px-4 sm:px-8 bg-cream overflow-hidden flex flex-col justify-center border-b border-blush select-none"
+      className="relative w-full min-h-screen py-10 sm:py-14 px-4 sm:px-8 bg-cream overflow-hidden flex flex-col justify-center border-b border-blush select-none"
     >
       {/* Section Header: Corner Stamps */}
-      <div className="absolute top-8 sm:top-10 left-8 sm:left-14 flex items-center space-x-2 text-xs font-mono text-dustyRose uppercase tracking-widest z-30">
+      <div className="absolute top-6 sm:top-8 left-8 sm:left-14 flex items-center space-x-2 text-xs font-mono text-dustyRose uppercase tracking-widest z-30">
         <span className="w-2 h-2 rounded-full bg-burgundy" />
         <span>SEC. 03 &bull; MEMORY ENVELOPE</span>
       </div>
 
-      <div className="absolute top-8 sm:top-10 right-8 sm:right-14 hidden sm:flex items-center space-x-2 text-xs font-mono text-mauve z-30">
+      <div className="absolute top-6 sm:top-8 right-8 sm:right-14 hidden sm:flex items-center space-x-2 text-xs font-mono text-mauve z-30">
         <Sparkles className="w-3.5 h-3.5 text-dustyRose" />
         <span>
           {isSpread
@@ -282,7 +282,7 @@ export default function EnvelopeGallery() {
       </div>
 
       {/* Main Stage: Right-Facing Envelope on the Left -> Photos Spill Out to Right */}
-      <div className="max-w-7xl mx-auto w-full relative min-h-[580px] sm:min-h-[640px] flex items-center my-auto">
+      <div className="max-w-7xl mx-auto w-full relative min-h-[480px] sm:min-h-[520px] flex items-center my-auto">
         
         {/* ========================================================================= */}
         {/* LEFT: PHYSICAL HORIZONTAL ENVELOPE WITH OPEN MOUTH FACING RIGHT           */}
@@ -290,7 +290,7 @@ export default function EnvelopeGallery() {
         <div
           ref={envelopeRef}
           onClick={isSpread ? bundlePhotos : spreadPhotos}
-          className="relative z-20 w-[270px] sm:w-[330px] md:w-[370px] h-[330px] sm:h-[370px] md:h-[390px] flex-shrink-0 cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
+          className="relative z-20 w-[260px] sm:w-[310px] md:w-[340px] h-[230px] sm:h-[260px] md:h-[280px] flex-shrink-0 cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
           title={isSpread ? "Click to bundle photos back" : "Click to spread photos across desk"}
         >
           {/* Back Panel (Inner Lining of Pocket) */}
@@ -363,8 +363,8 @@ export default function EnvelopeGallery() {
         {/* ========================================================================= */}
         {/* RIGHT: PHOTOS CONTAINER (BUNDLED AT MOUTH -> SPREAD & DRAGGABLE)          */}
         {/* ========================================================================= */}
-        <div className="relative flex-1 h-full min-h-[500px] flex items-center min-w-0">
-          <div className="relative w-full h-[520px] flex items-center">
+        <div className="relative flex-1 h-full min-h-[440px] sm:min-h-[460px] flex items-center min-w-0">
+          <div className="relative w-full h-[440px] sm:h-[460px] flex items-center">
             {photos.map((photo, index) => (
               <div
                 key={photo.id}
@@ -384,7 +384,7 @@ export default function EnvelopeGallery() {
                 className="polaroid-card absolute left-0 top-1/2 -translate-y-1/2 cursor-grab active:cursor-grabbing transition-shadow group"
               >
                 {/* Polaroid Frame */}
-                <div className="w-48 sm:w-56 md:w-60 bg-white p-3 pb-5 rounded-md shadow-editorial border border-blush/80 transition-all duration-300 group-hover:shadow-editorial-lg group-hover:border-dustyRose/50">
+                <div className="w-44 sm:w-48 md:w-52 bg-white p-2.5 pb-4 rounded-md shadow-editorial border border-blush/80 transition-all duration-300 group-hover:shadow-editorial-lg group-hover:border-dustyRose/50">
                   {/* Translucent Washi Tape strip at top */}
                   <div className="absolute -top-3 left-1/2 -translate-x-1/2 w-14 h-5 bg-blush/80 border-t border-b border-dustyRose/40 opacity-90 transform -rotate-2 pointer-events-none" />
 
