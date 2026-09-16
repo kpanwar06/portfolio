@@ -12,6 +12,7 @@ interface PhotoItem {
   tag: string;
   date: string;
   src: string;
+  fallbackSrc?: string;
   aspect: string;
 }
 
@@ -26,14 +27,15 @@ export default function EnvelopeGallery() {
   const [isSpread, setIsSpread] = useState<boolean>(false);
   const [activePhoto, setActivePhoto] = useState<PhotoItem | null>(null);
 
-  // Curated photo collection
+  // Photo collection: supports local images in public/photos/ (e.g. 1.jpg, 2.jpg) with high-res fallbacks
   const photos: PhotoItem[] = [
     {
       id: 1,
       title: "Deep Focus Coding",
       tag: "Development",
       date: "Autumn 2025",
-      src: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
+      src: "/photos/1.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
       aspect: "aspect-[4/5]",
     },
     {
@@ -41,7 +43,8 @@ export default function EnvelopeGallery() {
       title: "Campus & Architecture",
       tag: "Academics",
       date: "BMSCE Life",
-      src: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
+      src: "/photos/2.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
       aspect: "aspect-[4/3]",
     },
     {
@@ -49,7 +52,8 @@ export default function EnvelopeGallery() {
       title: "Late Night Problem Solving",
       tag: "Engineering",
       date: "Algorithm Sprints",
-      src: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80",
+      src: "/photos/3.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80",
       aspect: "aspect-square",
     },
     {
@@ -57,7 +61,8 @@ export default function EnvelopeGallery() {
       title: "Creative Sketches & Art",
       tag: "Personal Passions",
       date: "Studio Notebook",
-      src: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80",
+      src: "/photos/4.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80",
       aspect: "aspect-[4/5]",
     },
     {
@@ -65,7 +70,8 @@ export default function EnvelopeGallery() {
       title: "Tech Conference & Hackathon",
       tag: "Community",
       date: "Winter 2025",
-      src: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80",
+      src: "/photos/5.jpg",
+      fallbackSrc: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80",
       aspect: "aspect-[4/3]",
     },
   ];
@@ -73,7 +79,7 @@ export default function EnvelopeGallery() {
   // Coordinates when bundled at the open right mouth of the envelope
   const getBundleCoords = (index: number) => {
     return {
-      x: index * 10,
+      x: 35 + index * 10,
       y: (index - 2) * 5,
       rot: (index - 2) * 2.5,
     };
@@ -91,7 +97,7 @@ export default function EnvelopeGallery() {
       const col = index % 2;
       const row = Math.floor(index / 2);
       return {
-        x: col === 0 ? 15 : 130,
+        x: col === 0 ? 30 : 140,
         y: (row - 1) * 90 + (col === 1 ? 15 : 0),
         rot: (index % 2 === 0 ? -3 : 4),
       };
@@ -102,14 +108,14 @@ export default function EnvelopeGallery() {
     const envelopeW = window.innerWidth >= 1024 ? 260 : 230;
     const cardWidth = 185;
     // Usable width on the right of the portrait envelope
-    const usableW = Math.max(sectionW - envelopeW - cardWidth - 50, 280);
+    const usableW = Math.max(sectionW - envelopeW - cardWidth - 80, 260);
     const step = usableW / Math.max(total - 1, 1);
 
     const yOffsets = [-35, 30, -25, 35, -15];
     const rotations = [-5, 5, -4, 6, -3];
 
     return {
-      x: 30 + index * step,
+      x: 65 + index * step,
       y: yOffsets[index] || 0,
       rot: rotations[index] || 0,
     };
@@ -297,95 +303,89 @@ export default function EnvelopeGallery() {
           className="relative z-20 w-[210px] sm:w-[230px] md:w-[245px] h-[320px] sm:h-[350px] md:h-[375px] flex-shrink-0 cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
           title={isSpread ? "Click to bundle photos back" : "Click to spread photos across desk"}
         >
-          {/* Pale Pink Satin Ribbon peeking over Top Edge */}
-          <div className="absolute -top-4 left-8 sm:left-10 z-30 pointer-events-none flex items-center">
-            <div className="w-4 sm:w-5 h-7 sm:h-8 bg-gradient-to-b from-[#FAD3DC] via-[#F2B3C2] to-[#E597A8] rounded-full transform -rotate-12 shadow-xs opacity-95" />
-            <div className="w-4 sm:w-5 h-7 sm:h-8 bg-gradient-to-b from-[#FAD3DC] via-[#F2B3C2] to-[#E597A8] rounded-full transform rotate-12 shadow-xs opacity-95 -ml-2" />
-            <div className="absolute top-3 -left-1 w-2.5 h-6 bg-[#E597A8] rounded-xs transform -rotate-20 opacity-90" />
-            <div className="absolute top-3 left-4 w-2.5 h-6 bg-[#D98799] rounded-xs transform rotate-15 opacity-90" />
-          </div>
-
           {/* Back Panel (Inner Lining of Pocket) */}
           <div className="absolute inset-0 bg-[#F5EDE3] rounded-l-2xl border border-r-0 border-[#E8DFC9]/80 shadow-[-15px_20px_40px_rgba(38,28,30,0.12)] overflow-hidden">
             {/* Subtle soft blush pocket shadow gradient on right opening */}
-            <div className="absolute top-0 right-0 bottom-0 w-20 bg-gradient-to-l from-[#E8D7DC]/60 via-[#E8D7DC]/20 to-transparent pointer-events-none" />
+            <div className="absolute top-0 right-0 bottom-0 w-24 bg-gradient-to-l from-[#E8D7DC]/60 via-[#E8D7DC]/20 to-transparent pointer-events-none" />
           </div>
 
           {/* Front Envelope Panel: Soft Textured Cream Cotton Rag Paper */}
-          <div className="relative z-20 w-full h-full bg-[#FAF7F2] rounded-l-2xl border border-r-0 border-[#E5DDD0] p-4 sm:p-5 flex flex-col justify-between overflow-hidden shadow-xs">
+          <div className="relative z-20 w-full h-full bg-[#FAF7F2] rounded-l-2xl border border-r-0 border-[#E5DDD0] flex flex-col justify-between items-center p-4 sm:p-5 overflow-hidden shadow-xs">
             
-            {/* Top Row: Hand-painted Tulips + Antique Pill-Shaped Bow Wax Seal */}
-            <div className="flex justify-between items-start">
-              {/* Botanical Pink Tulips SVG Artwork */}
-              <div className="relative -ml-1 -mt-1 pointer-events-none">
-                <svg viewBox="0 0 100 120" className="w-16 h-20 sm:w-20 sm:h-24 filter drop-shadow-xs" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  {/* Stems */}
-                  <path d="M50 115 C48 85, 42 60, 42 45" stroke="#6E8B69" strokeWidth="2.5" strokeLinecap="round" />
-                  <path d="M50 115 C52 90, 56 65, 58 48" stroke="#6E8B69" strokeWidth="2.2" strokeLinecap="round" />
-                  <path d="M50 115 C50 85, 36 68, 30 55" stroke="#7A9875" strokeWidth="2" strokeLinecap="round" />
-                  {/* Leaves */}
-                  <path d="M50 95 C38 80, 32 60, 26 50 C32 66, 42 82, 50 95 Z" fill="#88A682" opacity="0.9" />
-                  <path d="M50 90 C62 76, 68 58, 72 46 C66 62, 58 78, 50 90 Z" fill="#7A9875" opacity="0.85" />
-                  {/* Left Tulip Bloom */}
-                  <path d="M30 55 C22 45, 20 32, 28 24 C34 32, 36 44, 30 55 Z" fill="#E896A6" />
-                  <path d="M30 55 C34 44, 38 32, 34 22 C28 32, 26 44, 30 55 Z" fill="#D6758A" opacity="0.8" />
-                  {/* Center Tulip Bloom */}
-                  <path d="M42 45 C34 35, 34 20, 42 12 C46 22, 48 34, 42 45 Z" fill="#E896A6" />
-                  <path d="M42 45 C48 34, 52 20, 46 10 C40 20, 38 32, 42 45 Z" fill="#DE7E92" />
-                  <path d="M42 45 C40 32, 44 22, 48 16 C48 26, 46 36, 42 45 Z" fill="#F4B8C5" opacity="0.9" />
-                  {/* Right Tulip Bloom */}
-                  <path d="M58 48 C52 38, 54 26, 62 18 C66 26, 66 38, 58 48 Z" fill="#E896A6" />
-                  <path d="M58 48 C64 38, 68 26, 64 16 C58 26, 56 38, 58 48 Z" fill="#CF6E83" opacity="0.85" />
+            {/* Authentic Folded Paper Crease Grooves */}
+            <svg
+              className="absolute inset-0 w-full h-full pointer-events-none"
+              preserveAspectRatio="none"
+              viewBox="0 0 240 375"
+            >
+              {/* Top Triangular Facet Shading */}
+              <polygon points="0,0 240,0 120,188" fill="#FAF6F0" fillOpacity="0.45" />
+              
+              {/* Left Triangular Facet Shading */}
+              <polygon points="0,0 120,188 0,375" fill="#F2EAE0" fillOpacity="0.38" />
+
+              {/* Bottom Triangular Facet Shading */}
+              <polygon points="0,375 240,375 120,188" fill="#EFE5D8" fillOpacity="0.5" />
+
+              {/* Top-Left to Center Diagonal Crease Groove */}
+              <line x1="0" y1="0" x2="120" y2="188" stroke="#D3C5B3" strokeWidth="1.4" strokeOpacity="0.85" />
+              <line x1="1" y1="1" x2="121" y2="189" stroke="#FFFFFF" strokeWidth="1.1" strokeOpacity="0.95" />
+
+              {/* Bottom-Left to Center Diagonal Crease Groove */}
+              <line x1="0" y1="375" x2="120" y2="188" stroke="#D3C5B3" strokeWidth="1.4" strokeOpacity="0.85" />
+              <line x1="1" y1="374" x2="121" y2="187" stroke="#FFFFFF" strokeWidth="1.1" strokeOpacity="0.95" />
+
+              {/* Center Crease Seam Intersection */}
+              <circle cx="120" cy="188" r="2.5" fill="#D3C5B3" fillOpacity="0.4" />
+            </svg>
+
+            {/* Botanical Pink Tulips SVG Artwork (Upper-Center) */}
+            <div className="relative z-10 mx-auto mt-6 sm:mt-8 pointer-events-none">
+              <svg viewBox="0 0 110 135" className="w-24 h-28 sm:w-28 sm:h-32 filter drop-shadow-xs" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Stems */}
+                <path d="M55 128 C53 96, 46 68, 46 50" stroke="#6E8B69" strokeWidth="2.5" strokeLinecap="round" />
+                <path d="M55 128 C57 102, 64 74, 66 54" stroke="#6E8B69" strokeWidth="2.2" strokeLinecap="round" />
+                <path d="M55 128 C55 94, 38 74, 32 60" stroke="#7A9875" strokeWidth="2" strokeLinecap="round" />
+                {/* Leaves */}
+                <path d="M55 108 C40 90, 33 67, 26 56 C33 74, 45 92, 55 108 Z" fill="#88A682" opacity="0.9" />
+                <path d="M55 100 C68 84, 75 64, 80 50 C73 68, 64 86, 55 100 Z" fill="#7A9875" opacity="0.85" />
+                {/* Left Tulip Bloom */}
+                <path d="M32 60 C24 49, 21 35, 30 26 C37 35, 39 48, 32 60 Z" fill="#E896A6" />
+                <path d="M32 60 C37 48, 41 35, 37 24 C30 35, 27 48, 32 60 Z" fill="#D6758A" opacity="0.8" />
+                {/* Center Tulip Bloom */}
+                <path d="M46 50 C37 39, 37 23, 46 14 C51 25, 53 38, 46 50 Z" fill="#E896A6" />
+                <path d="M46 50 C53 38, 58 23, 51 12 C44 23, 42 36, 46 50 Z" fill="#DE7E92" />
+                <path d="M46 50 C44 36, 49 25, 53 19 C53 30, 51 41, 46 50 Z" fill="#F4B8C5" opacity="0.9" />
+                {/* Right Tulip Bloom */}
+                <path d="M66 54 C59 43, 61 30, 70 21 C74 30, 74 43, 66 54 Z" fill="#E896A6" />
+                <path d="M66 54 C73 43, 77 30, 72 19 C65 30, 63 43, 66 54 Z" fill="#CF6E83" opacity="0.85" />
+              </svg>
+            </div>
+
+            {/* Dusty Rose Antique Wax Seal (Rounded Pill with Embossed Bow, centered near crease seam) */}
+            <div className="relative z-10 mx-auto mb-8 sm:mb-10 w-14 h-11 sm:w-16 sm:h-12 rounded-xl bg-gradient-to-br from-[#E2A6B3] via-[#D892A0] to-[#B86B7A] shadow-[0_4px_14px_rgba(101,31,53,0.25)] border-2 border-[#EBBCC6] flex items-center justify-center transform group-hover:rotate-3 transition-transform">
+              <div className="w-10 h-8 sm:w-12 sm:h-9 rounded-lg border border-[#F6D0D8]/70 flex items-center justify-center">
+                <svg viewBox="0 0 24 24" className="w-5 h-5 text-[#FFFDF9] drop-shadow-xs" fill="currentColor">
+                  <path d="M12 11 C10 9, 6 8, 4 10 C2 12, 4 15, 7 14 C9 13.5, 10.5 12, 12 11 Z" opacity="0.9" />
+                  <path d="M12 11 C14 9, 18 8, 20 10 C22 12, 20 15, 17 14 C15 13.5, 13.5 12, 12 11 Z" opacity="0.9" />
+                  <circle cx="12" cy="11.5" r="2" />
+                  <path d="M11 13 L9 19 C8.8 19.5, 9.5 20, 10 19.5 L12 14.5 L14 19.5 C14.5 20, 15.2 19.5, 15 19 L13 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
                 </svg>
               </div>
-
-              {/* Dusty Rose Antique Wax Seal (Rounded Rectangle / Pill with Embossed Bow) */}
-              <div className="relative w-12 h-10 sm:w-13 sm:h-11 rounded-xl bg-gradient-to-br from-[#E2A6B3] via-[#D892A0] to-[#B86B7A] shadow-[0_4px_12px_rgba(101,31,53,0.22)] border-2 border-[#EBBCC6] flex items-center justify-center transform group-hover:rotate-3 transition-transform">
-                <div className="w-9 h-7 rounded-lg border border-[#F6D0D8]/60 flex items-center justify-center">
-                  <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#FFFDF9] drop-shadow-xs" fill="currentColor">
-                    <path d="M12 11 C10 9, 6 8, 4 10 C2 12, 4 15, 7 14 C9 13.5, 10.5 12, 12 11 Z" opacity="0.9" />
-                    <path d="M12 11 C14 9, 18 8, 20 10 C22 12, 20 15, 17 14 C15 13.5, 13.5 12, 12 11 Z" opacity="0.9" />
-                    <circle cx="12" cy="11.5" r="2" />
-                    <path d="M11 13 L9 19 C8.8 19.5, 9.5 20, 10 19.5 L12 14.5 L14 19.5 C14.5 20, 15.2 19.5, 15 19 L13 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-                  </svg>
-                </div>
-              </div>
-            </div>
-
-            {/* Handwritten Delivery Address Field */}
-            <div className="my-auto py-2 pl-1 pr-2 font-serif space-y-1">
-              <span className="text-[9px] font-mono uppercase tracking-widest text-burgundy/75 block font-semibold">
-                DELIVER TO:
-              </span>
-              <p className="text-xl sm:text-2xl text-espresso font-bold italic tracking-wide leading-tight">
-                Kritika Panwar
-              </p>
-              <p className="text-xs text-espresso/70 font-sans leading-snug">
-                Portfolio Archive • Memories &amp; Milestones
-              </p>
-              <p className="text-[9px] font-mono text-dustyRose pt-1">
-                Bengaluru, KA • Class of 2028
-              </p>
-            </div>
-
-            {/* Bottom Status / Toggle Strip */}
-            <div className="pt-2 border-t border-[#E8DFC9]/70 flex flex-col justify-between items-start gap-1 text-[9px] font-mono text-mauve">
-              <span className="text-burgundy font-semibold tracking-wide">
-                {isSpread ? "OPENED • SCATTERED" : "OPENED • BUNDLED"}
-              </span>
-              <span className="text-dustyRose-dark group-hover:underline">
-                {isSpread ? "Click to bundle ↺" : "Click to spread ✦"}
-              </span>
             </div>
           </div>
 
-          {/* Triangular Flap Unfolded and Open to the Right */}
+          {/* Triangular Flap Unfolded and Open to the Right (Generous & Prominent) */}
           <div
-            className="absolute top-3 -right-10 bottom-3 w-11 bg-gradient-to-r from-[#FAF7F2] to-[#ECE3D6] border-t border-b border-[#E5DDD0] pointer-events-none opacity-95 shadow-sm"
+            className="absolute top-2 -right-[76px] sm:-right-[90px] md:-right-[102px] bottom-2 w-20 sm:w-24 md:w-26 bg-gradient-to-r from-[#FAF7F2] via-[#F4ECE2] to-[#ECE2D4] border-t border-b border-[#DFD5C4] pointer-events-none opacity-98 shadow-md"
             style={{
               clipPath: "polygon(0 0, 100% 50%, 0 100%)",
+              filter: "drop-shadow(6px 6px 14px rgba(38,28,30,0.18))",
             }}
-          />
+          >
+            {/* Crease line at the flap hinge */}
+            <div className="absolute top-0 left-0 bottom-0 w-[2px] bg-[#D4C6B5]" />
+          </div>
         </div>
 
         {/* ========================================================================= */}
@@ -423,6 +423,12 @@ export default function EnvelopeGallery() {
                       alt={photo.title}
                       className="w-full h-full object-cover grayscale-[10%] contrast-[105%] transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105"
                       draggable={false}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (photo.fallbackSrc && target.src !== photo.fallbackSrc) {
+                          target.src = photo.fallbackSrc;
+                        }
+                      }}
                     />
                     <div className="absolute inset-0 bg-burgundy/10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <div className="w-7 h-7 rounded-full bg-white/90 text-burgundy flex items-center justify-center shadow">
@@ -438,7 +444,7 @@ export default function EnvelopeGallery() {
                         {photo.title}
                       </h4>
                       <p className="text-[9px] font-mono text-mauve mt-0.5">
-                        {photo.tag} &bull; {photo.date}
+                        {photo.tag} • {photo.date}
                       </p>
                     </div>
                     <Heart className="w-3.5 h-3.5 text-dustyRose opacity-0 group-hover:opacity-100 transition-opacity" />
@@ -494,13 +500,19 @@ export default function EnvelopeGallery() {
                 src={activePhoto.src}
                 alt={activePhoto.title}
                 className="w-full h-auto max-h-[70vh] object-cover"
+                onError={(e) => {
+                  const target = e.currentTarget;
+                  if (activePhoto.fallbackSrc && target.src !== activePhoto.fallbackSrc) {
+                    target.src = activePhoto.fallbackSrc;
+                  }
+                }}
               />
             </div>
 
             <div className="mt-4 flex items-center justify-between">
               <div>
                 <span className="text-xs font-mono uppercase text-burgundy tracking-wider">
-                  {activePhoto.tag} &bull; {activePhoto.date}
+                  {activePhoto.tag} • {activePhoto.date}
                 </span>
                 <h3 className="font-serif text-2xl text-espresso font-bold mt-1">
                   {activePhoto.title}
