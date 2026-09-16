@@ -27,51 +27,70 @@ export default function EnvelopeGallery() {
   const [isSpread, setIsSpread] = useState<boolean>(false);
   const [activePhoto, setActivePhoto] = useState<PhotoItem | null>(null);
 
-  // Photo collection: supports local images in public/photos/ (e.g. 1.jpg, 2.jpg) with high-res fallbacks
+  // Personal archive photos from public/photos/
   const photos: PhotoItem[] = [
     {
       id: 1,
-      title: "Deep Focus Coding",
-      tag: "Development",
-      date: "Autumn 2025",
-      src: "/photos/1.jpg",
-      fallbackSrc: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=800&q=80",
-      aspect: "aspect-[4/5]",
-    },
-    {
-      id: 2,
-      title: "Campus & Architecture",
-      tag: "Academics",
-      date: "BMSCE Life",
-      src: "/photos/2.jpg",
-      fallbackSrc: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&w=800&q=80",
+      title: "Team Hackathon Sprints",
+      tag: "BMSCE Tech",
+      date: "Round 01",
+      src: "/photos/1.jpeg",
       aspect: "aspect-[4/3]",
     },
     {
-      id: 3,
-      title: "Late Night Problem Solving",
-      tag: "Engineering",
-      date: "Algorithm Sprints",
-      src: "/photos/3.jpg",
-      fallbackSrc: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80",
-      aspect: "aspect-square",
-    },
-    {
-      id: 4,
-      title: "Creative Sketches & Art",
-      tag: "Personal Passions",
-      date: "Studio Notebook",
-      src: "/photos/4.jpg",
-      fallbackSrc: "https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80",
+      id: 2,
+      title: "Brandeis Business Summit",
+      tag: "Academics & Global",
+      date: "Delegate Series",
+      src: "/photos/2.jpeg",
       aspect: "aspect-[4/5]",
     },
     {
+      id: 3,
+      title: "Cyber Siege Challenge",
+      tag: "Engineering",
+      date: "Tech Fest 2025",
+      src: "/photos/3.jpeg",
+      aspect: "aspect-[4/3]",
+    },
+    {
+      id: 4,
+      title: "Department Placement Core",
+      tag: "Leadership",
+      date: "ISE Campus Life",
+      src: "/photos/4.jpeg",
+      aspect: "aspect-[4/3]",
+    },
+    {
       id: 5,
-      title: "Tech Conference & Hackathon",
-      tag: "Community",
-      date: "Winter 2025",
-      src: "/photos/5.jpg",
-      fallbackSrc: "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&w=800&q=80",
+      title: "Rapid Decode & Map Myst",
+      tag: "Event Architecture",
+      date: "Puzzle Design",
+      src: "/photos/5.jpeg",
+      aspect: "aspect-[4/3]",
+    },
+    {
+      id: 6,
+      title: "Business School Festival",
+      tag: "ReachIvy Leadership",
+      date: "Education Summit",
+      src: "/photos/6.jpeg",
+      aspect: "aspect-[4/5]",
+    },
+    {
+      id: 7,
+      title: "Faculty & Team Milestones",
+      tag: "Department",
+      date: "Academic Year",
+      src: "/photos/7.jpeg",
+      aspect: "aspect-[4/3]",
+    },
+    {
+      id: 8,
+      title: "Escape Room Challenge",
+      tag: "Campus Culture",
+      date: "Basavanagudi, BLR",
+      src: "/photos/8.jpeg",
       aspect: "aspect-[4/3]",
     },
   ];
@@ -79,16 +98,16 @@ export default function EnvelopeGallery() {
   // Coordinates when bundled at the open right mouth of the envelope
   const getBundleCoords = (index: number) => {
     return {
-      x: 35 + index * 10,
-      y: (index - 2) * 5,
-      rot: (index - 2) * 2.5,
+      x: 35 + index * 6.5,
+      y: (index - 3.5) * 3.5,
+      rot: (index - 3.5) * 1.8,
     };
   };
 
   // Coordinates when spread across the right half of the screen
   const getSpreadCoords = (index: number, total: number) => {
     if (typeof window === "undefined") {
-      return { x: 120 + index * 130, y: (index % 2 === 0 ? -30 : 30), rot: (index % 2 === 0 ? -4 : 5) };
+      return { x: 90 + index * 90, y: (index % 2 === 0 ? -28 : 28), rot: (index % 2 === 0 ? -4 : 4) };
     }
 
     const isMobile = window.innerWidth < 768;
@@ -97,8 +116,8 @@ export default function EnvelopeGallery() {
       const col = index % 2;
       const row = Math.floor(index / 2);
       return {
-        x: col === 0 ? 30 : 140,
-        y: (row - 1) * 90 + (col === 1 ? 15 : 0),
+        x: col === 0 ? 25 : 135,
+        y: (row - 1.5) * 70 + (col === 1 ? 12 : 0),
         rot: (index % 2 === 0 ? -3 : 4),
       };
     }
@@ -106,18 +125,18 @@ export default function EnvelopeGallery() {
     // Desktop/Laptop spread layout: distributes cleanly across the right canvas
     const sectionW = sectionRef.current ? sectionRef.current.clientWidth : window.innerWidth;
     const envelopeW = window.innerWidth >= 1024 ? 260 : 230;
-    const cardWidth = 185;
+    const cardWidth = 180;
     // Usable width on the right of the portrait envelope
-    const usableW = Math.max(sectionW - envelopeW - cardWidth - 80, 260);
+    const usableW = Math.max(sectionW - envelopeW - cardWidth - 60, 340);
     const step = usableW / Math.max(total - 1, 1);
 
-    const yOffsets = [-35, 30, -25, 35, -15];
-    const rotations = [-5, 5, -4, 6, -3];
+    const yOffsets = [-32, 28, -25, 32, -18, 25, -28, 22];
+    const rotations = [-5, 5, -4, 5, -3, 4, -5, 3];
 
     return {
-      x: 65 + index * step,
-      y: yOffsets[index] || 0,
-      rot: rotations[index] || 0,
+      x: 55 + index * step,
+      y: yOffsets[index % yOffsets.length] || 0,
+      rot: rotations[index % rotations.length] || 0,
     };
   };
 
