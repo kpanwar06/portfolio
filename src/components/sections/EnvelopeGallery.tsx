@@ -99,17 +99,17 @@ export default function EnvelopeGallery() {
 
     // Desktop/Laptop spread layout: distributes cleanly across the right canvas
     const sectionW = sectionRef.current ? sectionRef.current.clientWidth : window.innerWidth;
-    const envelopeW = window.innerWidth >= 1024 ? 330 : 270;
-    const cardWidth = 190;
-    // Usable width on the right of the envelope
-    const usableW = Math.max(sectionW - envelopeW - cardWidth - 60, 260);
+    const envelopeW = window.innerWidth >= 1024 ? 260 : 230;
+    const cardWidth = 185;
+    // Usable width on the right of the portrait envelope
+    const usableW = Math.max(sectionW - envelopeW - cardWidth - 50, 280);
     const step = usableW / Math.max(total - 1, 1);
 
     const yOffsets = [-35, 30, -25, 35, -15];
     const rotations = [-5, 5, -4, 6, -3];
 
     return {
-      x: 35 + index * step,
+      x: 30 + index * step,
       y: yOffsets[index] || 0,
       rot: rotations[index] || 0,
     };
@@ -289,27 +289,32 @@ export default function EnvelopeGallery() {
       <div className="max-w-7xl mx-auto w-full relative flex-1 min-h-0 flex items-center my-auto">
         
         {/* ========================================================================= */}
-        {/* LEFT: ARTISANAL CREAM COTTON ENVELOPE (RIGHT-OPENING FLAP)                */}
+        {/* LEFT: ARTISANAL CREAM COTTON ENVELOPE (PORTRAIT: HEIGHT LONGER THAN WIDTH) */}
         {/* ========================================================================= */}
         <div
           ref={envelopeRef}
           onClick={isSpread ? bundlePhotos : spreadPhotos}
-          className="relative z-20 w-[260px] sm:w-[300px] md:w-[330px] h-[215px] sm:h-[235px] md:h-[250px] flex-shrink-0 cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
+          className="relative z-20 w-[210px] sm:w-[230px] md:w-[245px] h-[320px] sm:h-[350px] md:h-[375px] flex-shrink-0 cursor-pointer group transition-transform duration-300 hover:scale-[1.02]"
           title={isSpread ? "Click to bundle photos back" : "Click to spread photos across desk"}
         >
-          {/* Pale Pink Satin Ribbon Tail peeking from envelope */}
-          <div className="absolute -top-3.5 left-10 w-8 h-10 bg-gradient-to-b from-[#F2C4CE] to-[#E5A8B4] rounded-t-sm shadow-xs transform -rotate-12 pointer-events-none opacity-90 border-t border-white" />
+          {/* Pale Pink Satin Ribbon peeking over Top Edge */}
+          <div className="absolute -top-4 left-8 sm:left-10 z-30 pointer-events-none flex items-center">
+            <div className="w-4 sm:w-5 h-7 sm:h-8 bg-gradient-to-b from-[#FAD3DC] via-[#F2B3C2] to-[#E597A8] rounded-full transform -rotate-12 shadow-xs opacity-95" />
+            <div className="w-4 sm:w-5 h-7 sm:h-8 bg-gradient-to-b from-[#FAD3DC] via-[#F2B3C2] to-[#E597A8] rounded-full transform rotate-12 shadow-xs opacity-95 -ml-2" />
+            <div className="absolute top-3 -left-1 w-2.5 h-6 bg-[#E597A8] rounded-xs transform -rotate-20 opacity-90" />
+            <div className="absolute top-3 left-4 w-2.5 h-6 bg-[#D98799] rounded-xs transform rotate-15 opacity-90" />
+          </div>
 
           {/* Back Panel (Inner Lining of Pocket) */}
           <div className="absolute inset-0 bg-[#F5EDE3] rounded-l-2xl border border-r-0 border-[#E8DFC9]/80 shadow-[-15px_20px_40px_rgba(38,28,30,0.12)] overflow-hidden">
             {/* Subtle soft blush pocket shadow gradient on right opening */}
-            <div className="absolute top-0 right-0 bottom-0 w-24 bg-gradient-to-l from-[#E8D7DC]/50 via-[#E8D7DC]/15 to-transparent pointer-events-none" />
+            <div className="absolute top-0 right-0 bottom-0 w-20 bg-gradient-to-l from-[#E8D7DC]/60 via-[#E8D7DC]/20 to-transparent pointer-events-none" />
           </div>
 
           {/* Front Envelope Panel: Soft Textured Cream Cotton Rag Paper */}
           <div className="relative z-20 w-full h-full bg-[#FAF7F2] rounded-l-2xl border border-r-0 border-[#E5DDD0] p-4 sm:p-5 flex flex-col justify-between overflow-hidden shadow-xs">
             
-            {/* Top Row: Hand-painted Tulips Illustration + Blush Wax Seal with Bow */}
+            {/* Top Row: Hand-painted Tulips + Antique Pill-Shaped Bow Wax Seal */}
             <div className="flex justify-between items-start">
               {/* Botanical Pink Tulips SVG Artwork */}
               <div className="relative -ml-1 -mt-1 pointer-events-none">
@@ -334,9 +339,9 @@ export default function EnvelopeGallery() {
                 </svg>
               </div>
 
-              {/* Dusty Rose Wax Seal with Embossed Bow */}
-              <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-[#E2A6B3] via-[#D892A0] to-[#B86B7A] shadow-[0_4px_12px_rgba(101,31,53,0.22)] border-2 border-[#EBBCC6] flex items-center justify-center transform group-hover:rotate-6 transition-transform">
-                <div className="w-8 h-8 rounded-full border border-[#F6D0D8]/60 flex items-center justify-center">
+              {/* Dusty Rose Antique Wax Seal (Rounded Rectangle / Pill with Embossed Bow) */}
+              <div className="relative w-12 h-10 sm:w-13 sm:h-11 rounded-xl bg-gradient-to-br from-[#E2A6B3] via-[#D892A0] to-[#B86B7A] shadow-[0_4px_12px_rgba(101,31,53,0.22)] border-2 border-[#EBBCC6] flex items-center justify-center transform group-hover:rotate-3 transition-transform">
+                <div className="w-9 h-7 rounded-lg border border-[#F6D0D8]/60 flex items-center justify-center">
                   <svg viewBox="0 0 24 24" className="w-4 h-4 text-[#FFFDF9] drop-shadow-xs" fill="currentColor">
                     <path d="M12 11 C10 9, 6 8, 4 10 C2 12, 4 15, 7 14 C9 13.5, 10.5 12, 12 11 Z" opacity="0.9" />
                     <path d="M12 11 C14 9, 18 8, 20 10 C22 12, 20 15, 17 14 C15 13.5, 13.5 12, 12 11 Z" opacity="0.9" />
@@ -348,25 +353,25 @@ export default function EnvelopeGallery() {
             </div>
 
             {/* Handwritten Delivery Address Field */}
-            <div className="my-auto pl-1 pr-3 font-serif">
+            <div className="my-auto py-2 pl-1 pr-2 font-serif space-y-1">
               <span className="text-[9px] font-mono uppercase tracking-widest text-burgundy/75 block font-semibold">
                 DELIVER TO:
               </span>
-              <p className="text-lg sm:text-xl text-espresso font-bold italic tracking-wide">
+              <p className="text-xl sm:text-2xl text-espresso font-bold italic tracking-wide leading-tight">
                 Kritika Panwar
               </p>
-              <p className="text-xs text-espresso/70 font-sans">
-                Portfolio Archive &bull; Memories &amp; Milestones
+              <p className="text-xs text-espresso/70 font-sans leading-snug">
+                Portfolio Archive • Memories &amp; Milestones
               </p>
-              <p className="text-[9px] font-mono text-dustyRose pt-0.5">
-                Bengaluru, KA &bull; Class of 2028
+              <p className="text-[9px] font-mono text-dustyRose pt-1">
+                Bengaluru, KA • Class of 2028
               </p>
             </div>
 
             {/* Bottom Status / Toggle Strip */}
-            <div className="pt-2 border-t border-[#E8DFC9]/60 flex justify-between items-center text-[9px] font-mono text-mauve">
-              <span className="text-burgundy font-semibold">
-                {isSpread ? "OPENED &bull; SCATTERED" : "OPENED &bull; BUNDLED"}
+            <div className="pt-2 border-t border-[#E8DFC9]/70 flex flex-col justify-between items-start gap-1 text-[9px] font-mono text-mauve">
+              <span className="text-burgundy font-semibold tracking-wide">
+                {isSpread ? "OPENED • SCATTERED" : "OPENED • BUNDLED"}
               </span>
               <span className="text-dustyRose-dark group-hover:underline">
                 {isSpread ? "Click to bundle ↺" : "Click to spread ✦"}
@@ -376,7 +381,7 @@ export default function EnvelopeGallery() {
 
           {/* Triangular Flap Unfolded and Open to the Right */}
           <div
-            className="absolute top-2 -right-8 bottom-2 w-10 bg-gradient-to-r from-[#FAF7F2] to-[#F1E8DC] border-t border-b border-[#E5DDD0] pointer-events-none opacity-95 shadow-sm"
+            className="absolute top-3 -right-10 bottom-3 w-11 bg-gradient-to-r from-[#FAF7F2] to-[#ECE3D6] border-t border-b border-[#E5DDD0] pointer-events-none opacity-95 shadow-sm"
             style={{
               clipPath: "polygon(0 0, 100% 50%, 0 100%)",
             }}
