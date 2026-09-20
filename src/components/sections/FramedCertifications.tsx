@@ -9,6 +9,9 @@ import {
   X,
   ChevronLeft,
   ChevronRight,
+  FileText,
+  Star,
+  Compass,
 } from "lucide-react";
 
 interface CertificateItem {
@@ -18,90 +21,174 @@ interface CertificateItem {
   date: string;
   credentialId: string;
   verificationUrl?: string;
+  pdfUrl?: string;
+  image?: string;
   skills: string[];
-  badgeColor?: string;
+  honors?: string;
+  score?: string;
+  isSpecial?: boolean;
 }
 
 export default function FramedCertifications() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
 
-  // 8 Curated Certificates across 2 pages (4 per page in a 2x2 grid)
+  // 12 Certificates structured into 3 pages (4 per page in a 2x2 grid)
+  // Ordered with top-prestige & main credentials first
   const certificates: CertificateItem[] = [
-    // Page 1: Frames 1 - 4
+    // ================= PAGE 1: CORE PRESTIGE & HIGH-IMPACT CREDENTIALS =================
     {
       id: 1,
-      title: "Django Web Framework Specialization",
-      issuer: "Coursera & Meta / University",
-      date: "2025",
-      credentialId: "COURSERA-DJANGO-KP06",
-      skills: ["Python", "Django", "ORM", "REST APIs"],
+      title: "Ethics in Engineering Practice",
+      issuer: "NPTEL & IIT Kharagpur (MoE, Govt. of India)",
+      date: "Feb–Apr 2026",
+      credentialId: "NPTEL26MG42S1550207092",
+      verificationUrl: "https://nptel.ac.in/",
+      skills: ["Engineering Ethics", "Governance", "Professional Standards", "IIT Kharagpur"],
+      image: "/certificates/26_Nptel_Ethics.jpeg",
+      honors: "Elite + Top 2% Topper",
+      score: "88% Consolidated (Online: 22.08/25 • Exam: 66/75)",
     },
     {
       id: 2,
-      title: "Data Structures & Algorithms in Python",
-      issuer: "Advanced Engineering Program",
-      date: "2024",
-      credentialId: "DSA-PY-98421",
-      skills: ["Graph Theory", "Dynamic Prog.", "Trees"],
+      title: "Django Web Framework",
+      issuer: "Meta & Coursera",
+      date: "Dec 9, 2024",
+      credentialId: "VEBNRQ8HZQC1",
+      verificationUrl: "https://coursera.org/verify/VEBNRQ8HZQC1",
+      pdfUrl: "/certificates/Kritika_DjangoWebFramework.pdf",
+      image: "/certificates/Kritika_DjangoWebFramework.png",
+      skills: ["Django", "Python", "ORM", "MVT Architecture", "REST APIs"],
+      honors: "Meta Certified Professional",
     },
     {
       id: 3,
-      title: "Full-Stack Web Development & Cloud",
-      issuer: "Professional Credentials",
-      date: "2025",
-      credentialId: "FS-DEV-77312",
-      skills: ["React", "Node.js", "Docker", "CI/CD"],
+      title: "Programming in Python",
+      issuer: "Meta & Coursera",
+      date: "Dec 9, 2024",
+      credentialId: "C4PEWCB4T42X",
+      verificationUrl: "https://coursera.org/verify/C4PEWCB4T42X",
+      pdfUrl: "/certificates/Kritika_ProgrammingInPython.pdf",
+      image: "/certificates/Kritika_ProgrammingInPython.png",
+      skills: ["Python 3", "Data Structures", "OOP", "Unit Testing", "Algorithms"],
+      honors: "Meta Certified Professional",
     },
     {
       id: 4,
-      title: "Relational Database Design & SQL",
-      issuer: "Engineering Academy",
-      date: "2024",
-      credentialId: "SQL-DB-44109",
-      skills: ["PostgreSQL", "Indexing", "Optimization"],
+      title: "Introduction to Databases for Back-End",
+      issuer: "Meta & Coursera",
+      date: "Dec 9, 2024",
+      credentialId: "AER000NX4SCW",
+      verificationUrl: "https://coursera.org/verify/AER000NX4SCW",
+      pdfUrl: "/certificates/Kritika_IntroToDatabases.pdf",
+      image: "/certificates/Kritika_IntroToDatabases.png",
+      skills: ["MySQL", "Relational Databases", "SQL Queries", "Schema Design"],
+      honors: "Meta Certified Professional",
     },
 
-    // Page 2: Frames 5 - 8
+    // ================= PAGE 2: SYSTEMS, LINUX & CORE BACK-END =================
     {
       id: 5,
-      title: "Distributed Data Pipelines with Kafka",
-      issuer: "Cloud & Data Summit",
-      date: "2025",
-      credentialId: "KAFKA-STREAM-2201",
-      skills: ["Apache Kafka", "Message Queues", "Streaming"],
+      title: "Red Hat System Administration I (RH124)",
+      issuer: "Red Hat, Inc.",
+      date: "Dec 7, 2025",
+      credentialId: "RH124 - RHA Ver. 10 (40 Credit Hours)",
+      verificationUrl: "https://www.credly.com/badges/91ee0aa4-53fd-467f-bde0-ec6feafae416",
+      pdfUrl: "/certificates/25_RedHat10.pdf",
+      image: "/certificates/25_RedHat10.png",
+      skills: ["Linux SysAdmin", "Red Hat Enterprise", "CLI", "Systems & Storage"],
+      honors: "Red Hat Enterprise Training (40 hrs)",
     },
     {
       id: 6,
-      title: "Git Documentation & Open Source Architecture",
-      issuer: "Open Source Initiative",
-      date: "2024",
-      credentialId: "GIT-COLLAB-3819",
-      skills: ["Git", "GitHub Actions", "Markdown", "CI/CD"],
+      title: "Getting Started with Linux Fundamentals (RH104)",
+      issuer: "Red Hat, Inc.",
+      date: "Nov 16, 2025",
+      credentialId: "RH104 - RHA Ver. 9.1 (16 Credit Hours)",
+      verificationUrl: "https://www.credly.com/badges/8cd997e7-e6ee-4cc2-b91b-5267e47340be",
+      pdfUrl: "/certificates/25_RedHat9.1.pdf",
+      image: "/certificates/25_RedHat9.1.png",
+      skills: ["Linux Fundamentals", "Filesystems", "Permissions", "Bash"],
+      honors: "Red Hat Enterprise Training (16 hrs)",
     },
     {
       id: 7,
-      title: "InnovateTech 36-Hour Hackathon",
-      issuer: "BMSCE Tech Club",
-      date: "2025",
-      credentialId: "HACK-FINALIST-007",
-      skills: ["Rapid Prototyping", "Full Stack", "System Design"],
+      title: "Introduction to Back-End Development",
+      issuer: "Meta & Coursera",
+      date: "Dec 9, 2024",
+      credentialId: "VHLGRI5L92ZL",
+      verificationUrl: "https://coursera.org/verify/VHLGRI5L92ZL",
+      pdfUrl: "/certificates/Kritika_IntroToBackEndDev.pdf",
+      image: "/certificates/Kritika_IntroToBackEndDev.png",
+      skills: ["Back-End Architecture", "HTTP & REST", "Servers", "Web Frameworks"],
+      honors: "Meta Certified Professional",
     },
     {
       id: 8,
-      title: "Frontend Systems & UI Architecture",
-      issuer: "Meta Professional Series",
-      date: "2025",
-      credentialId: "META-FRONTEND-8821",
-      skills: ["Modern JS", "React 18", "Performance"],
+      title: "Version Control with Git & GitHub",
+      issuer: "Meta & Coursera",
+      date: "Dec 9, 2024",
+      credentialId: "OJLFFUI04H07",
+      verificationUrl: "https://coursera.org/verify/OJLFFUI04H07",
+      pdfUrl: "/certificates/Kritika_VersionControl.pdf",
+      image: "/certificates/Kritika_VersionControl.png",
+      skills: ["Git", "GitHub", "Branching", "Pull Requests", "CI/CD"],
+      honors: "Meta Certified Professional",
+    },
+
+    // ================= PAGE 3: ENTERPRISE GIT & CONTINUOUS MASTERY =================
+    {
+      id: 9,
+      title: "Mastering Git",
+      issuer: "Infosys Springboard",
+      date: "May 30, 2026",
+      credentialId: "INFOSYS-GIT-MASTER-2026",
+      verificationUrl: "https://verify.onwingspan.com",
+      pdfUrl: "/certificates/26_Infosys_MasteringGit.pdf",
+      image: "/certificates/26_Infosys_MasteringGit.png",
+      skills: ["Advanced Git", "Rebase", "Cherry-Pick", "Branching Architecture"],
+      honors: "Infosys Verified Credential",
+    },
+    {
+      id: 10,
+      title: "Project on Git",
+      issuer: "Infosys Springboard",
+      date: "May 30, 2026",
+      credentialId: "INFOSYS-GIT-PROJECT-2026",
+      verificationUrl: "https://verify.onwingspan.com",
+      pdfUrl: "/certificates/26_Infosys_ProjectOnGit.pdf",
+      image: "/certificates/26_Infosys_ProjectOnGit.png",
+      skills: ["Project Collaboration", "Repository Setup", "Workflow Automation"],
+      honors: "Infosys Verified Credential",
+    },
+    {
+      id: 11,
+      title: "TechA Git Foundation Certification",
+      issuer: "TechA & Infosys Wingspan",
+      date: "June 1, 2026",
+      credentialId: "TECHA-GIT-FOUNDATION-2026",
+      verificationUrl: "https://verify.onwingspan.com",
+      pdfUrl: "/certificates/26_TechA_Git.pdf",
+      image: "/certificates/26_TechA_Git.png",
+      skills: ["Git Foundations", "Version Tracking", "Merge Conflict Handling"],
+      honors: "TechA Verified Credential",
+    },
+    {
+      id: 12,
+      title: "Continuous Technical Advancement",
+      issuer: "Independent & Industry Specializations",
+      date: "2026 & Beyond",
+      credentialId: "ACTIVE-LEARNING-KP",
+      skills: ["System Design", "Cloud DevOps", "Scalable Microservices", "Distributed Data"],
+      honors: "Ongoing Specialization",
+      isSpecial: true,
     },
   ];
 
   const totalPages = Math.ceil(certificates.length / 4);
-  const pages = [
-    certificates.slice(0, 4),
-    certificates.slice(4, 8),
-  ];
+  const pages = Array.from({ length: totalPages }, (_, i) =>
+    certificates.slice(i * 4, (i + 1) * 4)
+  );
 
   // Strictly moves Left (Previous) only if not at the beginning
   const handlePrev = () => {
@@ -145,21 +232,25 @@ export default function FramedCertifications() {
             <div className="w-16 h-1 bg-dustyRose my-4" />
 
             <p className="text-xs sm:text-sm font-serif italic text-espresso/85 leading-relaxed max-w-sm">
-              Rigorous coursework, specialized professional training, and verified engineering certifications in modern software architecture and systems.
+              Rigorous coursework, top-tier engineering distinctions, and verified professional certifications in distributed systems, back-end development, and cloud infrastructure.
             </p>
 
             <div className="mt-5 space-y-2 font-mono text-[11px] text-mauve-dark">
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-burgundy flex-shrink-0" />
-                <span>Coursera &bull; Meta Full-Stack Credentials</span>
+                <span>NPTEL &bull; IIT Kharagpur Elite Topper (Top 2%)</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-burgundy flex-shrink-0" />
-                <span>Algorithms &amp; Database Design Mastery</span>
+                <span>Meta Professional &bull; Python, Django &amp; Database Design</span>
               </div>
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-burgundy flex-shrink-0" />
-                <span>Hackathon Finalist &amp; Distributed Systems</span>
+                <span>Red Hat Enterprise &bull; System Administration (RH124/RH104)</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <CheckCircle2 className="w-3.5 h-3.5 text-burgundy flex-shrink-0" />
+                <span>Infosys Springboard &bull; Git &amp; Enterprise Project Workflows</span>
               </div>
             </div>
           </div>
@@ -167,10 +258,10 @@ export default function FramedCertifications() {
           {/* Left Column Footer Note */}
           <div className="pt-4 border-t border-blush/60">
             <span className="text-[10px] font-mono text-dustyRose uppercase tracking-wider block font-semibold">
-              Continuous Verification:
+              Authentic Verification:
             </span>
             <p className="text-xs font-serif italic text-espresso/75 mt-0.5">
-              Credentials certified and verified across industry benchmarks.
+              Click any frame to inspect the full certificate, verify credentials, and view official transcripts.
             </p>
           </div>
         </div>
@@ -203,53 +294,93 @@ export default function FramedCertifications() {
                         <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none z-20" />
 
                         {/* Inner Matting / Certificate Cardstock */}
-                        <div className="w-full h-full bg-[#FFFDF9] rounded-xs p-2.5 sm:p-3 border border-dustyRose/20 shadow-inner flex flex-col justify-between relative z-10">
-                          {/* Certificate Header */}
-                          <div className="flex items-center justify-between border-b border-blush pb-1">
-                            <div className="flex items-center space-x-1">
-                              <Award className="w-3 h-3 text-burgundy" />
-                              <span className="text-[8px] font-mono tracking-widest uppercase text-burgundy font-bold">
-                                CERTIFICATE OF COMPLETION
-                              </span>
-                            </div>
-                            <span className="text-[9px] font-mono text-mauve font-semibold">
-                              {cert.date}
-                            </span>
-                          </div>
-
-                          {/* Certificate Body */}
-                          <div className="my-auto py-1 text-center">
-                            <span className="text-[7.5px] font-mono text-dustyRose tracking-widest uppercase block">
-                              AWARDED TO KRITIKA PANWAR FOR
-                            </span>
-                            <h3 className="font-serif text-xs sm:text-sm font-bold text-espresso mt-0.5 leading-snug line-clamp-2">
-                              {cert.title}
-                            </h3>
-                            <p className="text-[9.5px] font-mono text-mauve-dark italic truncate mt-0.5">
-                              Issued by {cert.issuer}
-                            </p>
-                          </div>
-
-                          {/* Footer: Skills + Stamp */}
-                          <div className="pt-1 border-t border-blush flex items-end justify-between">
-                            <div className="flex flex-wrap gap-1 max-w-[70%]">
-                              {cert.skills.slice(0, 2).map((skill, i) => (
-                                <span
-                                  key={i}
-                                  className="text-[8px] font-mono px-1 py-0.2 bg-blush text-burgundy rounded"
-                                >
-                                  {skill}
+                        <div className="w-full h-full bg-[#FFFDF9] rounded-xs border border-dustyRose/20 shadow-inner flex flex-col justify-between relative z-10 overflow-hidden">
+                          {cert.isSpecial ? (
+                            // Special Continuous Learning Card
+                            <div className="w-full h-full p-3 flex flex-col justify-between items-center text-center bg-gradient-to-b from-cream to-blush/40 border border-dashed border-burgundy/30 rounded">
+                              <div className="flex items-center space-x-1 text-burgundy">
+                                <Compass className="w-4 h-4 animate-spin-slow" />
+                                <span className="text-[8px] font-mono uppercase tracking-widest font-bold">
+                                  CONTINUOUS ADVANCEMENT
                                 </span>
-                              ))}
+                              </div>
+                              <div className="my-auto">
+                                <h3 className="font-serif text-xs sm:text-sm font-bold text-espresso leading-tight">
+                                  System Design &amp; Scalable Infrastructure
+                                </h3>
+                                <p className="text-[9px] font-mono text-mauve-dark mt-1">
+                                  Active self-study &amp; specialized coursework
+                                </p>
+                              </div>
+                              <div className="text-[8px] font-mono px-2 py-0.5 bg-burgundy/10 text-burgundy rounded font-semibold">
+                                IN PROGRESS &bull; 2026
+                              </div>
                             </div>
-                            <div className="w-6 h-6 rounded-full border border-burgundy flex items-center justify-center bg-burgundy/5 text-burgundy text-[6.5px] font-mono font-bold uppercase shadow-2xs">
-                              VERIFIED
+                          ) : cert.image ? (
+                            // Real Certificate Image Preview
+                            <div className="relative w-full h-full overflow-hidden bg-white flex flex-col">
+                              <div className="relative w-full h-full overflow-hidden">
+                                <img
+                                  src={cert.image}
+                                  alt={cert.title}
+                                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                  loading="lazy"
+                                />
+                                {/* Top Badge for Honors */}
+                                {cert.honors && (
+                                  <div className="absolute top-1.5 right-1.5 bg-burgundy/95 text-white text-[7px] font-mono font-bold px-1.5 py-0.5 rounded shadow-xs z-10 flex items-center space-x-0.5">
+                                    <Star className="w-2 h-2 text-yellow-300 fill-yellow-300" />
+                                    <span>
+                                      {cert.honors.includes("Topper")
+                                        ? "TOPPER 2%"
+                                        : cert.honors.includes("Meta")
+                                        ? "META"
+                                        : "VERIFIED"}
+                                    </span>
+                                  </div>
+                                )}
+                                {/* Hover Overlay */}
+                                <div className="absolute inset-0 bg-espresso/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px] z-10">
+                                  <span className="px-2.5 py-1 bg-burgundy text-cream text-[9px] font-mono rounded shadow flex items-center space-x-1">
+                                    <Sparkles className="w-2.5 h-2.5 text-cream" />
+                                    <span>Inspect Certificate</span>
+                                  </span>
+                                </div>
+                              </div>
                             </div>
-                          </div>
+                          ) : (
+                            // Fallback Editorial Cardstock
+                            <div className="p-2.5 sm:p-3 flex flex-col justify-between h-full">
+                              <div className="flex items-center justify-between border-b border-blush pb-1">
+                                <div className="flex items-center space-x-1">
+                                  <Award className="w-3 h-3 text-burgundy" />
+                                  <span className="text-[8px] font-mono tracking-widest uppercase text-burgundy font-bold">
+                                    VERIFIED CREDENTIAL
+                                  </span>
+                                </div>
+                                <span className="text-[9px] font-mono text-mauve font-semibold">
+                                  {cert.date}
+                                </span>
+                              </div>
+                              <div className="my-auto py-1 text-center">
+                                <h3 className="font-serif text-xs sm:text-sm font-bold text-espresso leading-snug line-clamp-2">
+                                  {cert.title}
+                                </h3>
+                                <p className="text-[9.5px] font-mono text-mauve-dark italic truncate mt-0.5">
+                                  {cert.issuer}
+                                </p>
+                              </div>
+                              <div className="pt-1 border-t border-blush flex items-center justify-between">
+                                <span className="text-[8px] font-mono text-burgundy font-bold">
+                                  {cert.credentialId}
+                                </span>
+                              </div>
+                            </div>
+                          )}
                         </div>
 
                         {/* Brass Nameplate at Frame Base */}
-                        <div className="mt-1 py-0.5 px-2 bg-gradient-to-r from-[#d8a47f]/80 via-[#f5d9b5] to-[#d8a47f]/80 rounded text-center shadow-2xs border border-[#b88562]">
+                        <div className="mt-1 py-0.5 px-2 bg-gradient-to-r from-[#d8a47f]/80 via-[#f5d9b5] to-[#d8a47f]/80 rounded text-center shadow-2xs border border-[#b88562] flex-shrink-0">
                           <span className="text-[7.5px] font-mono text-espresso font-bold uppercase tracking-wider block truncate">
                             {cert.title}
                           </span>
@@ -267,7 +398,7 @@ export default function FramedCertifications() {
           {/* ===================================================================== */}
           <div className="mt-3 pt-3 border-t border-blush/60 flex items-center justify-between px-1">
             <div className="flex items-center space-x-3">
-              {/* Left Arrow Button (Strictly Moves Left / Back to Page 1) */}
+              {/* Left Arrow Button (Strictly Moves Left / Back) */}
               <button
                 onClick={handlePrev}
                 disabled={currentPage === 0}
@@ -276,13 +407,13 @@ export default function FramedCertifications() {
                     ? "opacity-25 cursor-not-allowed border-mauve/30 text-mauve"
                     : "border-burgundy/50 text-burgundy hover:bg-burgundy hover:text-white cursor-pointer"
                 }`}
-                title="Previous certificates (Page 1)"
+                title="Previous certificates"
                 aria-label="Previous certificates"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
 
-              {/* Right Arrow Button (Strictly Moves Right / Next to Page 2) */}
+              {/* Right Arrow Button (Strictly Moves Right / Next) */}
               <button
                 onClick={handleNext}
                 disabled={currentPage === totalPages - 1}
@@ -291,7 +422,7 @@ export default function FramedCertifications() {
                     ? "opacity-25 cursor-not-allowed border-mauve/30 text-mauve"
                     : "border-burgundy/50 text-burgundy hover:bg-burgundy hover:text-white cursor-pointer"
                 }`}
-                title="Next certificates (Page 2)"
+                title="Next certificates"
                 aria-label="Next certificates"
               >
                 <ChevronRight className="w-4 h-4" />
@@ -338,41 +469,73 @@ export default function FramedCertifications() {
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-[#FFFDF9] p-6 sm:p-8 rounded-xl shadow-2xl max-w-lg w-full border-4 border-burgundy relative animate-in zoom-in-95 duration-200"
+            className="bg-[#FFFDF9] p-5 sm:p-7 rounded-xl shadow-2xl max-w-2xl w-full border-4 border-burgundy relative animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto"
           >
+            {/* Close Button */}
             <button
               onClick={() => setSelectedCert(null)}
-              className="absolute top-4 right-4 w-8 h-8 rounded-full bg-blush text-burgundy flex items-center justify-center hover:bg-dustyRose hover:text-white transition-colors cursor-pointer"
+              className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-blush text-burgundy flex items-center justify-center hover:bg-dustyRose hover:text-white transition-colors cursor-pointer z-10"
+              aria-label="Close modal"
             >
               <X className="w-4 h-4" />
             </button>
 
+            {/* Header Badge */}
             <div className="flex items-center space-x-2 text-burgundy text-xs font-mono uppercase tracking-widest">
               <Award className="w-4 h-4" />
-              <span>Official Verified Certificate</span>
+              <span>{selectedCert.honors || "Official Verified Credential"}</span>
             </div>
 
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-espresso mt-2">
+            {/* Title & Issuer */}
+            <h3 className="text-xl sm:text-2xl font-serif font-bold text-espresso mt-1 leading-tight">
               {selectedCert.title}
             </h3>
-            <p className="text-sm font-mono text-mauve mt-1">
-              Issued by {selectedCert.issuer} &bull; {selectedCert.date}
+            <p className="text-xs sm:text-sm font-mono text-mauve mt-0.5">
+              Issued by <span className="font-semibold text-burgundy">{selectedCert.issuer}</span> &bull; {selectedCert.date}
             </p>
 
-            <div className="my-5 p-4 rounded-lg bg-blush/60 border border-dustyRose/40 space-y-2 text-xs font-mono text-espresso">
+            {/* Score / Distinction Banner if present */}
+            {selectedCert.score && (
+              <div className="mt-3 p-2.5 rounded-md bg-amber-50 border border-amber-200 text-amber-900 text-xs font-mono flex items-center space-x-2">
+                <Star className="w-4 h-4 text-amber-600 fill-amber-500 flex-shrink-0" />
+                <div>
+                  <span className="font-bold block">Elite Top 2% Distinction:</span>
+                  <span className="text-[11px]">{selectedCert.score}</span>
+                </div>
+              </div>
+            )}
+
+            {/* Real Certificate Image Preview in Modal */}
+            {selectedCert.image && (
+              <div className="mt-4 rounded-lg overflow-hidden border border-blush shadow-inner bg-cream/50 relative">
+                <img
+                  src={selectedCert.image}
+                  alt={selectedCert.title}
+                  className="w-full max-h-[340px] object-contain mx-auto"
+                />
+              </div>
+            )}
+
+            {/* Metadata Card */}
+            <div className="my-4 p-3.5 rounded-lg bg-blush/60 border border-dustyRose/40 space-y-2.5 text-xs font-mono text-espresso">
               <div>
-                <span className="text-mauve block text-[10px]">CREDENTIAL ID</span>
-                <span className="font-bold text-burgundy text-sm">
+                <span className="text-mauve block text-[10px] uppercase font-semibold tracking-wider">
+                  CREDENTIAL / ENROLLMENT ID
+                </span>
+                <span className="font-bold text-burgundy text-xs sm:text-sm select-all">
                   {selectedCert.credentialId}
                 </span>
               </div>
-              <div className="pt-2">
-                <span className="text-mauve block text-[10px]">VERIFIED SKILLS</span>
+
+              <div>
+                <span className="text-mauve block text-[10px] uppercase font-semibold tracking-wider">
+                  VERIFIED COMPETENCIES &amp; TOPICS
+                </span>
                 <div className="flex flex-wrap gap-1.5 mt-1">
                   {selectedCert.skills.map((s, idx) => (
                     <span
                       key={idx}
-                      className="px-2 py-0.5 bg-white rounded border border-blush text-espresso"
+                      className="px-2 py-0.5 bg-white rounded border border-blush text-espresso text-[11px]"
                     >
                       {s}
                     </span>
@@ -381,19 +544,39 @@ export default function FramedCertifications() {
               </div>
             </div>
 
-            <div className="flex justify-between items-center pt-2 border-t border-blush">
+            {/* Modal Footer / Action Buttons */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-3 border-t border-blush">
               <span className="text-xs font-mono text-mauve">
-                Recipient: Kritika Panwar
+                Recipient: <strong className="text-espresso">Kritika Panwar</strong>
               </span>
-              <a
-                href="https://github.com/Kritika-Panwar-151/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center space-x-1.5 px-4 py-2 bg-burgundy hover:bg-burgundy-light text-cream rounded-md text-xs font-mono font-semibold transition-colors"
-              >
-                <span>Verify on GitHub</span>
-                <ExternalLink className="w-3.5 h-3.5" />
-              </a>
+
+              <div className="flex items-center space-x-2">
+                {/* View Original PDF (if available) */}
+                {selectedCert.pdfUrl && (
+                  <a
+                    href={selectedCert.pdfUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 px-3 py-1.5 border border-burgundy/40 text-burgundy hover:bg-burgundy/10 rounded-md text-xs font-mono font-semibold transition-colors"
+                  >
+                    <FileText className="w-3.5 h-3.5" />
+                    <span>View PDF</span>
+                  </a>
+                )}
+
+                {/* Direct Verification Link */}
+                {selectedCert.verificationUrl && (
+                  <a
+                    href={selectedCert.verificationUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center space-x-1.5 px-4 py-1.5 bg-burgundy hover:bg-burgundy-light text-cream rounded-md text-xs font-mono font-semibold transition-colors shadow-xs"
+                  >
+                    <span>Verify Credential</span>
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                )}
+              </div>
             </div>
           </div>
         </div>
