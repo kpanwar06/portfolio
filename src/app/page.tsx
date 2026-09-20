@@ -24,11 +24,11 @@ export default function Home() {
       {/* 5. Other Certificates & Workshops (Horizontal Scroll) */}
       <HorizontalCertificates />
 
-      {/* 6. Personal Journey (45° Diagonal Stone Path → Cloud) */}
-      <JourneyPath />
+      {/* 6. Personal Journey (45° Diagonal Stone Path → Cloud) - Kept in code, temporarily hidden */}
+      {/* <JourneyPath /> */}
 
-      {/* 7. Tech Stack (3D Box with Scroll-Driven Camera Rotation) */}
-      <TechStackBox />
+      {/* 7. Tech Stack (3D Box with Scroll-Driven Camera Rotation) - Kept in code, temporarily hidden */}
+      {/* <TechStackBox /> */}
 
       {/* Footer */}
       <footer className="py-12 px-6 border-t border-blush bg-cream text-center">
