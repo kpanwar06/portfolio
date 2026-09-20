@@ -103,12 +103,18 @@ export default function FramedCertifications() {
     certificates.slice(4, 8),
   ];
 
+  // Strictly moves Left (Previous) only if not at the beginning
   const handlePrev = () => {
-    setCurrentPage((prev) => (prev > 0 ? prev - 1 : totalPages - 1));
+    if (currentPage > 0) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
+  // Strictly moves Right (Next) only if not at the end
   const handleNext = () => {
-    setCurrentPage((prev) => (prev < totalPages - 1 ? prev + 1 : 0));
+    if (currentPage < totalPages - 1) {
+      setCurrentPage((prev) => prev + 1);
+    }
   };
 
   return (
@@ -121,21 +127,19 @@ export default function FramedCertifications() {
 
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center relative z-10 h-full max-h-[640px]">
         {/* ========================================================================= */}
-        {/* LEFT COLUMN: STATIC / FIXED TITLE & SLIDER CONTROLS                       */}
+        {/* LEFT COLUMN: STATIC / FIXED TITLE & DETAILS (STAYS COMPLETELY STILL)     */}
         {/* ========================================================================= */}
         <div className="lg:col-span-5 flex flex-col justify-between h-full max-h-[560px] lg:pr-4">
           <div>
             {/* Section Tag */}
-            <div className="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-widest text-burgundy mb-2">
+            <div className="inline-flex items-center space-x-2 text-xs font-mono uppercase tracking-widest text-burgundy mb-3">
               <span className="w-2.5 h-2.5 rounded-full bg-burgundy" />
               <span>SEC. 04 &bull; ACCREDITATION</span>
             </div>
 
-            {/* Editorial Title */}
-            <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-serif font-black text-burgundy uppercase tracking-tight leading-[0.92] select-none">
-              CERTIFI-
-              <br />
-              CATIONS
+            {/* Editorial Title - Fits in One Single Line */}
+            <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-[40px] xl:text-[46px] font-serif font-black text-burgundy uppercase tracking-wide leading-none select-none whitespace-nowrap">
+              CERTIFICATIONS
             </h2>
 
             <div className="w-16 h-1 bg-dustyRose my-4" />
@@ -144,7 +148,7 @@ export default function FramedCertifications() {
               Rigorous coursework, specialized professional training, and verified engineering certifications in modern software architecture and systems.
             </p>
 
-            <div className="mt-4 space-y-1.5 font-mono text-[11px] text-mauve-dark">
+            <div className="mt-5 space-y-2 font-mono text-[11px] text-mauve-dark">
               <div className="flex items-center space-x-2">
                 <CheckCircle2 className="w-3.5 h-3.5 text-burgundy flex-shrink-0" />
                 <span>Coursera &bull; Meta Full-Stack Credentials</span>
@@ -160,25 +164,135 @@ export default function FramedCertifications() {
             </div>
           </div>
 
-          {/* Interactive Slide Controls (Fixed on Left) */}
-          <div className="pt-4 border-t border-blush/60 flex items-center justify-between">
+          {/* Left Column Footer Note */}
+          <div className="pt-4 border-t border-blush/60">
+            <span className="text-[10px] font-mono text-dustyRose uppercase tracking-wider block font-semibold">
+              Continuous Verification:
+            </span>
+            <p className="text-xs font-serif italic text-espresso/75 mt-0.5">
+              Credentials certified and verified across industry benchmarks.
+            </p>
+          </div>
+        </div>
+
+        {/* ========================================================================= */}
+        {/* RIGHT COLUMN: SLIDING 4-FRAME 2x2 GRID + CONTROLS BELOW                  */}
+        {/* ========================================================================= */}
+        <div className="lg:col-span-7 flex flex-col justify-between h-full max-h-[580px]">
+          {/* Overflow-hidden container for the sliding track */}
+          <div className="overflow-hidden relative w-full flex-1 flex items-center">
+            {/* Inner sliding track: 1.0s smooth transition */}
+            <div
+              className="flex w-full transition-transform duration-1000 ease-[cubic-bezier(0.25,1,0.5,1)]"
+              style={{ transform: `translateX(-${currentPage * 100}%)` }}
+            >
+              {pages.map((pageGroup, pageIdx) => (
+                <div
+                  key={pageIdx}
+                  className="w-full flex-shrink-0 grid grid-cols-2 gap-3 sm:gap-4 p-1"
+                >
+                  {pageGroup.map((cert) => (
+                    <div
+                      key={cert.id}
+                      onClick={() => setSelectedCert(cert)}
+                      className="physical-frame group cursor-pointer transition-all duration-300 hover:-translate-y-1.5 relative h-[180px] sm:h-[195px] md:h-[210px]"
+                    >
+                      {/* Picture Frame Outer Border */}
+                      <div className="w-full h-full p-2 sm:p-2.5 rounded-lg bg-[#38262a] shadow-[-6px_10px_25px_rgba(38,28,30,0.22)] border-[4px] sm:border-[6px] border-[#291b1e] relative flex flex-col justify-between overflow-hidden">
+                        {/* Glass Sheen Glare */}
+                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none z-20" />
+
+                        {/* Inner Matting / Certificate Cardstock */}
+                        <div className="w-full h-full bg-[#FFFDF9] rounded-xs p-2.5 sm:p-3 border border-dustyRose/20 shadow-inner flex flex-col justify-between relative z-10">
+                          {/* Certificate Header */}
+                          <div className="flex items-center justify-between border-b border-blush pb-1">
+                            <div className="flex items-center space-x-1">
+                              <Award className="w-3 h-3 text-burgundy" />
+                              <span className="text-[8px] font-mono tracking-widest uppercase text-burgundy font-bold">
+                                CERTIFICATE OF COMPLETION
+                              </span>
+                            </div>
+                            <span className="text-[9px] font-mono text-mauve font-semibold">
+                              {cert.date}
+                            </span>
+                          </div>
+
+                          {/* Certificate Body */}
+                          <div className="my-auto py-1 text-center">
+                            <span className="text-[7.5px] font-mono text-dustyRose tracking-widest uppercase block">
+                              AWARDED TO KRITIKA PANWAR FOR
+                            </span>
+                            <h3 className="font-serif text-xs sm:text-sm font-bold text-espresso mt-0.5 leading-snug line-clamp-2">
+                              {cert.title}
+                            </h3>
+                            <p className="text-[9.5px] font-mono text-mauve-dark italic truncate mt-0.5">
+                              Issued by {cert.issuer}
+                            </p>
+                          </div>
+
+                          {/* Footer: Skills + Stamp */}
+                          <div className="pt-1 border-t border-blush flex items-end justify-between">
+                            <div className="flex flex-wrap gap-1 max-w-[70%]">
+                              {cert.skills.slice(0, 2).map((skill, i) => (
+                                <span
+                                  key={i}
+                                  className="text-[8px] font-mono px-1 py-0.2 bg-blush text-burgundy rounded"
+                                >
+                                  {skill}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="w-6 h-6 rounded-full border border-burgundy flex items-center justify-center bg-burgundy/5 text-burgundy text-[6.5px] font-mono font-bold uppercase shadow-2xs">
+                              VERIFIED
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Brass Nameplate at Frame Base */}
+                        <div className="mt-1 py-0.5 px-2 bg-gradient-to-r from-[#d8a47f]/80 via-[#f5d9b5] to-[#d8a47f]/80 rounded text-center shadow-2xs border border-[#b88562]">
+                          <span className="text-[7.5px] font-mono text-espresso font-bold uppercase tracking-wider block truncate">
+                            {cert.title}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ===================================================================== */}
+          {/* SLIDER CONTROLS (PLACED BELOW THE RIGHT COLUMN OF FRAMES)             */}
+          {/* ===================================================================== */}
+          <div className="mt-3 pt-3 border-t border-blush/60 flex items-center justify-between px-1">
             <div className="flex items-center space-x-3">
-              {/* Previous Button */}
+              {/* Left Arrow Button (Strictly Moves Left / Back to Page 1) */}
               <button
                 onClick={handlePrev}
-                className="w-9 h-9 rounded-full border border-burgundy/40 flex items-center justify-center text-burgundy hover:bg-burgundy hover:text-white transition-all shadow-xs active:scale-95 cursor-pointer"
-                title="Previous certificates"
-                aria-label="Previous set"
+                disabled={currentPage === 0}
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all shadow-xs active:scale-95 ${
+                  currentPage === 0
+                    ? "opacity-25 cursor-not-allowed border-mauve/30 text-mauve"
+                    : "border-burgundy/50 text-burgundy hover:bg-burgundy hover:text-white cursor-pointer"
+                }`}
+                title="Previous certificates (Page 1)"
+                aria-label="Previous certificates"
               >
                 <ChevronLeft className="w-4 h-4" />
               </button>
 
-              {/* Next Button */}
+              {/* Right Arrow Button (Strictly Moves Right / Next to Page 2) */}
               <button
                 onClick={handleNext}
-                className="w-9 h-9 rounded-full border border-burgundy/40 flex items-center justify-center text-burgundy hover:bg-burgundy hover:text-white transition-all shadow-xs active:scale-95 cursor-pointer"
-                title="Next certificates"
-                aria-label="Next set"
+                disabled={currentPage === totalPages - 1}
+                className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all shadow-xs active:scale-95 ${
+                  currentPage === totalPages - 1
+                    ? "opacity-25 cursor-not-allowed border-mauve/30 text-mauve"
+                    : "border-burgundy/50 text-burgundy hover:bg-burgundy hover:text-white cursor-pointer"
+                }`}
+                title="Next certificates (Page 2)"
+                aria-label="Next certificates"
               >
                 <ChevronRight className="w-4 h-4" />
               </button>
@@ -189,13 +303,13 @@ export default function FramedCertifications() {
               </span>
             </div>
 
-            {/* Page Dots Indicator */}
+            {/* Page Indicator Pills */}
             <div className="flex items-center space-x-1.5">
               {Array.from({ length: totalPages }).map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setCurrentPage(idx)}
-                  className={`h-2 rounded-full transition-all cursor-pointer ${
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     currentPage === idx
                       ? "w-6 bg-burgundy"
                       : "w-2 bg-dustyRose/40 hover:bg-dustyRose"
@@ -204,100 +318,12 @@ export default function FramedCertifications() {
                 />
               ))}
             </div>
-          </div>
-        </div>
 
-        {/* ========================================================================= */}
-        {/* RIGHT COLUMN: SLIDING 4-FRAME 2x2 GRID (ONLY THIS CONTAINER SLIDES)       */}
-        {/* ========================================================================= */}
-        <div className="lg:col-span-7 overflow-hidden relative w-full h-full flex flex-col justify-center">
-          {/* Inner sliding track */}
-          <div
-            className="flex w-full transition-transform duration-500 ease-[cubic-bezier(0.25,1,0.5,1)]"
-            style={{ transform: `translateX(-${currentPage * 100}%)` }}
-          >
-            {pages.map((pageGroup, pageIdx) => (
-              <div
-                key={pageIdx}
-                className="w-full flex-shrink-0 grid grid-cols-2 gap-3 sm:gap-4 p-1"
-              >
-                {pageGroup.map((cert) => (
-                  <div
-                    key={cert.id}
-                    onClick={() => setSelectedCert(cert)}
-                    className="physical-frame group cursor-pointer transition-all duration-300 hover:-translate-y-1.5 relative h-[180px] sm:h-[195px] md:h-[210px]"
-                  >
-                    {/* Picture Frame Outer Border */}
-                    <div className="w-full h-full p-2 sm:p-2.5 rounded-lg bg-[#38262a] shadow-[-6px_10px_25px_rgba(38,28,30,0.22)] border-[4px] sm:border-[6px] border-[#291b1e] relative flex flex-col justify-between overflow-hidden">
-                      {/* Glass Sheen Glare */}
-                      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none z-20" />
-
-                      {/* Inner Matting / Certificate Cardstock */}
-                      <div className="w-full h-full bg-[#FFFDF9] rounded-xs p-2.5 sm:p-3 border border-dustyRose/20 shadow-inner flex flex-col justify-between relative z-10">
-                        {/* Certificate Header */}
-                        <div className="flex items-center justify-between border-b border-blush pb-1">
-                          <div className="flex items-center space-x-1">
-                            <Award className="w-3 h-3 text-burgundy" />
-                            <span className="text-[8px] font-mono tracking-widest uppercase text-burgundy font-bold">
-                              CERTIFICATE OF COMPLETION
-                            </span>
-                          </div>
-                          <span className="text-[9px] font-mono text-mauve font-semibold">
-                            {cert.date}
-                          </span>
-                        </div>
-
-                        {/* Certificate Body */}
-                        <div className="my-auto py-1 text-center">
-                          <span className="text-[7.5px] font-mono text-dustyRose tracking-widest uppercase block">
-                            AWARDED TO KRITIKA PANWAR FOR
-                          </span>
-                          <h3 className="font-serif text-xs sm:text-sm font-bold text-espresso mt-0.5 leading-snug line-clamp-2">
-                            {cert.title}
-                          </h3>
-                          <p className="text-[9.5px] font-mono text-mauve-dark italic truncate mt-0.5">
-                            Issued by {cert.issuer}
-                          </p>
-                        </div>
-
-                        {/* Footer: Skills + Stamp */}
-                        <div className="pt-1 border-t border-blush flex items-end justify-between">
-                          <div className="flex flex-wrap gap-1 max-w-[70%]">
-                            {cert.skills.slice(0, 2).map((skill, i) => (
-                              <span
-                                key={i}
-                                className="text-[8px] font-mono px-1 py-0.2 bg-blush text-burgundy rounded"
-                              >
-                                {skill}
-                              </span>
-                            ))}
-                          </div>
-                          <div className="w-6 h-6 rounded-full border border-burgundy flex items-center justify-center bg-burgundy/5 text-burgundy text-[6.5px] font-mono font-bold uppercase shadow-2xs">
-                            VERIFIED
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Brass Nameplate at Frame Base */}
-                      <div className="mt-1 py-0.5 px-2 bg-gradient-to-r from-[#d8a47f]/80 via-[#f5d9b5] to-[#d8a47f]/80 rounded text-center shadow-2xs border border-[#b88562]">
-                        <span className="text-[7.5px] font-mono text-espresso font-bold uppercase tracking-wider block truncate">
-                          {cert.title}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ))}
-          </div>
-
-          {/* Quick Helper Text */}
-          <div className="mt-2 flex items-center justify-between text-[10px] font-mono text-mauve px-1">
-            <span>* Physical certificate replicas</span>
-            <span className="flex items-center space-x-1 text-dustyRose">
-              <Sparkles className="w-3 h-3" />
-              <span>Tap frame to zoom details</span>
-            </span>
+            {/* Tap to zoom tip */}
+            <div className="text-[10px] font-mono text-mauve flex items-center space-x-1">
+              <Sparkles className="w-3 h-3 text-dustyRose" />
+              <span>Tap frame to zoom</span>
+            </div>
           </div>
         </div>
       </div>
