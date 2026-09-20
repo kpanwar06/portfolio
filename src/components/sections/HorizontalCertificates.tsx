@@ -233,7 +233,7 @@ export default function HorizontalCertificates() {
       {/* Floating Arrow Left (Click to roll left) */}
       <button
         onClick={() => scrollStep("left")}
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream/95 backdrop-blur-md border border-dustyRose/40 text-burgundy flex items-center justify-center shadow-md hover:bg-burgundy hover:text-white transition-all active:scale-90 cursor-pointer"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FFFDF9]/95 backdrop-blur-md border border-[#c49f65]/50 text-burgundy flex items-center justify-center shadow-md hover:bg-burgundy hover:text-white transition-all active:scale-90 cursor-pointer"
         aria-label="Roll certificates left"
       >
         <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -242,7 +242,7 @@ export default function HorizontalCertificates() {
       {/* Floating Arrow Right (Click to roll right) */}
       <button
         onClick={() => scrollStep("right")}
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream/95 backdrop-blur-md border border-dustyRose/40 text-burgundy flex items-center justify-center shadow-md hover:bg-burgundy hover:text-white transition-all active:scale-90 cursor-pointer"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-[#FFFDF9]/95 backdrop-blur-md border border-[#c49f65]/50 text-burgundy flex items-center justify-center shadow-md hover:bg-burgundy hover:text-white transition-all active:scale-90 cursor-pointer"
         aria-label="Roll certificates right"
       >
         <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
@@ -268,87 +268,104 @@ export default function HorizontalCertificates() {
         }}
       >
         {loopedItems.map((item, idx) => {
-          // Special 8th card matching user's design
+          // Special 8th card matching user's design (Framed in Gilded Exhibition Frame)
           if (item.isSpecialFinalCard) {
             return (
               <div
                 key={`special-${idx}`}
                 onClick={handleScrollToJourney}
-                className="w-[280px] sm:w-[310px] h-[195px] sm:h-[210px] flex-shrink-0 bg-[#5A1A2E] text-[#FFF6F8] rounded-xl p-5 border border-burgundy shadow-md flex flex-col justify-between select-none relative group hover:shadow-xl transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+                className="w-[280px] sm:w-[310px] h-[195px] sm:h-[210px] flex-shrink-0 group cursor-pointer transition-all duration-300 hover:-translate-y-1.5 relative select-none"
               >
-                <div>
-                  <h3 className="text-xl sm:text-[23px] font-serif font-bold text-[#FFF6F8] leading-tight tracking-tight">
-                    Always Learning &amp; Exploring.
-                  </h3>
-                  <p className="text-xs font-sans text-[#F3D7DF]/90 leading-relaxed mt-2.5">
-                    Every workshop and challenge expands the developer toolkit. Next up: Personal Journey Path!
-                  </p>
-                </div>
+                {/* Gilded Champagne Gold Exhibition Frame */}
+                <div className="w-full h-full p-2 sm:p-2.5 rounded-lg bg-gradient-to-br from-[#d4af37] via-[#f7e6c4] to-[#9a7837] shadow-[-5px_8px_20px_rgba(70,40,15,0.25)] border-[4px] sm:border-[5px] border-[#a07c42] relative flex flex-col justify-between overflow-hidden">
+                  {/* Subtle Glass Sheen Reflection */}
+                  <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent pointer-events-none z-20" />
 
-                <div className="pt-2.5 border-t border-rose-200/20 flex items-center justify-between text-xs font-sans text-[#F3D7DF]/85 group-hover:text-white transition-colors">
-                  <span className="font-medium tracking-wide">Scroll down to continue</span>
-                  <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform" />
+                  {/* 4 Vintage Metallic Corner Accents */}
+                  <div className="absolute top-1 left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-[#fff0d4] pointer-events-none z-20" />
+                  <div className="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-[#fff0d4] pointer-events-none z-20" />
+                  <div className="absolute bottom-1 left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-[#fff0d4] pointer-events-none z-20" />
+                  <div className="absolute bottom-1 right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-[#fff0d4] pointer-events-none z-20" />
+
+                  {/* Deep Burgundy Velvet Matting with Screenshot Content */}
+                  <div className="w-full h-full bg-[#5A1A2E] text-[#FFF6F8] rounded-xs p-3.5 sm:p-4 border border-[#c49f65]/40 shadow-inner flex flex-col justify-between relative z-10">
+                    <div>
+                      <h3 className="text-lg sm:text-[21px] font-serif font-bold text-[#FFF6F8] leading-tight tracking-tight">
+                        Always Learning &amp; Exploring.
+                      </h3>
+                      <p className="text-[11px] sm:text-xs font-sans text-[#F3D7DF]/90 leading-relaxed mt-1.5">
+                        Every workshop and challenge expands the developer toolkit. Next up: Personal Journey Path!
+                      </p>
+                    </div>
+
+                    <div className="pt-2 border-t border-rose-200/20 flex items-center justify-between text-xs font-sans text-[#F3D7DF]/85 group-hover:text-white transition-colors">
+                      <span className="font-medium tracking-wide text-[11.5px]">Scroll down to continue</span>
+                      <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1.5 transition-transform text-[#FFF6F8]" />
+                    </div>
+                  </div>
+
+                  {/* Engraved Plaque at Frame Base */}
+                  <div className="mt-1 py-0.5 px-2 bg-gradient-to-r from-[#e6c898] via-[#fff4df] to-[#e6c898] rounded-xs text-center shadow-2xs border border-[#b8955b]">
+                    <span className="text-[7.5px] font-mono text-[#3d2617] font-bold uppercase tracking-wider block truncate">
+                      CONTINUOUS MILESTONE &bull; 2026
+                    </span>
+                  </div>
                 </div>
               </div>
             );
           }
 
-          // Regular Hackathon & Workshop Card
+          // Authentic Certificate Photo in Gilded Exhibition Frame
           return (
             <div
               key={`${item.id}-${idx}`}
               onClick={() => setSelectedCert(item)}
-              className="w-[280px] sm:w-[310px] h-[195px] sm:h-[210px] flex-shrink-0 bg-[#FFFDF9] rounded-xl p-4 border border-dustyRose/30 shadow-xs hover:shadow-md hover:border-burgundy/50 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between select-none relative group cursor-pointer"
+              className="w-[280px] sm:w-[310px] h-[195px] sm:h-[210px] flex-shrink-0 group cursor-pointer transition-all duration-300 hover:-translate-y-1.5 relative select-none"
             >
-              {/* Card Header: Badge + Year */}
-              <div className="flex items-center justify-between pb-1.5 border-b border-blush/80">
-                <span
-                  className={`text-[8px] font-mono uppercase tracking-wider px-2 py-0.5 rounded font-bold ${
-                    item.badgeType === "hackathon"
-                      ? "bg-purple-50 text-purple-900 border border-purple-200"
-                      : item.badgeType === "competition"
-                      ? "bg-rose-50 text-rose-900 border border-rose-200"
-                      : "bg-blush text-burgundy border border-dustyRose/30"
-                  }`}
-                >
-                  {item.badge}
-                </span>
-                <span className="text-[10px] font-mono text-mauve font-semibold">
-                  {item.year}
-                </span>
-              </div>
+              {/* Distinct Gilded Antique Gold Exhibition Frame (Contrasting with Sec 4 Dark Mahogany) */}
+              <div className="w-full h-full p-2 sm:p-2.5 rounded-lg bg-gradient-to-br from-[#d4af37] via-[#f7e6c4] to-[#9a7837] shadow-[-5px_8px_20px_rgba(70,40,15,0.22)] border-[4px] sm:border-[5px] border-[#a07c42] relative flex flex-col justify-between overflow-hidden">
+                {/* Subtle Glass Sheen Reflection */}
+                <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/20 to-transparent pointer-events-none z-20" />
 
-              {/* Card Middle: Title + Organization + Honors */}
-              <div className="my-auto py-1">
-                <h4 className="font-serif text-sm sm:text-[15px] font-bold text-espresso leading-snug line-clamp-2 group-hover:text-burgundy transition-colors">
-                  {item.title}
-                </h4>
-                <p className="text-[10.5px] font-mono text-mauve-dark italic truncate mt-0.5">
-                  {item.organization}
-                </p>
-                {item.honors && (
-                  <span className="inline-block mt-1 text-[8px] font-mono font-bold text-burgundy bg-amber-50/90 px-1.5 py-0.5 rounded border border-amber-200 line-clamp-1">
-                    &bull; {item.honors}
-                  </span>
-                )}
-              </div>
+                {/* 4 Vintage Metallic Corner Accents */}
+                <div className="absolute top-1 left-1 w-2.5 h-2.5 border-t-2 border-l-2 border-[#fff0d4] pointer-events-none z-20" />
+                <div className="absolute top-1 right-1 w-2.5 h-2.5 border-t-2 border-r-2 border-[#fff0d4] pointer-events-none z-20" />
+                <div className="absolute bottom-1 left-1 w-2.5 h-2.5 border-b-2 border-l-2 border-[#fff0d4] pointer-events-none z-20" />
+                <div className="absolute bottom-1 right-1 w-2.5 h-2.5 border-b-2 border-r-2 border-[#fff0d4] pointer-events-none z-20" />
 
-              {/* Card Footer: Skills pills + Zoom Hint */}
-              <div className="pt-2 border-t border-blush/60 flex items-center justify-between">
-                <div className="flex flex-wrap gap-1 max-w-[82%]">
-                  {item.skills.slice(0, 2).map((skill, sIdx) => (
-                    <span
-                      key={sIdx}
-                      className="text-[7.5px] font-mono px-1.5 py-0.2 bg-cream text-espresso/80 rounded border border-blush truncate"
-                    >
-                      {skill}
-                    </span>
-                  ))}
+                {/* Inner Archival Cream Passe-partout Matting */}
+                <div className="w-full h-full bg-[#FAF7F0] rounded-xs border border-[#c49f65]/50 shadow-inner flex flex-col justify-between relative z-10 overflow-hidden">
+                  {/* Real Certificate Photo Preview */}
+                  <div className="relative w-full flex-1 overflow-hidden bg-white flex flex-col">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105 pointer-events-none select-none"
+                      loading="lazy"
+                    />
+
+                    {/* Top Organization Pill Badge */}
+                    <div className="absolute top-1.5 right-1.5 bg-burgundy/90 text-[#FFFDF9] text-[7.5px] font-mono font-bold px-1.5 py-0.5 rounded shadow-xs z-10 flex items-center space-x-0.5 backdrop-blur-xs">
+                      <Sparkles className="w-2 h-2 text-yellow-300 fill-yellow-300" />
+                      <span>{item.badge}</span>
+                    </div>
+
+                    {/* Hover Inspect Overlay */}
+                    <div className="absolute inset-0 bg-espresso/45 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px] z-10">
+                      <span className="px-2.5 py-1 bg-burgundy text-cream text-[8.5px] font-mono rounded shadow-md flex items-center space-x-1">
+                        <ExternalLink className="w-2.5 h-2.5 text-cream" />
+                        <span>Inspect Certificate</span>
+                      </span>
+                    </div>
+                  </div>
                 </div>
-                <span className="text-[9px] font-mono text-burgundy flex items-center space-x-0.5 opacity-80 group-hover:opacity-100 font-semibold">
-                  <span>View</span>
-                  <ExternalLink className="w-2.5 h-2.5" />
-                </span>
+
+                {/* Bottom Engraved Metallic Nameplate */}
+                <div className="mt-1 py-0.5 px-2 bg-gradient-to-r from-[#e6c898] via-[#fff4df] to-[#e6c898] rounded-xs text-center shadow-2xs border border-[#b8955b] flex-shrink-0">
+                  <span className="text-[7.5px] font-mono text-[#3d2617] font-bold uppercase tracking-wider block truncate">
+                    {item.title} &bull; {item.year}
+                  </span>
+                </div>
               </div>
             </div>
           );
@@ -401,7 +418,7 @@ export default function HorizontalCertificates() {
               </div>
             )}
 
-            {/* Certificate Image Preview */}
+            {/* Real Certificate Image Preview */}
             {selectedCert.image && (
               <div className="mt-4 rounded-lg overflow-hidden border border-blush shadow-inner bg-cream/50 relative">
                 <img
