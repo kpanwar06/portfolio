@@ -1,231 +1,335 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Scroll, Sparkles, Calendar, Tag, ChevronRight, Bookmark } from "lucide-react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
+import {
+  Award,
+  ChevronRight,
+  ChevronLeft,
+  Sparkles,
+  ExternalLink,
+  ShieldCheck,
+} from "lucide-react";
 
-interface WorkshopItem {
+interface RollItem {
   id: number;
-  type: "Workshop" | "Participation" | "Course" | "Hackathon";
   title: string;
   organization: string;
   year: string;
   badge: string;
   skills: string[];
-  description: string;
+  honors?: string;
+  isSpecialFinalCard?: boolean;
 }
 
 export default function HorizontalCertificates() {
-  const sectionRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeftState, setScrollLeftState] = useState(0);
 
-  const workshops: WorkshopItem[] = [
+  // 11 Core Certificates + 1 Special Final Card from user design
+  const items: RollItem[] = [
     {
       id: 1,
-      type: "Course",
-      title: "Django Backend & REST APIs",
-      organization: "Coursera & Meta",
-      year: "2025",
-      badge: "Completed",
-      skills: ["Django", "Python", "ORM", "REST"],
-      description: "Deep dive into model relationships, serializers, class-based views, and secure token authentication.",
+      title: "Ethics in Engineering Practice",
+      organization: "NPTEL & IIT Kharagpur",
+      year: "2026",
+      badge: "Govt. of India",
+      honors: "Elite + Top 2% Topper (88%)",
+      skills: ["Engineering Ethics", "Standards", "Governance"],
     },
     {
       id: 2,
-      type: "Workshop",
-      title: "Git Documentation & Collaboration Syntax",
-      organization: "Open Source Initiative",
+      title: "Django Web Framework",
+      organization: "Meta & Coursera",
       year: "2024",
-      badge: "Certificate",
-      skills: ["Git", "GitHub Actions", "Markdown", "CI/CD"],
-      description: "Hands-on workshop on repository architecture, branching strategies, and release documentation.",
+      badge: "Meta Certified",
+      skills: ["Python", "Django", "ORM", "REST APIs"],
     },
     {
       id: 3,
-      type: "Hackathon",
-      title: "InnovateTech 36-Hour Hackathon",
-      organization: "BMSCE Tech Club",
-      year: "2025",
-      badge: "Finalist",
-      skills: ["Rapid Prototyping", "Full Stack", "System Design"],
-      description: "Engineered an interactive real-time student utility application with high-concurrency event handling.",
+      title: "Programming in Python",
+      organization: "Meta & Coursera",
+      year: "2024",
+      badge: "Meta Certified",
+      skills: ["Python 3", "Data Structures", "OOP", "Algorithms"],
     },
     {
       id: 4,
-      type: "Workshop",
-      title: "Distributed Data Pipelines with Kafka",
-      organization: "Cloud & Data Summit",
-      year: "2025",
-      badge: "Participant",
-      skills: ["Apache Kafka", "Message Queues", "Streaming"],
-      description: "Explored publish-subscribe topologies, consumer groups, partitions, and fault-tolerant event sourcing.",
+      title: "Databases for Back-End",
+      organization: "Meta & Coursera",
+      year: "2024",
+      badge: "Meta Certified",
+      skills: ["MySQL", "Relational DB", "SQL Queries"],
     },
     {
       id: 5,
-      type: "Course",
-      title: "Relational Database Design & SQL Performance",
-      organization: "Engineering Academy",
-      year: "2024",
-      badge: "Distinction",
-      skills: ["PostgreSQL", "Query Optimization", "Indexing"],
-      description: "Mastered indexing strategies, query execution plans, normalization, and ACID transaction safety.",
+      title: "Red Hat System Admin I (RH124)",
+      organization: "Red Hat, Inc.",
+      year: "2025",
+      badge: "Enterprise Training",
+      honors: "40 Credit Hours",
+      skills: ["Linux SysAdmin", "CLI", "Storage & Users"],
     },
     {
       id: 6,
-      type: "Workshop",
-      title: "Modern UI Engineering & Responsive Web",
-      organization: "Frontend Guild",
+      title: "Getting Started with Linux (RH104)",
+      organization: "Red Hat, Inc.",
       year: "2025",
-      badge: "Certificate",
-      skills: ["Tailwind CSS", "TypeScript", "Micro-animations"],
-      description: "Creating accessible, performant user interfaces with design tokens and responsive CSS typography.",
+      badge: "Enterprise Training",
+      honors: "16 Credit Hours",
+      skills: ["Linux Fundamentals", "Permissions", "Bash"],
+    },
+    {
+      id: 7,
+      title: "Introduction to Back-End Dev",
+      organization: "Meta & Coursera",
+      year: "2024",
+      badge: "Meta Certified",
+      skills: ["Web Architecture", "HTTP Protocols", "APIs"],
+    },
+    {
+      id: 8,
+      title: "Version Control with Git",
+      organization: "Meta & Coursera",
+      year: "2024",
+      badge: "Meta Certified",
+      skills: ["Git", "GitHub", "Branching", "CI/CD"],
+    },
+    {
+      id: 9,
+      title: "Mastering Git",
+      organization: "Infosys Springboard",
+      year: "2026",
+      badge: "Infosys Verified",
+      skills: ["Advanced Git", "Rebase", "Repository Workflows"],
+    },
+    {
+      id: 10,
+      title: "Project on Git",
+      organization: "Infosys Springboard",
+      year: "2026",
+      badge: "Infosys Verified",
+      skills: ["Hands-on Git", "Merge Conflicts", "Collaboration"],
+    },
+    {
+      id: 11,
+      title: "TechA Git Foundation",
+      organization: "TechA & Infosys Wingspan",
+      year: "2026",
+      badge: "TechA Verified",
+      skills: ["Git Foundations", "Version Tracking", "Source Control"],
+    },
+    // The special 12th card from user screenshot
+    {
+      id: 12,
+      title: "Always Learning & Exploring.",
+      organization: "Continuous Growth",
+      year: "2026",
+      badge: "Next Milestone",
+      skills: [],
+      isSpecialFinalCard: true,
     },
   ];
 
-  useEffect(() => {
-    gsap.registerPlugin(ScrollTrigger);
+  // Render 3 identical sets to enable seamless infinite wrapping in both directions
+  const loopedItems = [...items, ...items, ...items];
 
-    const ctx = gsap.context(() => {
-      const track = trackRef.current;
-      const section = sectionRef.current;
-      if (!track || !section) return;
+  // Helper to maintain seamless infinite wrapping
+  const handleScrollWrap = useCallback(() => {
+    const track = trackRef.current;
+    if (!track) return;
 
-      const totalScrollWidth = track.scrollWidth - window.innerWidth + 120;
+    const singleSetWidth = track.scrollWidth / 3;
 
-      gsap.to(track, {
-        x: -totalScrollWidth,
-        ease: "none",
-        scrollTrigger: {
-          trigger: section,
-          pin: true,
-          scrub: 1,
-          start: "top top",
-          end: () => `+=${totalScrollWidth + 300}`,
-          invalidateOnRefresh: true,
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
+    // If user scrolls left near the beginning, jump forward by singleSetWidth
+    if (track.scrollLeft <= 20) {
+      track.scrollLeft += singleSetWidth;
+    }
+    // If user scrolls right past the second set, jump back by singleSetWidth
+    else if (track.scrollLeft >= singleSetWidth * 2 - 20) {
+      track.scrollLeft -= singleSetWidth;
+    }
   }, []);
+
+  // Initialize scroll position to the middle set so scrolling left immediately shows the last card
+  useEffect(() => {
+    const track = trackRef.current;
+    if (!track) return;
+
+    // Small delay to allow CSS layout to settle
+    const timer = setTimeout(() => {
+      const singleSetWidth = track.scrollWidth / 3;
+      track.scrollLeft = singleSetWidth;
+    }, 50);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // Drag-to-swipe handlers for mouse
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const track = trackRef.current;
+    if (!track) return;
+    setIsDragging(true);
+    setStartX(e.pageX - track.offsetLeft);
+    setScrollLeftState(track.scrollLeft);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const track = trackRef.current;
+    if (!track) return;
+    const x = e.pageX - track.offsetLeft;
+    const walk = (x - startX) * 1.5; // Smooth swipe sensitivity
+    track.scrollLeft = scrollLeftState - walk;
+    handleScrollWrap();
+  };
+
+  const handleMouseUpOrLeave = () => {
+    setIsDragging(false);
+  };
+
+  // Nav Arrow buttons (one-click smooth scroll)
+  const scrollStep = (direction: "left" | "right") => {
+    const track = trackRef.current;
+    if (!track) return;
+    const step = 340;
+    track.scrollBy({
+      left: direction === "left" ? -step : step,
+      behavior: "smooth",
+    });
+  };
+
+  const handleScrollToJourney = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    const journeyEl = document.getElementById("journey");
+    if (journeyEl) {
+      journeyEl.scrollIntoView({ behavior: "smooth" });
+    }
+  };
 
   return (
     <section
-      ref={sectionRef}
       id="workshops"
-      className="relative w-full h-screen bg-cream overflow-hidden flex flex-col justify-center border-b border-blush select-none"
+      className="relative w-full py-7 sm:py-8 bg-[#FBF7F2] border-b border-blush overflow-hidden select-none"
     >
-      {/* Background Scrapbook Watermark */}
-      <div className="absolute top-1/2 left-10 -translate-y-1/2 text-[14vw] font-serif font-black text-blush/40 pointer-events-none select-none tracking-widest whitespace-nowrap">
-        WORKSHOPS &amp; CREDENTIALS
-      </div>
+      {/* Subtle background grain & warm styling */}
+      <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(rgba(101,31,53,0.06)_1px,transparent_1px)] [background-size:18px_18px]" />
 
-      {/* Header Bar */}
-      <div className="max-w-7xl mx-auto w-full px-6 sm:px-12 mb-8 relative z-10 flex flex-col sm:flex-row sm:items-end justify-between">
-        <div>
-          <div className="flex items-center space-x-2 text-xs font-mono uppercase tracking-widest text-burgundy">
-            <Scroll className="w-4 h-4 text-dustyRose" />
-            <span>SEC. 05 &bull; WORKSHOPS &amp; COURSES</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-serif text-espresso font-bold mt-1">
-            Continuous Learning Reel
-          </h2>
-        </div>
+      {/* Floating Arrow Left (Click to roll left) */}
+      <button
+        onClick={() => scrollStep("left")}
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream/90 backdrop-blur-md border border-dustyRose/40 text-burgundy flex items-center justify-center shadow-md hover:bg-burgundy hover:text-white transition-all active:scale-90 cursor-pointer"
+        aria-label="Roll certificates left"
+      >
+        <ChevronLeft className="w-4 h-4 sm:w-5 sm:h-5" />
+      </button>
 
-        <div className="flex items-center space-x-2 text-xs font-mono text-mauve-dark mt-3 sm:mt-0 bg-blush/60 px-3 py-1.5 rounded-full border border-dustyRose/30">
-          <Sparkles className="w-3.5 h-3.5 text-dustyRose" />
-          <span>Scroll down to slide horizontally &rarr;</span>
-        </div>
-      </div>
+      {/* Floating Arrow Right (Click to roll right) */}
+      <button
+        onClick={() => scrollStep("right")}
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-20 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-cream/90 backdrop-blur-md border border-dustyRose/40 text-burgundy flex items-center justify-center shadow-md hover:bg-burgundy hover:text-white transition-all active:scale-90 cursor-pointer"
+        aria-label="Roll certificates right"
+      >
+        <ChevronRight className="w-4 h-4 sm:w-5 sm:h-5" />
+      </button>
 
       {/* ========================================================================= */}
-      {/* HORIZONTAL CAROUSEL TRACK                                                 */}
+      {/* HORIZONTAL CONTINUOUS ROLLING CAROUSEL TRACK                              */}
       {/* ========================================================================= */}
-      <div className="relative w-full overflow-visible z-10">
-        <div
-          ref={trackRef}
-          className="flex items-center space-x-6 sm:space-x-8 px-6 sm:px-12 w-max"
-        >
-          {workshops.map((item, index) => (
-            <div
-              key={item.id}
-              className="w-[300px] sm:w-[380px] h-[400px] sm:h-[440px] flex-shrink-0 bg-[#FFFDF9] rounded-2xl shadow-editorial p-6 sm:p-7 border-2 border-blush hover:border-dustyRose/60 transition-all duration-300 hover:-translate-y-2 flex flex-col justify-between relative group"
-            >
-              {/* Decorative Corner Tape Stamp */}
-              <div className="absolute -top-3 right-8 w-16 h-6 bg-blush/90 border border-dustyRose/40 rounded-xs shadow-xs transform rotate-3 flex items-center justify-center text-[9px] font-mono uppercase text-burgundy font-bold">
-                {item.type}
+      <div
+        ref={trackRef}
+        onScroll={handleScrollWrap}
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUpOrLeave}
+        onMouseLeave={handleMouseUpOrLeave}
+        className={`flex items-center space-x-4 sm:space-x-5 px-6 sm:px-12 overflow-x-auto scrollbar-none relative z-10 ${
+          isDragging ? "cursor-grabbing select-none" : "cursor-grab"
+        }`}
+        style={{
+          scrollbarWidth: "none",
+          msOverflowStyle: "none",
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        {loopedItems.map((item, idx) => {
+          // Special 12th card matching user's design
+          if (item.isSpecialFinalCard) {
+            return (
+              <div
+                key={`special-${idx}`}
+                onClick={handleScrollToJourney}
+                className="w-[280px] sm:w-[310px] h-[190px] sm:h-[205px] flex-shrink-0 bg-[#5A1A2E] text-[#FFF6F8] rounded-xl p-5 border border-burgundy shadow-md flex flex-col justify-between select-none relative group hover:shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer"
+              >
+                <div>
+                  <h3 className="text-xl sm:text-[22px] font-serif font-bold text-[#FFF6F8] leading-tight tracking-tight">
+                    Always Learning &amp; Exploring.
+                  </h3>
+                  <p className="text-xs font-sans text-[#F3D7DF]/90 leading-relaxed mt-2 line-clamp-3">
+                    Every workshop and challenge expands the developer toolkit. Next up: Personal Journey Path!
+                  </p>
+                </div>
+
+                <div className="pt-2 border-t border-rose-200/20 flex items-center justify-between text-xs font-sans text-[#F3D7DF]/85 group-hover:text-white transition-colors">
+                  <span className="font-medium tracking-wide">Scroll down to continue</span>
+                  <ChevronRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
+            );
+          }
 
-              {/* Card Top */}
-              <div>
-                <div className="flex items-center justify-between text-xs font-mono text-mauve pb-3 border-b border-blush">
-                  <span className="flex items-center space-x-1">
-                    <Calendar className="w-3.5 h-3.5 text-dustyRose" />
-                    <span>{item.year}</span>
-                  </span>
-                  <span className="px-2 py-0.5 rounded bg-blush text-burgundy font-bold text-[10px] uppercase">
+          // Regular Certificate / Workshop Card
+          return (
+            <div
+              key={`${item.id}-${idx}`}
+              className="w-[280px] sm:w-[310px] h-[190px] sm:h-[205px] flex-shrink-0 bg-[#FFFDF9] rounded-xl p-4 sm:p-4.5 border border-dustyRose/30 shadow-xs hover:shadow-md hover:border-burgundy/40 transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between select-none relative group"
+            >
+              {/* Card Header: Organization Badge + Year */}
+              <div className="flex items-center justify-between pb-1.5 border-b border-blush/80">
+                <div className="flex items-center space-x-1.5">
+                  <span className="text-[8px] font-mono uppercase tracking-wider px-1.5 py-0.5 rounded bg-blush text-burgundy font-bold">
                     {item.badge}
                   </span>
                 </div>
-
-                <span className="text-xs font-mono text-dustyRose uppercase tracking-wider block mt-4">
-                  {item.organization}
+                <span className="text-[10px] font-mono text-mauve font-semibold">
+                  {item.year}
                 </span>
-
-                <h3 className="font-serif text-xl sm:text-2xl text-espresso font-bold mt-1 leading-snug group-hover:text-burgundy transition-colors">
-                  {item.title}
-                </h3>
-
-                <p className="text-xs sm:text-sm font-sans text-espresso/75 mt-3 leading-relaxed">
-                  {item.description}
-                </p>
               </div>
 
-              {/* Card Bottom: Skills & Number */}
-              <div className="pt-4 border-t border-blush">
-                <div className="flex flex-wrap gap-1.5 mb-3">
-                  {item.skills.map((skill, sIdx) => (
+              {/* Card Middle: Title + Issuer + Honors */}
+              <div className="my-auto py-1">
+                <h4 className="font-serif text-sm sm:text-[15px] font-bold text-espresso leading-snug line-clamp-2 group-hover:text-burgundy transition-colors">
+                  {item.title}
+                </h4>
+                <p className="text-[10.5px] font-mono text-mauve-dark italic truncate mt-0.5">
+                  {item.organization}
+                </p>
+                {item.honors && (
+                  <span className="inline-block mt-1 text-[8.5px] font-mono font-bold text-burgundy bg-amber-50 px-1.5 py-0.2 rounded border border-amber-200">
+                    &bull; {item.honors}
+                  </span>
+                )}
+              </div>
+
+              {/* Card Footer: Skills pills */}
+              <div className="pt-2 border-t border-blush/60 flex items-center justify-between">
+                <div className="flex flex-wrap gap-1 max-w-[85%]">
+                  {item.skills.slice(0, 3).map((skill, sIdx) => (
                     <span
                       key={sIdx}
-                      className="text-[10px] font-mono px-2 py-0.5 rounded bg-cream border border-blush text-mauve-dark font-medium"
+                      className="text-[8px] font-mono px-1.5 py-0.2 bg-cream text-espresso/80 rounded border border-blush"
                     >
-                      #{skill}
+                      {skill}
                     </span>
                   ))}
                 </div>
-
-                <div className="flex items-center justify-between text-[11px] font-mono text-mauve">
-                  <span className="flex items-center space-x-1 text-dustyRose">
-                    <Bookmark className="w-3 h-3" />
-                    <span>Archive Entry 0{index + 1}</span>
-                  </span>
-                  <span className="text-burgundy font-bold">Verified</span>
-                </div>
+                <ShieldCheck className="w-3.5 h-3.5 text-burgundy/60 group-hover:text-burgundy transition-colors" />
               </div>
             </div>
-          ))}
-
-          {/* End-of-Track Scrapbook Card */}
-          <div className="w-[280px] sm:w-[320px] h-[400px] sm:h-[440px] flex-shrink-0 bg-burgundy text-cream rounded-2xl shadow-editorial p-8 flex flex-col justify-between border-2 border-blush/30 relative">
-            <div className="space-y-3">
-              <span className="text-xs font-mono text-dustyRose-light uppercase tracking-widest block">
-                Next Chapter
-              </span>
-              <h3 className="text-3xl font-serif font-bold text-[#FFF8F0]">
-                Always Learning &amp; Exploring.
-              </h3>
-              <p className="text-xs font-sans text-blush/80 leading-relaxed pt-2">
-                Every workshop and challenge expands the developer toolkit. Next up: Personal Journey Path!
-              </p>
-            </div>
-
-            <div className="pt-4 border-t border-blush/20 flex items-center justify-between text-xs font-mono text-dustyRose-light">
-              <span>Scroll down to continue</span>
-              <ChevronRight className="w-5 h-5 animate-pulse" />
-            </div>
-          </div>
-        </div>
+          );
+        })}
       </div>
     </section>
   );

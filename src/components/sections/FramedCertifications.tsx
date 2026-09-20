@@ -540,11 +540,14 @@ export default function FramedCertifications() {
       {selectedCert && (
         <div
           onClick={() => setSelectedCert(null)}
-          className="fixed inset-0 z-50 bg-espresso/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+          className="fixed inset-0 z-50 bg-espresso/80 backdrop-blur-sm overflow-y-auto overscroll-contain p-3 sm:p-6 flex items-center justify-center animate-in fade-in duration-200"
+          style={{ touchAction: "pan-y" }}
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-[#FFFDF9] p-5 sm:p-7 rounded-xl shadow-2xl max-w-2xl w-full border-4 border-burgundy relative animate-in zoom-in-95 duration-200 max-h-[90vh] overflow-y-auto"
+            onWheel={(e) => e.stopPropagation()}
+            className="bg-[#FFFDF9] p-5 sm:p-7 rounded-xl shadow-2xl max-w-2xl w-full border-4 border-burgundy relative animate-in zoom-in-95 duration-200 my-auto max-h-[88vh] overflow-y-auto overscroll-contain touch-pan-y"
+            style={{ WebkitOverflowScrolling: "touch" }}
           >
             {/* Close Button */}
             <button
@@ -586,7 +589,7 @@ export default function FramedCertifications() {
                 <img
                   src={selectedCert.image}
                   alt={selectedCert.title}
-                  className="w-full max-h-[340px] object-contain mx-auto"
+                  className="w-full max-h-[340px] object-contain mx-auto pointer-events-none select-none"
                 />
               </div>
             )}
