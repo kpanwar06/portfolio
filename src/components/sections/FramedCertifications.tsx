@@ -11,7 +11,7 @@ import {
   ChevronRight,
   FileText,
   Star,
-  Compass,
+  Hourglass,
 } from "lucide-react";
 
 interface CertificateItem {
@@ -26,14 +26,14 @@ interface CertificateItem {
   skills: string[];
   honors?: string;
   score?: string;
-  isSpecial?: boolean;
 }
 
 export default function FramedCertifications() {
   const [currentPage, setCurrentPage] = useState<number>(0);
   const [selectedCert, setSelectedCert] = useState<CertificateItem | null>(null);
+  const [comingSoonModalOpen, setComingSoonModalOpen] = useState<boolean>(false);
 
-  // 12 Certificates structured into 3 pages (4 per page in a 2x2 grid)
+  // 11 Official Authenticated Certificates
   // Ordered with top-prestige & main credentials first
   const certificates: CertificateItem[] = [
     // ================= PAGE 1: CORE PRESTIGE & HIGH-IMPACT CREDENTIALS =================
@@ -136,7 +136,7 @@ export default function FramedCertifications() {
       honors: "Meta Certified Professional",
     },
 
-    // ================= PAGE 3: ENTERPRISE GIT & CONTINUOUS MASTERY =================
+    // ================= PAGE 3: ENTERPRISE GIT & INDUSTRY WORKFLOWS =================
     {
       id: 9,
       title: "Mastering Git",
@@ -173,22 +173,21 @@ export default function FramedCertifications() {
       skills: ["Git Foundations", "Version Tracking", "Merge Conflict Handling"],
       honors: "TechA Verified Credential",
     },
-    {
-      id: 12,
-      title: "Continuous Technical Advancement",
-      issuer: "Independent & Industry Specializations",
-      date: "2026 & Beyond",
-      credentialId: "ACTIVE-LEARNING-KP",
-      skills: ["System Design", "Cloud DevOps", "Scalable Microservices", "Distributed Data"],
-      honors: "Ongoing Specialization",
-      isSpecial: true,
-    },
   ];
 
+  // Dynamically calculate total pages (4 per page)
   const totalPages = Math.ceil(certificates.length / 4);
-  const pages = Array.from({ length: totalPages }, (_, i) =>
-    certificates.slice(i * 4, (i + 1) * 4)
-  );
+
+  // Group into pages of exactly 4 frames.
+  // Any empty slots are padded with null to render "COMING SOON" frames.
+  const pages: (CertificateItem | null)[][] = Array.from({ length: totalPages }, (_, i) => {
+    const slice = certificates.slice(i * 4, (i + 1) * 4);
+    const padded: (CertificateItem | null)[] = [...slice];
+    while (padded.length < 4) {
+      padded.push(null);
+    }
+    return padded;
+  });
 
   // Strictly moves Left (Previous) only if not at the beginning
   const handlePrev = () => {
@@ -282,112 +281,140 @@ export default function FramedCertifications() {
                   key={pageIdx}
                   className="w-full flex-shrink-0 grid grid-cols-2 gap-3 sm:gap-4 p-1"
                 >
-                  {pageGroup.map((cert) => (
-                    <div
-                      key={cert.id}
-                      onClick={() => setSelectedCert(cert)}
-                      className="physical-frame group cursor-pointer transition-all duration-300 hover:-translate-y-1.5 relative h-[180px] sm:h-[195px] md:h-[210px]"
-                    >
-                      {/* Picture Frame Outer Border */}
-                      <div className="w-full h-full p-2 sm:p-2.5 rounded-lg bg-[#38262a] shadow-[-6px_10px_25px_rgba(38,28,30,0.22)] border-[4px] sm:border-[6px] border-[#291b1e] relative flex flex-col justify-between overflow-hidden">
-                        {/* Glass Sheen Glare */}
-                        <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none z-20" />
+                  {pageGroup.map((cert, slotIdx) =>
+                    cert ? (
+                      // ================= AUTHENTIC CERTIFICATE FRAME =================
+                      <div
+                        key={cert.id}
+                        onClick={() => setSelectedCert(cert)}
+                        className="physical-frame group cursor-pointer transition-all duration-300 hover:-translate-y-1.5 relative h-[180px] sm:h-[195px] md:h-[210px]"
+                      >
+                        {/* Picture Frame Outer Border */}
+                        <div className="w-full h-full p-2 sm:p-2.5 rounded-lg bg-[#38262a] shadow-[-6px_10px_25px_rgba(38,28,30,0.22)] border-[4px] sm:border-[6px] border-[#291b1e] relative flex flex-col justify-between overflow-hidden">
+                          {/* Glass Sheen Glare */}
+                          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none z-20" />
 
-                        {/* Inner Matting / Certificate Cardstock */}
-                        <div className="w-full h-full bg-[#FFFDF9] rounded-xs border border-dustyRose/20 shadow-inner flex flex-col justify-between relative z-10 overflow-hidden">
-                          {cert.isSpecial ? (
-                            // Special Continuous Learning Card
-                            <div className="w-full h-full p-3 flex flex-col justify-between items-center text-center bg-gradient-to-b from-cream to-blush/40 border border-dashed border-burgundy/30 rounded">
-                              <div className="flex items-center space-x-1 text-burgundy">
-                                <Compass className="w-4 h-4 animate-spin-slow" />
-                                <span className="text-[8px] font-mono uppercase tracking-widest font-bold">
-                                  CONTINUOUS ADVANCEMENT
-                                </span>
-                              </div>
-                              <div className="my-auto">
-                                <h3 className="font-serif text-xs sm:text-sm font-bold text-espresso leading-tight">
-                                  System Design &amp; Scalable Infrastructure
-                                </h3>
-                                <p className="text-[9px] font-mono text-mauve-dark mt-1">
-                                  Active self-study &amp; specialized coursework
-                                </p>
-                              </div>
-                              <div className="text-[8px] font-mono px-2 py-0.5 bg-burgundy/10 text-burgundy rounded font-semibold">
-                                IN PROGRESS &bull; 2026
-                              </div>
-                            </div>
-                          ) : cert.image ? (
-                            // Real Certificate Image Preview
-                            <div className="relative w-full h-full overflow-hidden bg-white flex flex-col">
-                              <div className="relative w-full h-full overflow-hidden">
-                                <img
-                                  src={cert.image}
-                                  alt={cert.title}
-                                  className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
-                                  loading="lazy"
-                                />
-                                {/* Top Badge for Honors */}
-                                {cert.honors && (
-                                  <div className="absolute top-1.5 right-1.5 bg-burgundy/95 text-white text-[7px] font-mono font-bold px-1.5 py-0.5 rounded shadow-xs z-10 flex items-center space-x-0.5">
-                                    <Star className="w-2 h-2 text-yellow-300 fill-yellow-300" />
-                                    <span>
-                                      {cert.honors.includes("Topper")
-                                        ? "TOPPER 2%"
-                                        : cert.honors.includes("Meta")
-                                        ? "META"
-                                        : "VERIFIED"}
+                          {/* Inner Matting / Certificate Cardstock */}
+                          <div className="w-full h-full bg-[#FFFDF9] rounded-xs border border-dustyRose/20 shadow-inner flex flex-col justify-between relative z-10 overflow-hidden">
+                            {cert.image ? (
+                              // Real Certificate Image Preview
+                              <div className="relative w-full h-full overflow-hidden bg-white flex flex-col">
+                                <div className="relative w-full h-full overflow-hidden">
+                                  <img
+                                    src={cert.image}
+                                    alt={cert.title}
+                                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                                    loading="lazy"
+                                  />
+                                  {/* Top Badge for Honors */}
+                                  {cert.honors && (
+                                    <div className="absolute top-1.5 right-1.5 bg-burgundy/95 text-white text-[7px] font-mono font-bold px-1.5 py-0.5 rounded shadow-xs z-10 flex items-center space-x-0.5">
+                                      <Star className="w-2 h-2 text-yellow-300 fill-yellow-300" />
+                                      <span>
+                                        {cert.honors.includes("Topper")
+                                          ? "TOPPER 2%"
+                                          : cert.honors.includes("Meta")
+                                          ? "META"
+                                          : "VERIFIED"}
+                                      </span>
+                                    </div>
+                                  )}
+                                  {/* Hover Overlay */}
+                                  <div className="absolute inset-0 bg-espresso/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px] z-10">
+                                    <span className="px-2.5 py-1 bg-burgundy text-cream text-[9px] font-mono rounded shadow flex items-center space-x-1">
+                                      <Sparkles className="w-2.5 h-2.5 text-cream" />
+                                      <span>Inspect Certificate</span>
                                     </span>
                                   </div>
-                                )}
-                                {/* Hover Overlay */}
-                                <div className="absolute inset-0 bg-espresso/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[1px] z-10">
-                                  <span className="px-2.5 py-1 bg-burgundy text-cream text-[9px] font-mono rounded shadow flex items-center space-x-1">
-                                    <Sparkles className="w-2.5 h-2.5 text-cream" />
-                                    <span>Inspect Certificate</span>
+                                </div>
+                              </div>
+                            ) : (
+                              // Fallback Editorial Cardstock
+                              <div className="p-2.5 sm:p-3 flex flex-col justify-between h-full">
+                                <div className="flex items-center justify-between border-b border-blush pb-1">
+                                  <div className="flex items-center space-x-1">
+                                    <Award className="w-3 h-3 text-burgundy" />
+                                    <span className="text-[8px] font-mono tracking-widest uppercase text-burgundy font-bold">
+                                      VERIFIED CREDENTIAL
+                                    </span>
+                                  </div>
+                                  <span className="text-[9px] font-mono text-mauve font-semibold">
+                                    {cert.date}
+                                  </span>
+                                </div>
+                                <div className="my-auto py-1 text-center">
+                                  <h3 className="font-serif text-xs sm:text-sm font-bold text-espresso leading-snug line-clamp-2">
+                                    {cert.title}
+                                  </h3>
+                                  <p className="text-[9.5px] font-mono text-mauve-dark italic truncate mt-0.5">
+                                    {cert.issuer}
+                                  </p>
+                                </div>
+                                <div className="pt-1 border-t border-blush flex items-center justify-between">
+                                  <span className="text-[8px] font-mono text-burgundy font-bold">
+                                    {cert.credentialId}
                                   </span>
                                 </div>
                               </div>
-                            </div>
-                          ) : (
-                            // Fallback Editorial Cardstock
-                            <div className="p-2.5 sm:p-3 flex flex-col justify-between h-full">
-                              <div className="flex items-center justify-between border-b border-blush pb-1">
-                                <div className="flex items-center space-x-1">
-                                  <Award className="w-3 h-3 text-burgundy" />
-                                  <span className="text-[8px] font-mono tracking-widest uppercase text-burgundy font-bold">
-                                    VERIFIED CREDENTIAL
-                                  </span>
-                                </div>
-                                <span className="text-[9px] font-mono text-mauve font-semibold">
-                                  {cert.date}
-                                </span>
-                              </div>
-                              <div className="my-auto py-1 text-center">
-                                <h3 className="font-serif text-xs sm:text-sm font-bold text-espresso leading-snug line-clamp-2">
-                                  {cert.title}
-                                </h3>
-                                <p className="text-[9.5px] font-mono text-mauve-dark italic truncate mt-0.5">
-                                  {cert.issuer}
-                                </p>
-                              </div>
-                              <div className="pt-1 border-t border-blush flex items-center justify-between">
-                                <span className="text-[8px] font-mono text-burgundy font-bold">
-                                  {cert.credentialId}
-                                </span>
-                              </div>
-                            </div>
-                          )}
-                        </div>
+                            )}
+                          </div>
 
-                        {/* Brass Nameplate at Frame Base */}
-                        <div className="mt-1 py-0.5 px-2 bg-gradient-to-r from-[#d8a47f]/80 via-[#f5d9b5] to-[#d8a47f]/80 rounded text-center shadow-2xs border border-[#b88562] flex-shrink-0">
-                          <span className="text-[7.5px] font-mono text-espresso font-bold uppercase tracking-wider block truncate">
-                            {cert.title}
-                          </span>
+                          {/* Brass Nameplate at Frame Base */}
+                          <div className="mt-1 py-0.5 px-2 bg-gradient-to-r from-[#d8a47f]/80 via-[#f5d9b5] to-[#d8a47f]/80 rounded text-center shadow-2xs border border-[#b88562] flex-shrink-0">
+                            <span className="text-[7.5px] font-mono text-espresso font-bold uppercase tracking-wider block truncate">
+                              {cert.title}
+                            </span>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ))}
+                    ) : (
+                      // ================= EMPTY FRAME: "COMING SOON" =================
+                      <div
+                        key={`coming-soon-${pageIdx}-${slotIdx}`}
+                        onClick={() => setComingSoonModalOpen(true)}
+                        className="physical-frame group cursor-pointer transition-all duration-300 hover:-translate-y-1 relative h-[180px] sm:h-[195px] md:h-[210px]"
+                      >
+                        {/* Picture Frame Outer Border */}
+                        <div className="w-full h-full p-2 sm:p-2.5 rounded-lg bg-[#38262a] shadow-[-6px_10px_25px_rgba(38,28,30,0.22)] border-[4px] sm:border-[6px] border-[#291b1e] relative flex flex-col justify-between overflow-hidden">
+                          {/* Glass Sheen Glare */}
+                          <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent pointer-events-none z-20" />
+
+                          {/* Inner Matting with Dashed Vintage Border */}
+                          <div className="w-full h-full bg-[#FFFDF9]/95 rounded-xs p-3 border-2 border-dashed border-dustyRose/40 shadow-inner flex flex-col justify-between items-center text-center relative z-10">
+                            <div className="flex items-center space-x-1 text-dustyRose pt-0.5">
+                              <Sparkles className="w-3 h-3 text-dustyRose" />
+                              <span className="text-[7.5px] font-mono tracking-widest uppercase font-bold text-mauve">
+                                UPCOMING ACCREDITATION
+                              </span>
+                              <Sparkles className="w-3 h-3 text-dustyRose" />
+                            </div>
+
+                            <div className="my-auto py-1">
+                              <h3 className="font-serif text-sm sm:text-base font-bold text-burgundy tracking-widest uppercase">
+                                COMING SOON
+                              </h3>
+                              <p className="text-[9px] font-mono text-mauve-dark italic mt-0.5">
+                                Next milestone in progress
+                              </p>
+                            </div>
+
+                            <div className="w-full pt-1 border-t border-blush flex items-center justify-center">
+                              <span className="text-[7px] font-mono text-dustyRose uppercase tracking-wider font-semibold">
+                                [ RESERVED FRAME &bull; 2026 ]
+                              </span>
+                            </div>
+                          </div>
+
+                          {/* Brass Nameplate at Frame Base */}
+                          <div className="mt-1 py-0.5 px-2 bg-gradient-to-r from-[#d8a47f]/80 via-[#f5d9b5] to-[#d8a47f]/80 rounded text-center shadow-2xs border border-[#b88562] flex-shrink-0">
+                            <span className="text-[7.5px] font-mono text-espresso font-bold uppercase tracking-wider block truncate">
+                              COMING SOON &bull; RESERVED
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    )
+                  )}
                 </div>
               ))}
             </div>
@@ -458,6 +485,54 @@ export default function FramedCertifications() {
           </div>
         </div>
       </div>
+
+      {/* ========================================================================= */}
+      {/* COMING SOON LIGHTBOX MODAL                                                */}
+      {/* ========================================================================= */}
+      {comingSoonModalOpen && (
+        <div
+          onClick={() => setComingSoonModalOpen(false)}
+          className="fixed inset-0 z-50 bg-espresso/80 backdrop-blur-sm flex items-center justify-center p-4 animate-in fade-in duration-200"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[#FFFDF9] p-6 sm:p-8 rounded-xl shadow-2xl max-w-md w-full border-4 border-burgundy relative text-center animate-in zoom-in-95 duration-200"
+          >
+            <button
+              onClick={() => setComingSoonModalOpen(false)}
+              className="absolute top-3.5 right-3.5 w-8 h-8 rounded-full bg-blush text-burgundy flex items-center justify-center hover:bg-dustyRose hover:text-white transition-colors cursor-pointer"
+              aria-label="Close modal"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="w-12 h-12 rounded-full bg-blush text-burgundy flex items-center justify-center mx-auto mb-3 shadow-inner">
+              <Hourglass className="w-6 h-6 animate-pulse" />
+            </div>
+
+            <div className="text-xs font-mono uppercase tracking-widest text-burgundy font-bold mb-1">
+              RESERVED GALLERY FRAME
+            </div>
+
+            <h3 className="text-2xl font-serif font-bold text-espresso">
+              Coming Soon
+            </h3>
+
+            <p className="text-xs font-serif italic text-espresso/80 mt-2 leading-relaxed">
+              This frame is reserved for upcoming engineering accreditations and professional milestones currently in progress.
+            </p>
+
+            <div className="mt-5 pt-4 border-t border-blush flex justify-center">
+              <button
+                onClick={() => setComingSoonModalOpen(false)}
+                className="px-5 py-1.5 bg-burgundy hover:bg-burgundy-light text-cream rounded-md text-xs font-mono font-semibold transition-colors"
+              >
+                Close Window
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ========================================================================= */}
       {/* CERTIFICATE DETAIL LIGHTBOX MODAL                                         */}
