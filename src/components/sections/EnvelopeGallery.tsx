@@ -31,65 +31,65 @@ export default function EnvelopeGallery() {
   const photos: PhotoItem[] = [
     {
       id: 1,
-      title: "Team Hackathon Sprints",
-      tag: "BMSCE Tech",
-      date: "Round 01",
+      title: "Encrypted",
+      tag: "Pentagram | Volunteer",
+      date: "2025",
       src: "/photos/1.jpeg",
       aspect: "aspect-[4/3]",
     },
     {
       id: 2,
-      title: "Brandeis Business Summit",
-      tag: "Academics & Global",
-      date: "Delegate Series",
+      title: "SEED Business School Festival",
+      tag: "SEED Global | Volunteer",
+      date: "2025",
       src: "/photos/2.jpeg",
       aspect: "aspect-[4/5]",
     },
     {
       id: 3,
-      title: "Cyber Siege Challenge",
-      tag: "Engineering",
-      date: "Tech Fest 2025",
+      title: "Cyber Siege",
+      tag: "Team Code Locked | Volunteer",
+      date: "2025",
       src: "/photos/3.jpeg",
       aspect: "aspect-[4/3]",
     },
     {
       id: 4,
-      title: "Department Placement Core",
-      tag: "Leadership",
-      date: "ISE Campus Life",
+      title: "All is Volt",
+      tag: "Pentagram | Volunteer",
+      date: "2025",
       src: "/photos/4.jpeg",
       aspect: "aspect-[4/3]",
     },
     {
       id: 5,
-      title: "Rapid Decode & Map Myst",
-      tag: "Event Architecture",
-      date: "Puzzle Design",
+      title: "Anveshna-Encipher",
+      tag: "Pentagram | Volunteer",
+      date: "2025",
       src: "/photos/5.jpeg",
       aspect: "aspect-[4/3]",
     },
     {
       id: 6,
-      title: "Business School Festival",
-      tag: "ReachIvy Leadership",
-      date: "Education Summit",
+      title: "SEED Business School Festival",
+      tag: "SEED Global | Volunteer",
+      date: "2026",
       src: "/photos/6.jpeg",
       aspect: "aspect-[4/5]",
     },
     {
       id: 7,
-      title: "Faculty & Team Milestones",
-      tag: "Department",
-      date: "Academic Year",
+      title: "Math Day",
+      tag: "Pentagram | Event Coordinator",
+      date: "2026",
       src: "/photos/7.jpeg",
       aspect: "aspect-[4/3]",
     },
     {
       id: 8,
-      title: "Escape Room Challenge",
-      tag: "Campus Culture",
-      date: "Basavanagudi, BLR",
+      title: "Utsav - Escape Room",
+      tag: "Pentagram | Volunteer",
+      date: "2026",
       src: "/photos/8.jpeg",
       aspect: "aspect-[4/3]",
     },
@@ -458,15 +458,15 @@ export default function EnvelopeGallery() {
 
                   {/* Handwritten Polaroid Caption */}
                   <div className="mt-2.5 flex items-center justify-between pointer-events-none">
-                    <div>
-                      <h4 className="font-serif italic text-espresso font-semibold text-xs leading-tight">
-                        {photo.title}
-                      </h4>
-                      <p className="text-[9px] font-mono text-mauve mt-0.5">
+                    <div className="min-w-0 pr-1">
+                      <p className="text-[8.5px] font-mono uppercase tracking-wider text-dustyRose font-medium truncate">
                         {photo.tag} • {photo.date}
                       </p>
+                      <h4 className="font-serif text-espresso font-bold text-xs sm:text-[13px] leading-tight mt-0.5 truncate">
+                        {photo.title}
+                      </h4>
                     </div>
-                    <Heart className="w-3.5 h-3.5 text-dustyRose opacity-0 group-hover:opacity-100 transition-opacity" />
+                    <Heart className="w-3.5 h-3.5 text-dustyRose opacity-0 group-hover:opacity-100 transition-opacity flex-shrink-0" />
                   </div>
                 </div>
               </div>
