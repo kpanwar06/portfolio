@@ -3,6 +3,7 @@ import IdentitySection from "@/components/sections/IdentitySection";
 import EnvelopeGallery from "@/components/sections/EnvelopeGallery";
 import FramedCertifications from "@/components/sections/FramedCertifications";
 import HorizontalCertificates from "@/components/sections/HorizontalCertificates";
+import ProjectsBento from "@/components/sections/ProjectsBento";
 import JourneyPath from "@/components/sections/JourneyPath";
 import TechStackBox from "@/components/sections/TechStackBox";
 
@@ -24,7 +25,10 @@ export default function Home() {
       {/* 5. Other Certificates & Workshops (Horizontal Scroll) */}
       <HorizontalCertificates />
 
-      {/* 6. Personal Journey (45° Diagonal Stone Path → Cloud) - Kept in code, temporarily hidden */}
+      {/* 6. Featured Projects (Cute Metamorphic Bento Showcase) */}
+      <ProjectsBento />
+
+      {/* 7. Personal Journey (45° Diagonal Stone Path → Cloud) - Kept in code, temporarily hidden */}
       {/* <JourneyPath /> */}
 
       {/* 7. Tech Stack (3D Box with Scroll-Driven Camera Rotation) - Kept in code, temporarily hidden */}
