@@ -15,7 +15,6 @@ interface ProjectItem {
   category: string;
   metaphorBadge: string;
   metaphorIcon: string;
-  cardImage: string;
   description: string;
   longDescription: string;
   techStack: string[];
@@ -42,7 +41,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     category: "Mobile Application · Social Impact",
     metaphorBadge: "Artisanal Bento Lunchbox",
     metaphorIcon: "🍱",
-    cardImage: "/projects/cards/sharebite_card.jpg",
     description: "Turning food surplus into community sustenance in real time &bull; Connecting commercial kitchens directly to orphanages & shelters.",
     longDescription: "Commercial restaurants, banquet caterers, and events regularly discard surplus cooked food, while neighboring shelters and orphanages face persistent meal shortages. ShareBite provides an instantaneous mobile platform with real-time geolocation routing to rescue and dispatch edible surplus food before it spoils.",
     techStack: ["Flutter 3", "Dart", "Firebase Auth", "Cloud Firestore", "Google Maps API", "FCM"],
@@ -70,7 +68,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     category: "Distributed Systems · Live Tool",
     metaphorBadge: "Sweet Shop Conveyor Sorter",
     metaphorIcon: "🧁",
-    cardImage: "/projects/cards/kafka_card.jpg",
     description: "Demystifying distributed event streaming through an interactive visual sandbox with real-time partitions & consumer offsets.",
     longDescription: "Apache Kafka powers high-throughput data streaming across modern tech companies, but core mechanics like partition key hashing, immutable commit logs, consumer lag, and read offsets can be difficult to visualize. This simulator provides an interactive sandbox to produce custom events, trace partition routing, and observe offset advancement in real-time.",
     techStack: ["Next.js 14", "React 18", "Framer Motion", "TypeScript", "Tailwind CSS", "Vercel"],
@@ -106,7 +103,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     category: "Full-Stack Web Application · BMSCE",
     metaphorBadge: "Pastel Leatherette Dorm Trunk",
     metaphorIcon: "🧳",
-    cardImage: "/projects/cards/unistay_card.jpg",
     description: "Streamlining campus residence discovery and room allocation for BMSCE students with single-room booking integrity.",
     longDescription: "Eliminates manual paper queues, lack of room vacancy transparency, and duplicate booking records by digitizing room discovery, gender-based allocations, and institutional KYC into a unified student & administrator portal.",
     techStack: ["Python", "Django (MVT)", "MySQL", "Google Maps API", "Django Admin"],
@@ -143,7 +139,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     category: "Data Processing · Educational Analytics",
     metaphorBadge: "Pastel Desk Organizer Boxes",
     metaphorIcon: "🗃️",
-    cardImage: "/projects/cards/cie_card.jpg",
     description: "Automating internal evaluation pipelines to flag at-risk learners for early academic care via headless document conversion.",
     longDescription: "Analyzing exam spreadsheets manually across hundreds of engineering students across CIE 1, 2, and 3 is tedious and delays remedial intervention. CIE Analyzer automates batch upload, legacy format normalization, and statistical benchmark scoring to flag students who need extra academic assistance before final exams.",
     techStack: ["Python", "Django", "Pandas", "LibreOffice Headless", "Firebase Firestore", "Docker"],
@@ -182,7 +177,6 @@ const PROJECTS_DATA: ProjectItem[] = [
     category: "Cybersecurity · OOPS Java",
     metaphorBadge: "Pastel Lanyard & ID Badge",
     metaphorIcon: "🪪",
-    cardImage: "/projects/cards/smartattend_card.jpg",
     description: "Eliminating proxy attendance through cryptographic geofencing and 1-student-1-device hardware binding.",
     longDescription: "Traditional roll calls and QR code attendance suffer from widespread proxy marking via remote link sharing or screenshot exchange. SmartAttend mathematically ensures that attendance can only be recorded if the student is physically within the classroom radius and using their registered personal device.",
     techStack: ["Java 17+", "Spring Boot", "Supabase (PostgreSQL)", "Haversine Distance", "Maven"],
@@ -270,6 +264,42 @@ export default function ProjectsBento() {
   return (
     <section id="projects" className="relative py-24 px-4 sm:px-6 md:px-10 bg-[#FAF6F0] text-[#3B121E]">
       
+      {/* Custom Styles for Sleek Shapes */}
+      <style jsx>{`
+        .sleek-bento-tray {
+          background: linear-gradient(145deg, #3D0A18, #26050E);
+          border: 3px solid #ECC880;
+          box-shadow: 
+            0 20px 40px -10px rgba(61, 10, 24, 0.25),
+            inset 0 2px 4px rgba(255, 255, 255, 0.15),
+            inset 0 -3px 6px rgba(0, 0, 0, 0.5);
+        }
+        .bento-inner-chamber {
+          background: #FAF7F2;
+          box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
+        }
+        .awning-stripes {
+          background: repeating-linear-gradient(
+            90deg,
+            #F472B6 0px,
+            #F472B6 18px,
+            #FFFDF9 18px,
+            #FFFDF9 36px
+          );
+        }
+        .suitcase-brass-clasp {
+          background: linear-gradient(135deg, #ECC880, #D4AF37, #996515);
+          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        .radar-sweep-anim {
+          animation: sweep 4s linear infinite;
+        }
+        @keyframes sweep {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+      `}</style>
+
       {/* SECTION HEADER (Matching User Reference Image) */}
       <div className="max-w-6xl mx-auto mb-12">
         <div className="flex items-center gap-2 mb-2">
@@ -284,169 +314,437 @@ export default function ProjectsBento() {
               Portfolio Projects
             </h2>
             <p className="text-sm sm:text-base text-[#7A4555] mt-1.5 max-w-xl">
-              Explore My Latest Work &bull; Click any cute physical object to open its interactive 2cm case study with real code and demo media.
+              Explore My Latest Work &bull; Each card is a sleek physical object with live code-crafted compartments that expands into an interactive case study with a 2cm margin.
             </p>
           </div>
           <div className="inline-flex items-center gap-2 bg-[#FFFDF9] px-4 py-2 rounded-full border border-[#8B1E3F]/20 text-xs text-[#8B1E3F] shadow-sm font-medium">
-            <span>✨ 5 Thematic Physical Objects</span>
+            <span>✨ 5 Sleek Thematic Shapes</span>
           </div>
         </div>
       </div>
 
-      {/* THE 5 PROJECTS GRID: TOP ROW 3 CARDS, BOTTOM ROW 2 CARDS */}
+      {/* THE 5 SLEEK CODE-CRAFTED CARDS: TOP ROW 3 CARDS, BOTTOM ROW 2 CARDS */}
       <div className="max-w-6xl mx-auto space-y-8">
         
-        {/* ================= TOP ROW: 3 EQUAL COLUMNS ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
+        {/* ================= TOP ROW: 3 SLEEK PHYSICAL OBJECT CARDS ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-7">
           
-          {/* CARD 01: SHAREBITE (Bento Lunchbox) */}
+          {/* CARD 01: SHAREBITE (Sleek Crafted Bento Box with Chopsticks) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[0])}
-            className="group relative bg-[#FFFDF9] rounded-3xl p-3.5 border-2 border-[#ECC880]/50 shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="sleek-bento-tray rounded-[28px] p-4 text-[#3D0A18] flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 relative group cursor-pointer"
           >
-            <div className="relative aspect-[330/365] rounded-2xl overflow-hidden shadow-inner bg-[#EFE9DC]">
-              <Image 
-                src={PROJECTS_DATA[0].cardImage}
-                alt="ShareBite Bento Box"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <span className="px-3 py-1.5 rounded-full bg-[#ECC880] text-[#3D0A18] text-xs font-bold shadow flex items-center gap-1.5 mx-auto">
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Open Bento Box Case Study</span>
+            {/* Chopsticks & Rest resting below box */}
+            <div className="absolute -bottom-3 left-8 right-8 flex items-center gap-2 pointer-events-none z-10">
+              <div className="h-1.5 flex-1 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] rounded-full shadow-md"></div>
+              <div className="w-4 h-4 rounded-full bg-[#F472B6] border border-[#ECC880] shadow flex items-center justify-center text-[8px]">🌸</div>
+              <div className="h-1.5 flex-1 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] rounded-full shadow-md"></div>
+            </div>
+
+            {/* Inside Bento Tray: 4 Compartments */}
+            <div className="space-y-3 pb-2">
+              
+              {/* Compartment 1 (Top): Fresh Veggie Green Header */}
+              <div className="bg-gradient-to-br from-[#122E22] to-[#0A1F16] text-[#F0FDF4] p-3.5 rounded-2xl border border-[#34D399]/40 shadow-sm flex items-center justify-between">
+                <div>
+                  <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#34D399] uppercase tracking-wider font-bold">
+                    <span>🌱</span>
+                    <span>ShareBite</span>
+                  </div>
+                  <h4 className="font-serif text-base font-bold text-white leading-snug mt-0.5">Surplus Food Rescue</h4>
+                </div>
+                <span className="text-[9px] bg-[#34D399]/20 text-[#34D399] border border-[#34D399]/40 px-2 py-0.5 rounded-full font-bold">
+                  Flutter 3
                 </span>
               </div>
+
+              {/* Compartment 2 & 3: Rice White Stats + Karaage Nuggets */}
+              <div className="grid grid-cols-12 gap-3">
+                {/* Rice White Counter */}
+                <div className="col-span-7 bento-inner-chamber p-3 rounded-2xl border border-[#ECC880]/30 flex flex-col justify-between">
+                  <span className="text-[9px] font-mono uppercase text-[#8C7A6B] font-bold">🍚 Steamed Rice Window</span>
+                  <div className="my-1.5">
+                    <div className="text-xl font-serif font-bold text-[#8B1E3F]">12,450+</div>
+                    <div className="text-[10px] text-[#7A4555]">Meals Distributed</div>
+                  </div>
+                  <span className="text-[9px] text-[#059669] font-semibold">15-min Hot Pickup SLA</span>
+                </div>
+
+                {/* Karaage & Veggie Dish Window */}
+                <div className="col-span-5 bg-gradient-to-br from-[#2D0A14] to-[#1A0309] text-white p-3 rounded-2xl border border-white/10 flex flex-col items-center justify-center text-center">
+                  <span className="text-2xl mb-1">🥦🍱</span>
+                  <span className="text-[10px] font-serif text-[#ECC880] font-bold">88+ Shelters</span>
+                  <span className="text-[9px] text-white/60">Zero Waste</span>
+                </div>
+              </div>
+
+              {/* Compartment 4: Recipe Ingredients & Actions */}
+              <div className="bg-black/30 p-2.5 rounded-2xl border border-white/10 flex items-center justify-between">
+                <div className="flex items-center gap-1 text-[10px] font-mono text-[#ECC880]">
+                  <span>Recipe:</span>
+                  <span className="bg-white/10 px-1.5 py-0.5 rounded text-white text-[9px]">Firebase</span>
+                  <span className="bg-white/10 px-1.5 py-0.5 rounded text-white text-[9px]">Maps API</span>
+                </div>
+                <span className="text-[10px] font-bold text-[#ECC880] group-hover:underline flex items-center gap-0.5">
+                  <span>Open 2cm</span>
+                  <span>↗</span>
+                </span>
+              </div>
+
             </div>
 
-            <div className="mt-3 px-1 flex items-center justify-between text-xs">
-              <span className="font-serif font-bold text-[#3D0A18] text-sm">01. ShareBite</span>
-              <span className="text-[#8B1E3F] font-mono text-[11px] font-semibold flex items-center gap-1">
-                <span>View Demo</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </span>
+            {/* Bottom Action Buttons */}
+            <div className="flex items-center gap-2 pt-2 border-t border-[#ECC880]/20">
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[0]); }}
+                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+              >
+                <span>▶ Watch Demo</span>
+              </button>
+              <a 
+                href={PROJECTS_DATA[0].githubUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold border border-white/20"
+              >
+                GitHub ↗
+              </a>
             </div>
+
           </div>
 
-          {/* CARD 02: KAFKA SIMULATOR (Sweet Shop Conveyor) */}
+          {/* CARD 02: KAFKA SIMULATOR (Sleek Sweet Shop with Awning) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[1])}
-            className="group relative bg-[#FFFDF9] rounded-3xl p-3.5 border-2 border-[#FDE68A] shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="bg-[#FFFDF9] rounded-[28px] border-2 border-[#ECC880] shadow-lg hover:-translate-y-2 transition-transform duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
           >
-            <div className="relative aspect-[340/355] rounded-2xl overflow-hidden shadow-inner bg-[#EFE9DC]">
-              <Image 
-                src={PROJECTS_DATA[1].cardImage}
-                alt="Kafka Simulator Sweet Sorter"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <span className="px-3 py-1.5 rounded-full bg-[#ECC880] text-[#3D0A18] text-xs font-bold shadow flex items-center gap-1.5 mx-auto">
-                  <Play className="w-3.5 h-3.5 fill-current" />
-                  <span>Launch Conveyor Case Study</span>
-                </span>
+            {/* Sleek Scalloped Awning Roof */}
+            <div>
+              <div className="h-6 awning-stripes border-b-2 border-[#ECC880] flex items-center justify-between px-3">
+                <span className="w-2 h-2 rounded-full bg-[#ECC880]"></span>
+                <span className="text-[9px] font-bold text-[#8B1E3F] tracking-widest bg-white/80 px-2 rounded-full">BAKERY CONVEYOR</span>
+                <span className="w-2 h-2 rounded-full bg-[#ECC880]"></span>
+              </div>
+
+              <div className="p-4 space-y-3">
+                {/* Shop Header */}
+                <div className="flex items-center justify-between">
+                  <div>
+                    <div className="text-[10px] uppercase font-mono text-[#ECC880] font-bold flex items-center gap-1">
+                      <span>🧁</span>
+                      <span>Kafka Simulator</span>
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-[#3D0A18]">Event Stream Sorter</h4>
+                  </div>
+                  <span className="text-[9px] font-mono bg-[#D1FAE5] text-[#065F46] px-2 py-0.5 rounded-full font-bold">
+                    VERCEL LIVE
+                  </span>
+                </div>
+
+                {/* Animated Conveyor Track */}
+                <div className="bg-[#2D0A14] text-white p-3 rounded-2xl border border-[#ECC880]/30 overflow-hidden">
+                  <div className="flex items-center justify-between text-[10px] font-mono text-[#ECC880] mb-2">
+                    <span>Conveyor Rollers</span>
+                    <span>hash(key) % 3</span>
+                  </div>
+                  
+                  {/* Moving Sweet Boxes */}
+                  <div className="flex items-center gap-2 py-1">
+                    <div className="px-2 py-1 rounded-lg bg-[#ECC880] text-[#2D0A14] text-[10px] font-bold shadow animate-pulse flex items-center gap-1">
+                      <span>📦</span>
+                      <span>order_created</span>
+                    </div>
+                    <span className="text-white/40">&rarr;</span>
+                    <div className="px-2 py-1 rounded-lg bg-[#F472B6] text-white text-[10px] font-bold shadow flex items-center gap-1">
+                      <span>🍬</span>
+                      <span>P1 Basket</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* 3 Pastel Partition Bins */}
+                <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
+                  <div className="p-2 rounded-xl bg-[#FCE7F3] border border-[#F472B6]/40 text-[#BE185D]">
+                    <span className="text-sm">🧁</span>
+                    <div className="font-bold text-[10px]">P0 Bin</div>
+                  </div>
+                  <div className="p-2 rounded-xl bg-[#DBEAFE] border border-[#93C5FD]/40 text-[#1E40AF]">
+                    <span className="text-sm">🍬</span>
+                    <div className="font-bold text-[10px]">P1 Bin</div>
+                  </div>
+                  <div className="p-2 rounded-xl bg-[#FEF3C7] border border-[#FDE68A]/60 text-[#92400E]">
+                    <span className="text-sm">🍰</span>
+                    <div className="font-bold text-[10px]">P2 Bin</div>
+                  </div>
+                </div>
+
               </div>
             </div>
 
-            <div className="mt-3 px-1 flex items-center justify-between text-xs">
-              <span className="font-serif font-bold text-[#3D0A18] text-sm">02. Kafka Simulator</span>
-              <span className="text-[#8B1E3F] font-mono text-[11px] font-semibold flex items-center gap-1">
-                <span>Live Vercel</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </span>
+            {/* Bottom Action Buttons */}
+            <div className="p-4 pt-0 flex items-center gap-2">
+              <a 
+                href={PROJECTS_DATA[1].liveUrl} 
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+              >
+                <span>▶ Live Demo</span>
+              </a>
+              <a 
+                href={PROJECTS_DATA[1].githubUrl} 
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="px-3 py-1.5 rounded-xl bg-[#8B1E3F]/10 hover:bg-[#8B1E3F]/20 text-[#8B1E3F] text-[11px] font-semibold border border-[#8B1E3F]/20"
+              >
+                GitHub ↗
+              </a>
             </div>
+
           </div>
 
-          {/* CARD 03: UNISTAY (Pastel Leatherette Dorm Trunk) */}
+          {/* CARD 03: UNISTAY (Sleek Leatherette Dorm Trunk) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[2])}
-            className="group relative bg-[#FFFDF9] rounded-3xl p-3.5 border-2 border-[#E8B4B8] shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="bg-[#FFFDF9] rounded-[28px] border-2 border-[#E8B4B8] shadow-lg hover:-translate-y-2 transition-transform duration-300 p-4 flex flex-col justify-between relative group cursor-pointer"
           >
-            <div className="relative aspect-[335/365] rounded-2xl overflow-hidden shadow-inner bg-[#EFE9DC]">
-              <Image 
-                src={PROJECTS_DATA[2].cardImage}
-                alt="UniStay Dorm Trunk"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <span className="px-3 py-1.5 rounded-full bg-[#ECC880] text-[#3D0A18] text-xs font-bold shadow flex items-center gap-1.5 mx-auto">
-                  <Key className="w-3.5 h-3.5" />
-                  <span>Open Suitcase Trunk</span>
+            {/* Brass Handle at Top */}
+            <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#E8B4B8]/40">
+              <div className="flex items-center gap-2">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#FCE7F3] text-[#BE185D] font-bold border border-[#F472B6]/40 flex items-center gap-1">
+                  <span>🏷️</span>
+                  <span>Room #412</span>
                 </span>
+                <span className="w-3 h-3 rounded-full bg-[#F472B6] shadow-inner"></span>
+              </div>
+              <div className="w-8 h-3.5 suitcase-brass-clasp rounded-sm flex items-center justify-center shadow">
+                <div className="w-1.5 h-1.5 rounded-full bg-black/40"></div>
               </div>
             </div>
 
-            <div className="mt-3 px-1 flex items-center justify-between text-xs">
-              <span className="font-serif font-bold text-[#3D0A18] text-sm">03. UniStay</span>
-              <span className="text-[#8B1E3F] font-mono text-[11px] font-semibold flex items-center gap-1">
-                <span>Room #412</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </span>
+            <div className="space-y-3">
+              <div>
+                <div className="text-[10px] uppercase font-mono text-[#BE185D] font-bold">Dorm Booking &bull; BMSCE</div>
+                <h4 className="font-serif text-lg font-bold text-[#3D0A18]">UniStay</h4>
+                <p className="text-xs text-[#7A4555] mt-0.5">Centralized hostel allocation with single-booking integrity.</p>
+              </div>
+
+              {/* Polaroid Preview with Washi Tape */}
+              <div className="relative bg-white p-2.5 rounded-2xl shadow-sm border border-[#E8B4B8] flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl bg-[#FCEEF1] border border-[#E8B4B8] flex items-center justify-center text-2xl shadow-inner">
+                  🧳
+                </div>
+                <div className="text-xs">
+                  <div className="font-serif font-bold text-[#8B1E3F]">Maple Hall &bull; Ensuite</div>
+                  <div className="text-[10px] text-[#A24857] mt-0.5">4 Residents &bull; Study Desks</div>
+                  <div className="text-[9px] text-[#059669] font-mono mt-1">&check; 1 Room / Student Verified</div>
+                </div>
+              </div>
+
+              {/* Specs Grid */}
+              <div className="grid grid-cols-2 gap-2 text-xs font-mono">
+                <div className="p-2 rounded-xl bg-[#FAF5EE] border border-[#ECC880]/30 text-center">
+                  <span className="text-[10px] text-[#8C7A6B] block">Architecture</span>
+                  <span className="font-bold text-[#3D0A18]">Django MVT</span>
+                </div>
+                <div className="p-2 rounded-xl bg-[#FAF5EE] border border-[#ECC880]/30 text-center">
+                  <span className="text-[10px] text-[#8C7A6B] block">Database</span>
+                  <span className="font-bold text-[#3D0A18]">MySQL</span>
+                </div>
+              </div>
             </div>
+
+            {/* Bottom Action Buttons */}
+            <div className="pt-3 border-t border-[#E8B4B8]/30 flex items-center gap-2 mt-2">
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[2]); }}
+                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+              >
+                <span>▶ View Project</span>
+              </button>
+              <a 
+                href={PROJECTS_DATA[2].githubUrl} 
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="px-3 py-1.5 rounded-xl bg-[#8B1E3F]/10 hover:bg-[#8B1E3F]/20 text-[#8B1E3F] text-[11px] font-semibold border border-[#8B1E3F]/20"
+              >
+                GitHub ↗
+              </a>
+            </div>
+
           </div>
 
         </div>
 
-        {/* ================= BOTTOM ROW: 2 EQUAL COLUMNS ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
+        {/* ================= BOTTOM ROW: 2 SLEEK PHYSICAL OBJECT CARDS ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-7">
           
-          {/* CARD 04: CIE ANALYZER (Pastel Desk Organizer Boxes) */}
+          {/* CARD 04: CIE ANALYZER (Sleek Pastel Desk Organizer) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[3])}
-            className="group relative bg-[#FFFDF9] rounded-3xl p-3.5 border-2 border-[#A7F3D0] shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="bg-[#F4F9F6] rounded-[28px] border-2 border-[#A7F3D0] shadow-lg hover:-translate-y-2 transition-transform duration-300 p-5 flex flex-col justify-between group cursor-pointer"
           >
-            <div className="relative aspect-[485/315] rounded-2xl overflow-hidden shadow-inner bg-[#EFE9DC]">
-              <Image 
-                src={PROJECTS_DATA[3].cardImage}
-                alt="CIE Analyzer Desk Organizer"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <span className="px-3.5 py-1.5 rounded-full bg-[#ECC880] text-[#3D0A18] text-xs font-bold shadow flex items-center gap-1.5 mx-auto">
-                  <Layers className="w-3.5 h-3.5" />
-                  <span>Open Desk Organizer Case Study</span>
-                </span>
+            <div>
+              {/* Tiered Pen Slots at Top */}
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#A7F3D0]/60">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#D1FAE5] text-[#065F46] font-bold">
+                    🗃️ Study Organizer
+                  </span>
+                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-red-100 text-red-700 border border-red-300">
+                    &lt; 40% Flag
+                  </span>
+                </div>
+
+                {/* Pastel Mildliners sticking up */}
+                <div className="flex items-center gap-1">
+                  <div className="w-2.5 h-6 rounded-t-sm bg-[#F472B6]"></div>
+                  <div className="w-2.5 h-7 rounded-t-sm bg-[#34D399]"></div>
+                  <div className="w-2.5 h-5 rounded-t-sm bg-[#FBBF24]"></div>
+                  <div className="w-2.5 h-6 rounded-t-sm bg-[#60A5FA]"></div>
+                </div>
+              </div>
+
+              {/* Content */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                <div className="sm:col-span-7">
+                  <div className="text-[10px] uppercase font-mono text-[#059669] font-bold">Educational Analytics &bull; Docker</div>
+                  <h4 className="font-serif text-xl font-bold text-[#3D0A18] mt-0.5">CIE Analyzer</h4>
+                  <p className="text-xs text-[#7A4555] mt-1 leading-relaxed">
+                    Automated continuous internal evaluation pipeline flagging slow learners via headless document conversion.
+                  </p>
+
+                  {/* 5-Step Pipeline Mini Chips */}
+                  <div className="flex flex-wrap gap-1 mt-3 text-[9px] font-mono">
+                    <span className="px-2 py-0.5 rounded bg-white border border-[#A7F3D0] text-[#065F46]">ZIP Ingest</span>
+                    <span>&rarr;</span>
+                    <span className="px-2 py-0.5 rounded bg-white border border-[#A7F3D0] text-[#065F46]">LibreOffice</span>
+                    <span>&rarr;</span>
+                    <span className="px-2 py-0.5 rounded bg-white border border-[#A7F3D0] text-[#065F46]">Pandas</span>
+                    <span>&rarr;</span>
+                    <span className="px-2 py-0.5 rounded bg-[#34D399]/20 text-[#065F46] font-bold">Chart.js</span>
+                  </div>
+                </div>
+
+                {/* Mini Line Chart Visualizer */}
+                <div className="sm:col-span-5 bg-white p-3 rounded-2xl border border-[#A7F3D0] shadow-sm">
+                  <div className="flex items-center justify-between text-[9px] font-mono text-[#8C7A6B] mb-1">
+                    <span>CIE Trends</span>
+                    <span className="text-rose-600 font-bold">&lt; 40% Alert</span>
+                  </div>
+                  {/* Mini SVG Graph */}
+                  <svg className="w-full h-16" viewBox="0 0 100 40">
+                    <line x1="0" y1="25" x2="100" y2="25" stroke="#FCA5A5" strokeDasharray="2,2" strokeWidth="1" />
+                    <path d="M 5,30 Q 30,10 50,28 T 95,8" fill="none" stroke="#059669" strokeWidth="2" />
+                    <circle cx="5" cy="30" r="2" fill="#059669" />
+                    <circle cx="50" cy="28" r="2" fill="#059669" />
+                    <circle cx="95" cy="8" r="2" fill="#059669" />
+                  </svg>
+                  <div className="flex justify-between text-[8px] font-mono text-[#8C7A6B] mt-1">
+                    <span>CIE 1</span>
+                    <span>CIE 2</span>
+                    <span>CIE 3</span>
+                  </div>
+                </div>
               </div>
             </div>
 
-            <div className="mt-3 px-1 flex items-center justify-between text-xs">
-              <span className="font-serif font-bold text-[#3D0A18] text-sm">04. CIE Analyzer</span>
-              <span className="text-[#8B1E3F] font-mono text-[11px] font-semibold flex items-center gap-1">
-                <span>&lt; 40% Diagnostics</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </span>
+            {/* Bottom Action Buttons */}
+            <div className="pt-3 border-t border-[#A7F3D0]/60 flex items-center gap-2 mt-3">
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[3]); }}
+                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+              >
+                <span>▶ View Project</span>
+              </button>
+              <a 
+                href={PROJECTS_DATA[3].githubUrl} 
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="px-3 py-1.5 rounded-xl bg-[#059669]/10 hover:bg-[#059669]/20 text-[#065F46] text-[11px] font-semibold border border-[#059669]/20"
+              >
+                GitHub ↗
+              </a>
             </div>
+
           </div>
 
-          {/* CARD 05: SMARTATTEND (Pastel Lanyard & Acrylic ID Badge) */}
+          {/* CARD 05: SMARTATTEND (Sleek Acrylic Lanyard Badge) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[4])}
-            className="group relative bg-[#FFFDF9] rounded-3xl p-3.5 border-2 border-[#FBCFE8] shadow-lg hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 cursor-pointer flex flex-col justify-between"
+            className="bg-gradient-to-br from-[#2D0A14] via-[#1F050E] to-[#120208] text-white rounded-[28px] border-2 border-[#ECC880]/40 shadow-lg hover:-translate-y-2 transition-transform duration-300 p-5 flex flex-col justify-between relative group overflow-hidden cursor-pointer"
           >
-            <div className="relative aspect-[520/315] rounded-2xl overflow-hidden shadow-inner bg-[#EFE9DC]">
-              <Image 
-                src={PROJECTS_DATA[4].cardImage}
-                alt="SmartAttend Lanyard Badge"
-                fill
-                className="object-cover group-hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-                <span className="px-3.5 py-1.5 rounded-full bg-[#ECC880] text-[#3D0A18] text-xs font-bold shadow flex items-center gap-1.5 mx-auto">
-                  <MapPin className="w-3.5 h-3.5" />
-                  <span>Open Geofence Badge Case Study</span>
-                </span>
+            {/* Acrylic Glass Shine */}
+            <div className="absolute -top-20 -left-20 w-44 h-44 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div>
+              {/* Lanyard Clip & Ribbon Strap */}
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-white/10">
+                <div className="flex items-center gap-2">
+                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-md bg-white/10 text-[#ECC880] font-bold border border-white/20">
+                    🪪 Smart ID Badge
+                  </span>
+                  <span className="text-[9px] font-mono text-[#34D399] font-bold flex items-center gap-1">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-ping"></span>
+                    <span>≤ 30m Active</span>
+                  </span>
+                </div>
+                <span className="text-[9px] font-mono text-[#ECC880]/80">★ SMARTATTEND ★</span>
+              </div>
+
+              {/* Content */}
+              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
+                <div className="sm:col-span-7">
+                  <div className="text-[10px] uppercase font-mono text-[#ECC880] font-bold">Cybersecurity &bull; Java Spring Boot</div>
+                  <h4 className="font-serif text-xl font-bold text-white mt-0.5">SmartAttend</h4>
+                  <p className="text-xs text-white/80 mt-1 leading-relaxed">
+                    Eliminating proxy attendance through cryptographic geofencing and 1-student-1-device hardware binding.
+                  </p>
+                  
+                  <div className="mt-3 flex flex-wrap gap-1 text-[9px] font-mono">
+                    <span className="px-2 py-0.5 rounded bg-black/40 text-[#ECC880] border border-white/10">Haversine GPS</span>
+                    <span className="px-2 py-0.5 rounded bg-[#10B981]/20 text-[#34D399] border border-[#10B981]/30">1 USN = 1 Device</span>
+                    <span className="px-2 py-0.5 rounded bg-white/10 text-white">Supabase Cloud</span>
+                  </div>
+                </div>
+
+                {/* Animated Sweeping Radar Widget */}
+                <div className="sm:col-span-5 bg-black/50 p-3 rounded-2xl border border-[#ECC880]/30 flex flex-col items-center text-center">
+                  <div className="relative w-20 h-20 rounded-full border border-[#10B981]/40 flex items-center justify-center my-1">
+                    <div className="absolute inset-1 rounded-full border border-dashed border-[#ECC880]/30"></div>
+                    {/* Sweeping Beam */}
+                    <div className="absolute inset-0 rounded-full radar-sweep-anim opacity-40 pointer-events-none" style={{ background: "conic-gradient(from 0deg, rgba(52,211,153,0.4) 0deg, transparent 60deg)" }}></div>
+                    <span className="text-sm">📍</span>
+                  </div>
+                  <span className="text-[9px] font-mono text-[#34D399] font-bold mt-1">Classroom Locked</span>
+                </div>
               </div>
             </div>
 
-            <div className="mt-3 px-1 flex items-center justify-between text-xs">
-              <span className="font-serif font-bold text-[#3D0A18] text-sm">05. SmartAttend</span>
-              <span className="text-[#8B1E3F] font-mono text-[11px] font-semibold flex items-center gap-1">
-                <span>30m Geofence</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </span>
+            {/* Bottom Action Buttons */}
+            <div className="pt-3 border-t border-white/15 flex items-center gap-2 mt-3">
+              <button 
+                onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[4]); }}
+                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+              >
+                <span>▶ View Project</span>
+              </button>
+              <a 
+                href={PROJECTS_DATA[4].githubUrl} 
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold border border-white/20"
+              >
+                GitHub ↗
+              </a>
             </div>
+
           </div>
 
         </div>
