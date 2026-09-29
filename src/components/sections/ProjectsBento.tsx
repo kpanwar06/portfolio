@@ -278,11 +278,12 @@ export default function ProjectsBento() {
           background: #FAF7F2;
           box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
         }
+        /* Sophisticated Luxury Awning in Velvet Burgundy and Warm Ivory with Gold Trim */
         .awning-stripes {
           background: repeating-linear-gradient(
             90deg,
-            #F472B6 0px,
-            #F472B6 18px,
+            #8B1E3F 0px,
+            #8B1E3F 18px,
             #FFFDF9 18px,
             #FFFDF9 36px
           );
@@ -300,7 +301,7 @@ export default function ProjectsBento() {
         }
       `}</style>
 
-      {/* SECTION HEADER (Matching User Reference Image) */}
+      {/* SECTION HEADER */}
       <div className="max-w-6xl mx-auto mb-12">
         <div className="flex items-center gap-2 mb-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#8B1E3F] animate-pulse"></span>
@@ -314,11 +315,11 @@ export default function ProjectsBento() {
               Portfolio Projects
             </h2>
             <p className="text-sm sm:text-base text-[#7A4555] mt-1.5 max-w-xl">
-              Explore My Latest Work &bull; Each card is a sleek physical object with live code-crafted compartments that expands into an interactive case study with a 2cm margin.
+              Curated Architectural Works &bull; Each creation is shaped as a physical desk object with sleek editorial styling. Click any item to expand its full case study.
             </p>
           </div>
           <div className="inline-flex items-center gap-2 bg-[#FFFDF9] px-4 py-2 rounded-full border border-[#8B1E3F]/20 text-xs text-[#8B1E3F] shadow-sm font-medium">
-            <span>✨ 5 Sleek Thematic Shapes</span>
+            <span>✨ 5 Thematic Physical Shapes</span>
           </div>
         </div>
       </div>
@@ -332,20 +333,20 @@ export default function ProjectsBento() {
           {/* CARD 01: SHAREBITE (Sleek Crafted Bento Box with Chopsticks) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[0])}
-            className="sleek-bento-tray rounded-[28px] p-4 text-[#3D0A18] flex flex-col justify-between hover:-translate-y-2 transition-transform duration-300 relative group cursor-pointer"
+            className="sleek-bento-tray rounded-[28px] p-4 text-[#3D0A18] flex flex-col justify-between hover:-translate-y-2 transition-all duration-300 relative group cursor-pointer"
           >
-            {/* Chopsticks & Rest resting below box */}
+            {/* Real Chopsticks & Sakura Blossom Resting Below Box */}
             <div className="absolute -bottom-3 left-8 right-8 flex items-center gap-2 pointer-events-none z-10">
               <div className="h-1.5 flex-1 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] rounded-full shadow-md"></div>
-              <div className="w-4 h-4 rounded-full bg-[#F472B6] border border-[#ECC880] shadow flex items-center justify-center text-[8px]">🌸</div>
+              <div className="w-4 h-4 rounded-full bg-[#E8B4B8] border border-[#ECC880] shadow flex items-center justify-center text-[8px]">🌸</div>
               <div className="h-1.5 flex-1 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] rounded-full shadow-md"></div>
             </div>
 
-            {/* Inside Bento Tray: 4 Compartments */}
+            {/* Inside Bento Tray: Clean, Uncluttered Compartments */}
             <div className="space-y-3 pb-2">
               
-              {/* Compartment 1 (Top): Fresh Veggie Green Header */}
-              <div className="bg-gradient-to-br from-[#122E22] to-[#0A1F16] text-[#F0FDF4] p-3.5 rounded-2xl border border-[#34D399]/40 shadow-sm flex items-center justify-between">
+              {/* Compartment 1: Deep Forest Green Header */}
+              <div className="bg-gradient-to-br from-[#122E22] to-[#0A1F16] text-[#F0FDF4] p-3 rounded-2xl border border-[#34D399]/40 shadow-sm flex items-center justify-between">
                 <div>
                   <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#34D399] uppercase tracking-wider font-bold">
                     <span>🌱</span>
@@ -353,24 +354,24 @@ export default function ProjectsBento() {
                   </div>
                   <h4 className="font-serif text-base font-bold text-white leading-snug mt-0.5">Surplus Food Rescue</h4>
                 </div>
-                <span className="text-[9px] bg-[#34D399]/20 text-[#34D399] border border-[#34D399]/40 px-2 py-0.5 rounded-full font-bold">
+                <span className="text-[9px] bg-[#34D399]/20 text-[#34D399] border border-[#34D399]/40 px-2.5 py-0.5 rounded-full font-bold">
                   Flutter 3
                 </span>
               </div>
 
-              {/* Compartment 2 & 3: Rice White Stats + Karaage Nuggets */}
+              {/* Compartment 2 & 3: Steamed Rice Counter + Karaage & Harvest Window */}
               <div className="grid grid-cols-12 gap-3">
-                {/* Rice White Counter */}
-                <div className="col-span-7 bento-inner-chamber p-3 rounded-2xl border border-[#ECC880]/30 flex flex-col justify-between">
+                {/* Steamed Rice Chamber */}
+                <div className="col-span-7 bento-inner-chamber p-3 rounded-2xl border border-[#ECC880]/40 flex flex-col justify-between">
                   <span className="text-[9px] font-mono uppercase text-[#8C7A6B] font-bold">🍚 Steamed Rice Window</span>
-                  <div className="my-1.5">
+                  <div className="my-1">
                     <div className="text-xl font-serif font-bold text-[#8B1E3F]">12,450+</div>
                     <div className="text-[10px] text-[#7A4555]">Meals Distributed</div>
                   </div>
                   <span className="text-[9px] text-[#059669] font-semibold">15-min Hot Pickup SLA</span>
                 </div>
 
-                {/* Karaage & Veggie Dish Window */}
+                {/* Karaage Dish Window */}
                 <div className="col-span-5 bg-gradient-to-br from-[#2D0A14] to-[#1A0309] text-white p-3 rounded-2xl border border-white/10 flex flex-col items-center justify-center text-center">
                   <span className="text-2xl mb-1">🥦🍱</span>
                   <span className="text-[10px] font-serif text-[#ECC880] font-bold">88+ Shelters</span>
@@ -378,15 +379,15 @@ export default function ProjectsBento() {
                 </div>
               </div>
 
-              {/* Compartment 4: Recipe Ingredients & Actions */}
+              {/* Compartment 4: Recipe Ingredients & Quick Expand Cue */}
               <div className="bg-black/30 p-2.5 rounded-2xl border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-1 text-[10px] font-mono text-[#ECC880]">
+                <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#ECC880]">
                   <span>Recipe:</span>
-                  <span className="bg-white/10 px-1.5 py-0.5 rounded text-white text-[9px]">Firebase</span>
-                  <span className="bg-white/10 px-1.5 py-0.5 rounded text-white text-[9px]">Maps API</span>
+                  <span className="bg-white/10 px-2 py-0.5 rounded text-white text-[9px]">Firebase</span>
+                  <span className="bg-white/10 px-2 py-0.5 rounded text-white text-[9px]">Maps API</span>
                 </div>
-                <span className="text-[10px] font-bold text-[#ECC880] group-hover:underline flex items-center gap-0.5">
-                  <span>Open 2cm</span>
+                <span className="text-[10px] font-bold text-[#ECC880] group-hover:text-white transition-colors flex items-center gap-0.5">
+                  <span>Open Bento</span>
                   <span>↗</span>
                 </span>
               </div>
@@ -397,16 +398,16 @@ export default function ProjectsBento() {
             <div className="flex items-center gap-2 pt-2 border-t border-[#ECC880]/20">
               <button 
                 onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[0]); }}
-                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
               >
-                <span>▶ Watch Demo</span>
+                <span>▶ Watch Demo (Video)</span>
               </button>
               <a 
                 href={PROJECTS_DATA[0].githubUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold border border-white/20"
+                className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold border border-white/20 transition-all"
               >
                 GitHub ↗
               </a>
@@ -414,16 +415,18 @@ export default function ProjectsBento() {
 
           </div>
 
-          {/* CARD 02: KAFKA SIMULATOR (Sleek Sweet Shop with Awning) */}
+          {/* CARD 02: KAFKA SIMULATOR (Sleek Parisian Sweet Shop Bakery) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[1])}
-            className="bg-[#FFFDF9] rounded-[28px] border-2 border-[#ECC880] shadow-lg hover:-translate-y-2 transition-transform duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
+            className="bg-[#FFFDF9] rounded-[28px] border-2 border-[#ECC880] shadow-lg hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
           >
-            {/* Sleek Scalloped Awning Roof */}
+            {/* Sleek Scalloped Awning Roof in Velvet Burgundy and Warm Ivory */}
             <div>
               <div className="h-6 awning-stripes border-b-2 border-[#ECC880] flex items-center justify-between px-3">
                 <span className="w-2 h-2 rounded-full bg-[#ECC880]"></span>
-                <span className="text-[9px] font-bold text-[#8B1E3F] tracking-widest bg-white/80 px-2 rounded-full">BAKERY CONVEYOR</span>
+                <span className="text-[9px] font-bold text-[#FFFDF9] tracking-widest bg-[#4A0E17] px-2.5 py-0.5 rounded-full border border-[#ECC880]/40">
+                  BAKERY CONVEYOR
+                </span>
                 <span className="w-2 h-2 rounded-full bg-[#ECC880]"></span>
               </div>
 
@@ -431,13 +434,13 @@ export default function ProjectsBento() {
                 {/* Shop Header */}
                 <div className="flex items-center justify-between">
                   <div>
-                    <div className="text-[10px] uppercase font-mono text-[#ECC880] font-bold flex items-center gap-1">
+                    <div className="text-[10px] uppercase font-mono text-[#8B1E3F] font-bold flex items-center gap-1">
                       <span>🧁</span>
                       <span>Kafka Simulator</span>
                     </div>
                     <h4 className="font-serif text-lg font-bold text-[#3D0A18]">Event Stream Sorter</h4>
                   </div>
-                  <span className="text-[9px] font-mono bg-[#D1FAE5] text-[#065F46] px-2 py-0.5 rounded-full font-bold">
+                  <span className="text-[9px] font-mono bg-[#D1FAE5] text-[#065F46] px-2.5 py-0.5 rounded-full font-bold border border-[#065F46]/20">
                     VERCEL LIVE
                   </span>
                 </div>
@@ -456,24 +459,24 @@ export default function ProjectsBento() {
                       <span>order_created</span>
                     </div>
                     <span className="text-white/40">&rarr;</span>
-                    <div className="px-2 py-1 rounded-lg bg-[#F472B6] text-white text-[10px] font-bold shadow flex items-center gap-1">
+                    <div className="px-2 py-1 rounded-lg bg-[#E8B4B8] text-[#3D0A18] text-[10px] font-bold shadow flex items-center gap-1">
                       <span>🍬</span>
                       <span>P1 Basket</span>
                     </div>
                   </div>
                 </div>
 
-                {/* 3 Pastel Partition Bins */}
+                {/* 3 Sleek Editorial Partition Bins */}
                 <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
-                  <div className="p-2 rounded-xl bg-[#FCE7F3] border border-[#F472B6]/40 text-[#BE185D]">
+                  <div className="p-2 rounded-xl bg-[#FAF0F2] border border-[#E8B4B8] text-[#8B1E3F]">
                     <span className="text-sm">🧁</span>
                     <div className="font-bold text-[10px]">P0 Bin</div>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#DBEAFE] border border-[#93C5FD]/40 text-[#1E40AF]">
+                  <div className="p-2 rounded-xl bg-[#F0F4F8] border border-[#CBD5E1] text-[#334155]">
                     <span className="text-sm">🍬</span>
                     <div className="font-bold text-[10px]">P1 Bin</div>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#FEF3C7] border border-[#FDE68A]/60 text-[#92400E]">
+                  <div className="p-2 rounded-xl bg-[#FEF9EE] border border-[#ECC880]/60 text-[#78350F]">
                     <span className="text-sm">🍰</span>
                     <div className="font-bold text-[10px]">P2 Bin</div>
                   </div>
@@ -489,16 +492,16 @@ export default function ProjectsBento() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
               >
-                <span>▶ Live Demo</span>
+                <span>▶ Launch Live Demo</span>
               </a>
               <a 
                 href={PROJECTS_DATA[1].githubUrl} 
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="px-3 py-1.5 rounded-xl bg-[#8B1E3F]/10 hover:bg-[#8B1E3F]/20 text-[#8B1E3F] text-[11px] font-semibold border border-[#8B1E3F]/20"
+                className="px-3 py-2 rounded-xl bg-[#8B1E3F]/10 hover:bg-[#8B1E3F]/20 text-[#8B1E3F] text-[11px] font-semibold border border-[#8B1E3F]/20 transition-all"
               >
                 GitHub ↗
               </a>
@@ -509,42 +512,42 @@ export default function ProjectsBento() {
           {/* CARD 03: UNISTAY (Sleek Leatherette Dorm Trunk) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[2])}
-            className="bg-[#FFFDF9] rounded-[28px] border-2 border-[#E8B4B8] shadow-lg hover:-translate-y-2 transition-transform duration-300 p-4 flex flex-col justify-between relative group cursor-pointer"
+            className="bg-[#FFFDF9] rounded-[28px] border-2 border-[#ECC880]/60 shadow-lg hover:-translate-y-2 transition-all duration-300 p-4 flex flex-col justify-between relative group cursor-pointer"
           >
-            {/* Brass Handle at Top */}
-            <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#E8B4B8]/40">
+            {/* Brass Clasp & Handle at Top */}
+            <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#ECC880]/40">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#FCE7F3] text-[#BE185D] font-bold border border-[#F472B6]/40 flex items-center gap-1">
+                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#FAF0F2] text-[#8B1E3F] font-bold border border-[#E8B4B8] flex items-center gap-1">
                   <span>🏷️</span>
                   <span>Room #412</span>
                 </span>
-                <span className="w-3 h-3 rounded-full bg-[#F472B6] shadow-inner"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#E8B4B8] shadow-inner"></span>
               </div>
-              <div className="w-8 h-3.5 suitcase-brass-clasp rounded-sm flex items-center justify-center shadow">
+              <div className="w-9 h-4 suitcase-brass-clasp rounded flex items-center justify-center shadow">
                 <div className="w-1.5 h-1.5 rounded-full bg-black/40"></div>
               </div>
             </div>
 
             <div className="space-y-3">
               <div>
-                <div className="text-[10px] uppercase font-mono text-[#BE185D] font-bold">Dorm Booking &bull; BMSCE</div>
+                <div className="text-[10px] uppercase font-mono text-[#8B1E3F] font-bold">Dorm Booking &bull; BMSCE</div>
                 <h4 className="font-serif text-lg font-bold text-[#3D0A18]">UniStay</h4>
                 <p className="text-xs text-[#7A4555] mt-0.5">Centralized hostel allocation with single-booking integrity.</p>
               </div>
 
               {/* Polaroid Preview with Washi Tape */}
-              <div className="relative bg-white p-2.5 rounded-2xl shadow-sm border border-[#E8B4B8] flex items-center gap-3">
-                <div className="w-14 h-14 rounded-xl bg-[#FCEEF1] border border-[#E8B4B8] flex items-center justify-center text-2xl shadow-inner">
+              <div className="relative bg-white p-2.5 rounded-2xl shadow-sm border border-[#ECC880]/40 flex items-center gap-3">
+                <div className="w-14 h-14 rounded-xl bg-[#FAF5EE] border border-[#ECC880]/40 flex items-center justify-center text-2xl shadow-inner">
                   🧳
                 </div>
                 <div className="text-xs">
                   <div className="font-serif font-bold text-[#8B1E3F]">Maple Hall &bull; Ensuite</div>
-                  <div className="text-[10px] text-[#A24857] mt-0.5">4 Residents &bull; Study Desks</div>
-                  <div className="text-[9px] text-[#059669] font-mono mt-1">&check; 1 Room / Student Verified</div>
+                  <div className="text-[10px] text-[#7A4555] mt-0.5">4 Residents &bull; Study Desks</div>
+                  <div className="text-[9px] text-[#059669] font-mono mt-1">&check; 1 Room / Student Constraint</div>
                 </div>
               </div>
 
-              {/* Specs Grid */}
+              {/* Architecture Badges */}
               <div className="grid grid-cols-2 gap-2 text-xs font-mono">
                 <div className="p-2 rounded-xl bg-[#FAF5EE] border border-[#ECC880]/30 text-center">
                   <span className="text-[10px] text-[#8C7A6B] block">Architecture</span>
@@ -558,19 +561,19 @@ export default function ProjectsBento() {
             </div>
 
             {/* Bottom Action Buttons */}
-            <div className="pt-3 border-t border-[#E8B4B8]/30 flex items-center gap-2 mt-2">
+            <div className="pt-3 border-t border-[#ECC880]/30 flex items-center gap-2 mt-2">
               <button 
                 onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[2]); }}
-                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
               >
-                <span>▶ View Project</span>
+                <span>▶ Unlock Trunk (Case Study)</span>
               </button>
               <a 
                 href={PROJECTS_DATA[2].githubUrl} 
-                target="_blank"
+                target="_blank" 
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="px-3 py-1.5 rounded-xl bg-[#8B1E3F]/10 hover:bg-[#8B1E3F]/20 text-[#8B1E3F] text-[11px] font-semibold border border-[#8B1E3F]/20"
+                className="px-3 py-2 rounded-xl bg-[#8B1E3F]/10 hover:bg-[#8B1E3F]/20 text-[#8B1E3F] text-[11px] font-semibold border border-[#8B1E3F]/20 transition-all"
               >
                 GitHub ↗
               </a>
@@ -583,29 +586,29 @@ export default function ProjectsBento() {
         {/* ================= BOTTOM ROW: 2 SLEEK PHYSICAL OBJECT CARDS ================= */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-7">
           
-          {/* CARD 04: CIE ANALYZER (Sleek Pastel Desk Organizer) */}
+          {/* CARD 04: CIE ANALYZER (Sleek Sage Desk Organizer) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[3])}
-            className="bg-[#F4F9F6] rounded-[28px] border-2 border-[#A7F3D0] shadow-lg hover:-translate-y-2 transition-transform duration-300 p-5 flex flex-col justify-between group cursor-pointer"
+            className="bg-[#F6FAF7] rounded-[28px] border-2 border-[#A7F3D0] shadow-lg hover:-translate-y-2 transition-all duration-300 p-5 flex flex-col justify-between group cursor-pointer"
           >
             <div>
-              {/* Tiered Pen Slots at Top */}
+              {/* Tiered Pen Slots at Top with Muted Editorial Highlighters */}
               <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#A7F3D0]/60">
                 <div className="flex items-center gap-2">
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#D1FAE5] text-[#065F46] font-bold">
                     🗃️ Study Organizer
                   </span>
-                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-red-100 text-red-700 border border-red-300">
+                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-red-50 text-red-700 border border-red-200">
                     &lt; 40% Flag
                   </span>
                 </div>
 
-                {/* Pastel Mildliners sticking up */}
-                <div className="flex items-center gap-1">
-                  <div className="w-2.5 h-6 rounded-t-sm bg-[#F472B6]"></div>
-                  <div className="w-2.5 h-7 rounded-t-sm bg-[#34D399]"></div>
-                  <div className="w-2.5 h-5 rounded-t-sm bg-[#FBBF24]"></div>
-                  <div className="w-2.5 h-6 rounded-t-sm bg-[#60A5FA]"></div>
+                {/* Refined Mildliners sticking up (Rosewood, Mint, Gold, Slate) */}
+                <div className="flex items-center gap-1.5">
+                  <div className="w-2.5 h-6 rounded-t-sm bg-[#C47D88] shadow-xs"></div>
+                  <div className="w-2.5 h-7 rounded-t-sm bg-[#2D5A46] shadow-xs"></div>
+                  <div className="w-2.5 h-5 rounded-t-sm bg-[#D4AF37] shadow-xs"></div>
+                  <div className="w-2.5 h-6 rounded-t-sm bg-[#475569] shadow-xs"></div>
                 </div>
               </div>
 
@@ -657,16 +660,16 @@ export default function ProjectsBento() {
             <div className="pt-3 border-t border-[#A7F3D0]/60 flex items-center gap-2 mt-3">
               <button 
                 onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[3]); }}
-                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
               >
-                <span>▶ View Project</span>
+                <span>▶ Open Caddy (Case Study)</span>
               </button>
               <a 
                 href={PROJECTS_DATA[3].githubUrl} 
-                target="_blank"
+                target="_blank" 
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="px-3 py-1.5 rounded-xl bg-[#059669]/10 hover:bg-[#059669]/20 text-[#065F46] text-[11px] font-semibold border border-[#059669]/20"
+                className="px-3 py-2 rounded-xl bg-[#059669]/10 hover:bg-[#059669]/20 text-[#065F46] text-[11px] font-semibold border border-[#059669]/20 transition-all"
               >
                 GitHub ↗
               </a>
@@ -677,7 +680,7 @@ export default function ProjectsBento() {
           {/* CARD 05: SMARTATTEND (Sleek Acrylic Lanyard Badge) */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[4])}
-            className="bg-gradient-to-br from-[#2D0A14] via-[#1F050E] to-[#120208] text-white rounded-[28px] border-2 border-[#ECC880]/40 shadow-lg hover:-translate-y-2 transition-transform duration-300 p-5 flex flex-col justify-between relative group overflow-hidden cursor-pointer"
+            className="bg-gradient-to-br from-[#2D0A14] via-[#1F050E] to-[#120208] text-white rounded-[28px] border-2 border-[#ECC880]/40 shadow-lg hover:-translate-y-2 transition-all duration-300 p-5 flex flex-col justify-between relative group overflow-hidden cursor-pointer"
           >
             {/* Acrylic Glass Shine */}
             <div className="absolute -top-20 -left-20 w-44 h-44 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
@@ -730,16 +733,16 @@ export default function ProjectsBento() {
             <div className="pt-3 border-t border-white/15 flex items-center gap-2 mt-3">
               <button 
                 onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[4]); }}
-                className="flex-1 py-1.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1"
+                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
               >
-                <span>▶ View Project</span>
+                <span>▶ Inspect Badge (Case Study)</span>
               </button>
               <a 
                 href={PROJECTS_DATA[4].githubUrl} 
-                target="_blank"
+                target="_blank" 
                 rel="noopener noreferrer"
                 onClick={(e) => e.stopPropagation()}
-                className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold border border-white/20"
+                className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold border border-white/20 transition-all"
               >
                 GitHub ↗
               </a>
