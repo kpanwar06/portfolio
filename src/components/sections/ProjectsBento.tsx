@@ -4,112 +4,65 @@ import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { 
   X, ExternalLink, Github, Play, Pause, Volume2, VolumeX, 
-  ChevronLeft, ChevronRight, Sparkles, MapPin, Heart, Key,
-  CheckCircle2, Clock, Terminal, Layers, ArrowUpRight
+  ChevronLeft, ChevronRight, Sparkles, MapPin, Key,
+  CheckCircle2, Clock, Terminal, Layers, ArrowUpRight,
+  ShieldCheck, Database, Server, Smartphone, Cpu, FileText
 } from "lucide-react";
 
 interface ProjectItem {
   id: string;
   title: string;
+  officialName: string;
   subtitle: string;
-  category: string;
-  metaphorBadge: string;
-  metaphorIcon: string;
-  description: string;
-  longDescription: string;
-  techStack: string[];
+  academicInfo: string;
+  overview: string;
+  problem: string;
+  solution: string;
+  functionalities: string[];
+  techStack: {
+    category: string;
+    items: string[];
+  }[];
   metrics: { label: string; value: string }[];
   githubUrl: string;
   liveUrl?: string;
   mediaType: "video" | "image";
   videoSrc?: string;
   screenshots: string[];
-  colorTheme: {
-    cardBg: string;
-    cardBorder: string;
-    accent: string;
-    badgeBg: string;
-    badgeText: string;
+  objectMeta: {
+    icon: string;
+    tag: string;
+    material: string;
   };
 }
 
 const PROJECTS_DATA: ProjectItem[] = [
   {
-    id: "sharebite",
-    title: "ShareBite",
-    subtitle: "Surplus Food Redistribution Network",
-    category: "Mobile Application · Social Impact",
-    metaphorBadge: "Artisanal Bento Lunchbox",
-    metaphorIcon: "🍱",
-    description: "Turning food surplus into community sustenance in real time &bull; Connecting commercial kitchens directly to orphanages & shelters.",
-    longDescription: "Commercial restaurants, banquet caterers, and events regularly discard surplus cooked food, while neighboring shelters and orphanages face persistent meal shortages. ShareBite provides an instantaneous mobile platform with real-time geolocation routing to rescue and dispatch edible surplus food before it spoils.",
-    techStack: ["Flutter 3", "Dart", "Firebase Auth", "Cloud Firestore", "Google Maps API", "FCM"],
-    metrics: [
-      { label: "Donations Processed", value: "12,450+" },
-      { label: "Shelters Supported", value: "88+ Hubs" },
-      { label: "Food Waste Saved", value: "14 Tons" },
-    ],
-    githubUrl: "https://github.com/shivanvithajayam/share_bite",
-    mediaType: "video",
-    videoSrc: "/projects/ShareBite/SHAREBITE.mp4",
-    screenshots: [],
-    colorTheme: {
-      cardBg: "from-[#3D0A18] to-[#24060E]",
-      cardBorder: "border-[#ECC880]",
-      accent: "#ECC880",
-      badgeBg: "bg-[#10B981]/20",
-      badgeText: "text-[#34D399]",
-    },
-  },
-  {
-    id: "kafka",
-    title: "Kafka Simulator",
-    subtitle: "Distributed Event Streaming Visualizer",
-    category: "Distributed Systems · Live Tool",
-    metaphorBadge: "Sweet Shop Conveyor Sorter",
-    metaphorIcon: "🧁",
-    description: "Demystifying distributed event streaming through an interactive visual sandbox with real-time partitions & consumer offsets.",
-    longDescription: "Apache Kafka powers high-throughput data streaming across modern tech companies, but core mechanics like partition key hashing, immutable commit logs, consumer lag, and read offsets can be difficult to visualize. This simulator provides an interactive sandbox to produce custom events, trace partition routing, and observe offset advancement in real-time.",
-    techStack: ["Next.js 14", "React 18", "Framer Motion", "TypeScript", "Tailwind CSS", "Vercel"],
-    metrics: [
-      { label: "Active Partitions", value: "3 Streams" },
-      { label: "Key Hashing", value: "hash(key) % 3" },
-      { label: "Commit Log", value: "100% Immutable" },
-    ],
-    githubUrl: "https://github.com/Kritika-Panwar-151/kafka-simulator",
-    liveUrl: "https://kafka-simulator.vercel.app",
-    mediaType: "image",
-    screenshots: [
-      "/projects/KafkaSimulation/1.jpeg",
-      "/projects/KafkaSimulation/2.jpeg",
-      "/projects/KafkaSimulation/3.jpeg",
-      "/projects/KafkaSimulation/4.jpeg",
-      "/projects/KafkaSimulation/5.jpeg",
-      "/projects/KafkaSimulation/6.jpeg",
-      "/projects/KafkaSimulation/7.jpeg",
-    ],
-    colorTheme: {
-      cardBg: "from-[#FFFDF9] to-[#FAF5EE]",
-      cardBorder: "border-[#ECC880]/40",
-      accent: "#8B1E3F",
-      badgeBg: "bg-[#FEF3C7]",
-      badgeText: "text-[#92400E]",
-    },
-  },
-  {
     id: "unistay",
     title: "UniStay",
-    subtitle: "Campus Hostel Booking & Management",
-    category: "Full-Stack Web Application · BMSCE",
-    metaphorBadge: "Pastel Leatherette Dorm Trunk",
-    metaphorIcon: "🧳",
-    description: "Streamlining campus residence discovery and room allocation for BMSCE students with single-room booking integrity.",
-    longDescription: "Eliminates manual paper queues, lack of room vacancy transparency, and duplicate booking records by digitizing room discovery, gender-based allocations, and institutional KYC into a unified student & administrator portal.",
-    techStack: ["Python", "Django (MVT)", "MySQL", "Google Maps API", "Django Admin"],
+    officialName: "UniStay — BMSCE Hostel Booking and Management System",
+    subtitle: "Centralized Campus Residence Discovery & Single-Booking Allocation",
+    academicInfo: "B.M.S. College of Engineering · Course 23CS3AEFWD · Guide: Mrs. Rachana M S",
+    overview: "UniStay is a web-based hostel booking and management system developed exclusively for students of B.M.S. College of Engineering (BMSCE). The application provides a centralized platform where students can view hostel block details, browse room vacancies, and submit booking requests with verified institutional integrity.",
+    problem: "Manual paper queues, lack of room vacancy transparency, and duplicate booking records during annual student hostel allotment create administrative gridlock.",
+    solution: "A centralized campus accommodation portal enforcing strict relational database constraints ensuring one verified room per student USN, real-time vacancy maps, gender-segregated block allocation, and admin KYC verification.",
+    functionalities: [
+      "Student Registration & USN KYC Authentication against university records",
+      "Hostel Block & Room Discovery with filters for Single, Double & Triple sharing",
+      "Single-Booking Relational Integrity (1 Student = 1 Room Rule preventing duplicate allotments)",
+      "Interactive Campus Distance Map showing BMSCE hostel proximity and amenities",
+      "Administrative Inventory Portal for vacancy approval, tenant records, and allocation logs"
+    ],
+    techStack: [
+      { category: "Architecture", items: ["Python 3", "Django (MVT Pattern)", "Django Admin"] },
+      { category: "Database", items: ["SQLite / MySQL", "Relational Integrity Constraints", "ORM"] },
+      { category: "Frontend", items: ["HTML5", "CSS3", "JavaScript", "Responsive Design"] },
+      { category: "Services", items: ["Google Maps Platform", "KYC Verification", "Role-Based Access Control"] }
+    ],
     metrics: [
-      { label: "Assigned Room", value: "Room #412" },
-      { label: "Booking Constraint", value: "1 Room / USN" },
-      { label: "Room Tiers", value: "1 / 2 / 3 Sharing" },
+      { label: "Assigned Demo", value: "Room #412" },
+      { label: "Booking Rule", value: "1 Room / USN" },
+      { label: "Room Tiers", value: "1 / 2 / 3 Sharing" }
     ],
     githubUrl: "https://github.com/Kritika-Panwar-151/FWD",
     mediaType: "image",
@@ -122,30 +75,122 @@ const PROJECTS_DATA: ProjectItem[] = [
       "/projects/HostelGo/6.jpeg",
       "/projects/HostelGo/7.jpeg",
       "/projects/HostelGo/8.jpeg",
-      "/projects/HostelGo/9.jpeg",
+      "/projects/HostelGo/9.jpeg"
     ],
-    colorTheme: {
-      cardBg: "from-[#FFFDF9] to-[#FDF4F5]",
-      cardBorder: "border-[#E8B4B8]",
-      accent: "#BE185D",
-      badgeBg: "bg-[#FCE7F3]",
-      badgeText: "text-[#BE185D]",
-    },
+    objectMeta: {
+      icon: "🧳",
+      tag: "VINTAGE DORM TRUNK",
+      material: "Dusty Rose Leather & Brass"
+    }
+  },
+  {
+    id: "sharebite",
+    title: "ShareBite",
+    officialName: "ShareBite: A Surplus Food Donation Management System",
+    subtitle: "Real-Time Mobile Redistribution Network Connecting Donors to Shelters",
+    academicInfo: "B.M.S. College of Engineering · Course 23CS4AEMAD · Guide: Prof. Sonika Sharma D · HOD: Dr. Kavitha Sooda",
+    overview: "ShareBite is a mobile-based surplus food donation management system developed to bridge the gap between food donors and charitable organizations. The system connects commercial restaurants, banquet caterers, and residential donors directly to nearby verified orphanages and shelters to ensure edible food is rescued before spoiling.",
+    problem: "Commercial kitchens and event caterers regularly discard edible surplus food at closing time, while neighboring shelters and orphanages face persistent meal shortages due to the lack of an immediate logistics coordination channel.",
+    solution: "An instantaneous mobile platform pairing commercial donors with verified shelters via geohash radius proximity queries within a strict 15-minute emergency pickup SLA, verified by OTP handoffs.",
+    functionalities: [
+      "Donor Food Listing Form (quantity in kg/portions, expiry window, veg/non-veg type, pickup address)",
+      "Real-Time Interactive NGO Discovery Map with geohash radius proximity queries",
+      "15-Minute Emergency Pickup SLA with live volunteer dispatch routing",
+      "OTP-Verified Delivery Handoffs, donation history tracking, and donor reviews",
+      "Real-Time Push Notification Engine notifying nearby shelters the moment surplus food is listed"
+    ],
+    techStack: [
+      { category: "Mobile Client", items: ["Flutter 3", "Dart", "Provider State Management"] },
+      { category: "Cloud Backend", items: ["Firebase Authentication", "Cloud Firestore", "Cloud Functions"] },
+      { category: "Media & Storage", items: ["Cloudinary Media Engine", "Firebase Storage"] },
+      { category: "Location & Sync", items: ["Google Maps Platform", "Geolocator API", "FCM Notifications"] }
+    ],
+    metrics: [
+      { label: "Donations Logged", value: "12,450+" },
+      { label: "Partner Shelters", value: "88+ Hubs" },
+      { label: "Pickup SLA", value: "15-Min Response" }
+    ],
+    githubUrl: "https://github.com/shivanvithajayam/share_bite",
+    mediaType: "video",
+    videoSrc: "/projects/ShareBite/SHAREBITE.mp4",
+    screenshots: [],
+    objectMeta: {
+      icon: "🍱",
+      tag: "WOODEN BENTO BOX",
+      material: "Dark Lacquer & Gold Bevels"
+    }
+  },
+  {
+    id: "kafka",
+    title: "Kafka Simulator",
+    officialName: "Kafka Simulator — Interactive Browser-Based Distributed Streaming Sandbox",
+    subtitle: "Interactive Visual Simulation of Partitions, Consumer Offsets & Rebalance",
+    academicInfo: "Independent Systems Architecture Visualizer · Deployed on Vercel Edge",
+    overview: "Kafka Simulator is an interactive browser-based visual simulation tool designed to demystify core Apache Kafka concepts. Built using Next.js and React state without requiring a real cluster or database, it allows developers to produce custom events, trace deterministic key hashing into partition streams, inspect offsets, and observe dynamic consumer group rebalances in real time.",
+    problem: "Core distributed streaming mechanics—such as partition key hashing, immutable commit logs, consumer group offsets, consumer lag, and automated rebalances—are abstract and difficult to grasp from documentation alone.",
+    solution: "An interactive browser-based simulation where developers produce custom events, trace deterministic key routing via hash(key) % 3 across P0, P1, and P2 streams, and observe real-time consumer lag advancement.",
+    functionalities: [
+      "Custom JSON Event Production with configurable keys and message payloads",
+      "Deterministic Partition Routing Visualizer using hash(key) % 3 algorithm",
+      "Real-Time Consumer Group Offset Tracking and Dynamic Consumer Lag Calculation",
+      "Simulated Cluster Node Rebalance and Broker Topic Stream Inspection",
+      "Step-by-Step Architectural Explanation Panels and Interactive Play/Pause Simulator"
+    ],
+    techStack: [
+      { category: "Core Engine", items: ["Next.js 14 (App Router)", "React 18", "TypeScript"] },
+      { category: "Animation & Styling", items: ["Framer Motion", "Tailwind CSS", "Lucide Icons"] },
+      { category: "Audio & Physics", items: ["Web Audio API", "Interactive Roller Canvas"] },
+      { category: "Deployment", items: ["Vercel Edge Network", "Client-Side Virtual Event Engine"] }
+    ],
+    metrics: [
+      { label: "Active Partitions", value: "3 Streams (P0, P1, P2)" },
+      { label: "Key Algorithm", value: "hash(key) % 3" },
+      { label: "Commit Log", value: "100% Immutable" }
+    ],
+    githubUrl: "https://github.com/Kritika-Panwar-151/kafka-simulator",
+    liveUrl: "https://kafka-simulator.vercel.app",
+    mediaType: "image",
+    screenshots: [
+      "/projects/KafkaSimulation/1.jpeg",
+      "/projects/KafkaSimulation/2.jpeg",
+      "/projects/KafkaSimulation/3.jpeg",
+      "/projects/KafkaSimulation/4.jpeg",
+      "/projects/KafkaSimulation/5.jpeg",
+      "/projects/KafkaSimulation/6.jpeg",
+      "/projects/KafkaSimulation/7.jpeg"
+    ],
+    objectMeta: {
+      icon: "⚙️",
+      tag: "EVENT-STREAM MACHINE",
+      material: "Charcoal Metal & Champagne Brass"
+    }
   },
   {
     id: "cie",
     title: "CIE Analyzer",
-    subtitle: "Automated Academic Diagnostics Pipeline",
-    category: "Data Processing · Educational Analytics",
-    metaphorBadge: "Pastel Desk Organizer Boxes",
-    metaphorIcon: "🗃️",
-    description: "Automating internal evaluation pipelines to flag at-risk learners for early academic care via headless document conversion.",
-    longDescription: "Analyzing exam spreadsheets manually across hundreds of engineering students across CIE 1, 2, and 3 is tedious and delays remedial intervention. CIE Analyzer automates batch upload, legacy format normalization, and statistical benchmark scoring to flag students who need extra academic assistance before final exams.",
-    techStack: ["Python", "Django", "Pandas", "LibreOffice Headless", "Firebase Firestore", "Docker"],
+    officialName: "CIE Analyzer — Slow Learner Detection & Academic Diagnostics Pipeline",
+    subtitle: "Automated Batch Document Normalization & At-Risk Early Warning Pipeline",
+    academicInfo: "B.M.S. College of Engineering · Dept. of CSE · Guide: Prof. Monisha H M",
+    overview: "CIE Analyzer is an automated educational evaluation analytics engine designed to identify engineering students requiring early academic care. By automating batch document normalization and statistical outlier benchmarking across semester evaluations (CIE 1, 2, and 3), the system flags at-risk learners early so faculty can organize remedial intervention.",
+    problem: "Analyzing semester evaluation spreadsheets manually across hundreds of engineering students across CIE 1, 2, and 3 is tedious, error-prone, and delays remedial intervention until it is too late before final exams.",
+    solution: "An automated headless document ingestion pipeline that extracts tabular marks from uploaded ZIP archives, normalizes legacy formats via headless LibreOffice in Docker, processes marks through Pandas, and flags students scoring below 40% for faculty intervention.",
+    functionalities: [
+      "Batch ZIP Archive Ingestion & Automated Unpacking Service",
+      "Headless LibreOffice Normalization converting heterogeneous doc/xls files into uniform CSVs",
+      "Pandas Dataframe Processing & Multi-Exam Longitudinal Progress Aggregation",
+      "Default 40% Remedial Threshold Outlier Flagging triggering faculty intervention workflows",
+      "Faculty Analytics Dashboard with section, subject, and student progress curves"
+    ],
+    techStack: [
+      { category: "Backend Engine", items: ["Python 3", "Django", "Pandas DataFrames"] },
+      { category: "Document Processing", items: ["LibreOffice Headless", "Docker System Container"] },
+      { category: "Database & Cloud", items: ["Firebase Firestore", "Cloud Storage"] },
+      { category: "Visualization", items: ["Chart.js", "SVG Trend Graphs", "Responsive Roster"] }
+    ],
     metrics: [
-      { label: "Remedial Benchmark", value: "< 40% Flag" },
+      { label: "Remedial Benchmark", value: "< 40% Threshold" },
       { label: "Evaluations Tracked", value: "CIE 1, 2, 3" },
-      { label: "Ingestion Format", value: "Batch ZIP" },
+      { label: "Pipeline Scope", value: "5-Step Automated" }
     ],
     githubUrl: "https://github.com/Kritika-Panwar-151/Slow-Learners",
     mediaType: "image",
@@ -160,30 +205,40 @@ const PROJECTS_DATA: ProjectItem[] = [
       "/projects/SlowLearners/8.png",
       "/projects/SlowLearners/9.png",
       "/projects/SlowLearners/10.png",
-      "/projects/SlowLearners/11.png",
+      "/projects/SlowLearners/11.png"
     ],
-    colorTheme: {
-      cardBg: "from-[#FDF8F7] to-[#FAF0F2]",
-      cardBorder: "border-[#F3D5D8]",
-      accent: "#991B1B",
-      badgeBg: "bg-[#FEE2E2]",
-      badgeText: "text-[#991B1B]",
-    },
+    objectMeta: {
+      icon: "🗃️",
+      tag: "SAGE DESK ORGANIZER",
+      material: "Matte Sage Green & Ivory Drawers"
+    }
   },
   {
     id: "smartattend",
-    title: "SmartAttend",
-    subtitle: "Geofenced Anti-Proxy Attendance Platform",
-    category: "Cybersecurity · OOPS Java",
-    metaphorBadge: "Pastel Lanyard & ID Badge",
-    metaphorIcon: "🪪",
-    description: "Eliminating proxy attendance through cryptographic geofencing and 1-student-1-device hardware binding.",
-    longDescription: "Traditional roll calls and QR code attendance suffer from widespread proxy marking via remote link sharing or screenshot exchange. SmartAttend mathematically ensures that attendance can only be recorded if the student is physically within the classroom radius and using their registered personal device.",
-    techStack: ["Java 17+", "Spring Boot", "Supabase (PostgreSQL)", "Haversine Distance", "Maven"],
+    title: "Attendance System",
+    officialName: "Attendance System Using Geofencing and Device ID",
+    subtitle: "Anti-Proxy Enterprise Attendance Platform with Dual-Factor Physical Verification",
+    academicInfo: "B.M.S. College of Engineering · Dept. of CSE · Guide: Prof. Monisha H M · OOPS with Java",
+    overview: "Attendance System Using Geofencing and Device ID is an anti-proxy enterprise attendance platform developed using Object-Oriented Programming (OOPS) principles in Java Spring Boot. It guarantees authentic lecture presence by combining mathematical Haversine spherical GPS geofencing with 1-student-1-device hardware ID binding.",
+    problem: "Pervasive proxy attendance in large lecture halls where absent students have peers sign attendance sheets or share static QR codes across messaging apps.",
+    solution: "A multi-factor anti-proxy attendance security platform enforcing spherical Haversine GPS distance calculation (≤ 30m circular classroom geofence), dynamic 30-second expiring session tokens, and strict 1-student-1-device hardware binding.",
+    functionalities: [
+      "Spherical Haversine Geofencing enforcing strict ≤ 30m classroom radius validation",
+      "1-Student = 1-Hardware Device ID binding preventing peer proxy marking",
+      "Teacher Service generating dynamic UUID session codes that expire in 30 seconds",
+      "Real-Time Presence Verification Ledger with instant faculty CSV attendance export",
+      "OOPS-Driven Microservices Architecture (Abstraction, Encapsulation, Dependency Injection)"
+    ],
+    techStack: [
+      { category: "Core Backend", items: ["Java 17+ (OOPS Principles)", "Spring Boot 3.x", "Maven"] },
+      { category: "Database & Cloud", items: ["PostgreSQL", "Supabase Cloud Database"] },
+      { category: "Location & Client", items: ["Android Geolocation API", "Haversine Spherical Algorithm"] },
+      { category: "Frontend", items: ["HTML5", "CSS3", "JavaScript", "Tailwind CSS"] }
+    ],
     metrics: [
-      { label: "Geofence Perimeter", value: "≤ 30m Radius" },
+      { label: "Classroom Boundary", value: "≤ 30m Radius" },
       { label: "Hardware Binding", value: "1 Device / USN" },
-      { label: "Proxy Leakage", value: "0% Tolerated" },
+      { label: "Session Expiry", value: "30s Dynamic UUID" }
     ],
     githubUrl: "https://github.com/Kritika-Panwar-151/JavaProject",
     mediaType: "image",
@@ -195,16 +250,14 @@ const PROJECTS_DATA: ProjectItem[] = [
       "/projects/SmartAttendece/5.png",
       "/projects/SmartAttendece/6.png",
       "/projects/SmartAttendece/7.png",
-      "/projects/SmartAttendece/8.png",
+      "/projects/SmartAttendece/8.png"
     ],
-    colorTheme: {
-      cardBg: "from-[#2D0A14] to-[#170308]",
-      cardBorder: "border-white/20",
-      accent: "#ECC880",
-      badgeBg: "bg-white/10",
-      badgeText: "text-[#ECC880]",
-    },
-  },
+    objectMeta: {
+      icon: "🎫",
+      tag: "ACRYLIC ACCESS BADGE",
+      material: "Transparent Acrylic & Woven Ribbon"
+    }
+  }
 ];
 
 export default function ProjectsBento() {
@@ -243,17 +296,6 @@ export default function ProjectsBento() {
     setActiveProject(null);
   };
 
-  const togglePlay = () => {
-    if (videoRef.current) {
-      if (isPlaying) {
-        videoRef.current.pause();
-      } else {
-        videoRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
   const toggleMute = () => {
     if (videoRef.current) {
       videoRef.current.muted = !isMuted;
@@ -262,492 +304,371 @@ export default function ProjectsBento() {
   };
 
   return (
-    <section id="projects" className="relative py-24 px-4 sm:px-6 md:px-10 bg-[#FAF6F0] text-[#3B121E]">
+    <section id="projects" className="relative py-24 px-4 sm:px-6 md:px-10 bg-[#FAF6F0] text-[#3D0A18] overflow-hidden select-none">
       
-      {/* Custom Styles for Sleek Shapes */}
-      <style jsx>{`
-        .sleek-bento-tray {
-          background: linear-gradient(145deg, #3D0A18, #26050E);
-          border: 3px solid #ECC880;
-          box-shadow: 
-            0 20px 40px -10px rgba(61, 10, 24, 0.25),
-            inset 0 2px 4px rgba(255, 255, 255, 0.15),
-            inset 0 -3px 6px rgba(0, 0, 0, 0.5);
-        }
-        .bento-inner-chamber {
-          background: #FAF7F2;
-          box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.08);
-        }
-        /* Sophisticated Luxury Awning in Velvet Burgundy and Warm Ivory with Gold Trim */
-        .awning-stripes {
-          background: repeating-linear-gradient(
-            90deg,
-            #8B1E3F 0px,
-            #8B1E3F 18px,
-            #FFFDF9 18px,
-            #FFFDF9 36px
-          );
-        }
-        .suitcase-brass-clasp {
-          background: linear-gradient(135deg, #ECC880, #D4AF37, #996515);
-          box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-        .radar-sweep-anim {
-          animation: sweep 4s linear infinite;
-        }
-        @keyframes sweep {
-          from { transform: rotate(0deg); }
-          to { transform: rotate(360deg); }
-        }
-      `}</style>
+      {/* Subtle paper dotted texture matching portfolio aesthetic */}
+      <div className="absolute inset-0 pointer-events-none opacity-25 bg-[radial-gradient(#8B1E3F_0.75px,transparent_0.75px)] [background-size:20px_20px]" />
 
       {/* SECTION HEADER */}
-      <div className="max-w-6xl mx-auto mb-12">
-        <div className="flex items-center gap-2 mb-2">
-          <span className="w-2.5 h-2.5 rounded-full bg-[#8B1E3F] animate-pulse"></span>
-          <span className="text-xs uppercase tracking-[0.25em] font-bold text-[#8B1E3F]">
-            Interactive Creations
-          </span>
+      <div className="max-w-6xl mx-auto mb-16 text-center relative z-10">
+        <div className="inline-flex items-center gap-2 bg-[#FFFDF9] px-4 py-1.5 rounded-full border border-[#8B1E3F]/20 text-xs text-[#8B1E3F] shadow-sm font-semibold mb-3">
+          <span className="w-2 h-2 rounded-full bg-[#8B1E3F] animate-pulse"></span>
+          <span>Miniature Physical Objects · Click to Open Case Study</span>
         </div>
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
-          <div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-[#3D0A18] font-bold tracking-tight">
-              Portfolio Projects
-            </h2>
-            <p className="text-sm sm:text-base text-[#7A4555] mt-1.5 max-w-xl">
-              Curated Architectural Works &bull; Each creation is shaped as a physical desk object with sleek editorial styling. Click any item to expand its full case study.
-            </p>
-          </div>
-          <div className="inline-flex items-center gap-2 bg-[#FFFDF9] px-4 py-2 rounded-full border border-[#8B1E3F]/20 text-xs text-[#8B1E3F] shadow-sm font-medium">
-            <span>✨ 5 Thematic Physical Shapes</span>
-          </div>
-        </div>
+        <h2 className="text-3xl sm:text-5xl font-serif font-bold text-[#3D0A18] tracking-tight">
+          Crafted Engineering Works
+        </h2>
+        <p className="text-sm sm:text-base text-[#7A4555] mt-2 max-w-2xl mx-auto leading-relaxed">
+          Five standalone miniature physical artifacts placed directly on my editorial desk. Each object is the UI itself—click any artifact to physically open its case study.
+        </p>
       </div>
 
-      {/* THE 5 SLEEK CODE-CRAFTED CARDS: TOP ROW 3 CARDS, BOTTOM ROW 2 CARDS */}
-      <div className="max-w-6xl mx-auto space-y-8">
+      {/* ========================================================================= */}
+      {/* THE 5 STANDALONE PHYSICAL OBJECTS (NO CARDS AROUND THEM!)                  */}
+      {/* TOP ROW: UNISTAY · SHAREBITE · KAFKA                                      */}
+      {/* BOTTOM ROW: CIE ANALYZER · ATTENDANCE SYSTEM                              */}
+      {/* ========================================================================= */}
+      <div className="max-w-6xl mx-auto space-y-12 sm:space-y-16 relative z-10">
         
-        {/* ================= TOP ROW: 3 SLEEK PHYSICAL OBJECT CARDS ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-7">
+        {/* ================= TOP ROW: 3 STANDALONE OBJECTS ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 sm:gap-10 items-end">
           
-          {/* CARD 01: SHAREBITE (Sleek Crafted Bento Box with Chopsticks) */}
+          {/* ================= OBJECT 01: UNISTAY (VINTAGE DORM TRUNK) ================= */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[0])}
-            className="sleek-bento-tray rounded-[28px] p-4 text-[#3D0A18] flex flex-col justify-between hover:-translate-y-2 transition-all duration-300 relative group cursor-pointer"
+            className="group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] relative"
+            style={{ filter: "drop-shadow(0 16px 24px rgba(74, 14, 23, 0.12))" }}
           >
-            {/* Real Chopsticks & Sakura Blossom Resting Below Box */}
-            <div className="absolute -bottom-3 left-8 right-8 flex items-center gap-2 pointer-events-none z-10">
-              <div className="h-1.5 flex-1 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] rounded-full shadow-md"></div>
-              <div className="w-4 h-4 rounded-full bg-[#E8B4B8] border border-[#ECC880] shadow flex items-center justify-center text-[8px]">🌸</div>
-              <div className="h-1.5 flex-1 bg-gradient-to-r from-[#D4AF37] to-[#B8860B] rounded-full shadow-md"></div>
+            {/* Arched Leather Carry Handle at Top */}
+            <div className="flex justify-center -mb-2 relative z-20">
+              <div className="w-20 h-4 rounded-t-lg bg-gradient-to-b from-[#8B1E3F] to-[#5C1329] border border-[#ECC880] shadow-sm flex items-center justify-center">
+                <div className="w-14 h-1.5 rounded-full bg-[#ECC880]/60"></div>
+              </div>
             </div>
 
-            {/* Inside Bento Tray: Clean, Uncluttered Compartments */}
-            <div className="space-y-3 pb-2">
+            {/* The Trunk Body Itself */}
+            <div className="relative rounded-2xl bg-gradient-to-b from-[#FAF5EE] via-[#FFFDF9] to-[#F5ECE8] border-2 border-[#ECC880] p-4 pt-5 shadow-lg overflow-hidden">
               
-              {/* Compartment 1: Deep Forest Green Header */}
-              <div className="bg-gradient-to-br from-[#122E22] to-[#0A1F16] text-[#F0FDF4] p-3 rounded-2xl border border-[#34D399]/40 shadow-sm flex items-center justify-between">
+              {/* Four Champagne Brass Corner Protectors */}
+              <div className="absolute top-1 left-1 w-4 h-4 border-t-2 border-l-2 border-[#D4AF37] rounded-tl-sm pointer-events-none" />
+              <div className="absolute top-1 right-1 w-4 h-4 border-t-2 border-r-2 border-[#D4AF37] rounded-tr-sm pointer-events-none" />
+              <div className="absolute bottom-1 left-1 w-4 h-4 border-b-2 border-l-2 border-[#D4AF37] rounded-bl-sm pointer-events-none" />
+              <div className="absolute bottom-1 right-1 w-4 h-4 border-b-2 border-r-2 border-[#D4AF37] rounded-br-sm pointer-events-none" />
+
+              {/* Stitched Leather Trim Bands */}
+              <div className="absolute inset-x-0 top-3 h-1 border-b border-dashed border-[#8B1E3F]/30 pointer-events-none" />
+              <div className="absolute inset-x-0 bottom-3 h-1 border-t border-dashed border-[#8B1E3F]/30 pointer-events-none" />
+
+              {/* Hanging Leather Luggage Tag & Key */}
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#ECC880]/30 relative z-10">
+                <div className="bg-[#FFFDF9] px-2.5 py-1 rounded shadow-xs border border-[#ECC880]/60 flex items-center gap-1.5">
+                  <span className="text-xs">🏷️</span>
+                  <div>
+                    <div className="text-[10px] font-serif font-bold text-[#8B1E3F] tracking-wide leading-none">UNISTAY</div>
+                    <div className="text-[7.5px] font-mono text-[#7A4555] uppercase">BMSCE HOSTEL MGMT</div>
+                  </div>
+                </div>
+                <div className="flex items-center gap-1">
+                  <span className="text-xs">🔑</span>
+                  <div className="w-5 h-2.5 rounded-xs bg-gradient-to-r from-[#ECC880] to-[#D4AF37] shadow-xs border border-[#996515]"></div>
+                </div>
+              </div>
+
+              {/* Mini Authentic Polaroid Dorm Photo with Washi Tape */}
+              <div className="relative bg-white p-2 rounded-xl shadow-xs border border-[#E8B4B8]/60 mb-3 flex items-center gap-3">
+                <div className="w-12 h-12 rounded-lg bg-[#FAF5EE] border border-[#ECC880]/40 flex items-center justify-center text-xl shadow-inner">
+                  🧳
+                </div>
                 <div>
-                  <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#34D399] uppercase tracking-wider font-bold">
-                    <span>🌱</span>
-                    <span>ShareBite</span>
-                  </div>
-                  <h4 className="font-serif text-base font-bold text-white leading-snug mt-0.5">Surplus Food Rescue</h4>
-                </div>
-                <span className="text-[9px] bg-[#34D399]/20 text-[#34D399] border border-[#34D399]/40 px-2.5 py-0.5 rounded-full font-bold">
-                  Flutter 3
-                </span>
-              </div>
-
-              {/* Compartment 2 & 3: Steamed Rice Counter + Karaage & Harvest Window */}
-              <div className="grid grid-cols-12 gap-3">
-                {/* Steamed Rice Chamber */}
-                <div className="col-span-7 bento-inner-chamber p-3 rounded-2xl border border-[#ECC880]/40 flex flex-col justify-between">
-                  <span className="text-[9px] font-mono uppercase text-[#8C7A6B] font-bold">🍚 Steamed Rice Window</span>
-                  <div className="my-1">
-                    <div className="text-xl font-serif font-bold text-[#8B1E3F]">12,450+</div>
-                    <div className="text-[10px] text-[#7A4555]">Meals Distributed</div>
-                  </div>
-                  <span className="text-[9px] text-[#059669] font-semibold">15-min Hot Pickup SLA</span>
-                </div>
-
-                {/* Karaage Dish Window */}
-                <div className="col-span-5 bg-gradient-to-br from-[#2D0A14] to-[#1A0309] text-white p-3 rounded-2xl border border-white/10 flex flex-col items-center justify-center text-center">
-                  <span className="text-2xl mb-1">🥦🍱</span>
-                  <span className="text-[10px] font-serif text-[#ECC880] font-bold">88+ Shelters</span>
-                  <span className="text-[9px] text-white/60">Zero Waste</span>
+                  <div className="text-xs font-serif font-bold text-[#8B1E3F]">Maple Hall &bull; Ensuite</div>
+                  <div className="text-[9.5px] text-[#7A4555]">Single / Double / Triple Sharing</div>
+                  <div className="text-[8.5px] font-mono text-[#059669] mt-0.5">&check; 1 Student = 1 Room Rule</div>
                 </div>
               </div>
 
-              {/* Compartment 4: Recipe Ingredients & Quick Expand Cue */}
-              <div className="bg-black/30 p-2.5 rounded-2xl border border-white/10 flex items-center justify-between">
-                <div className="flex items-center gap-1.5 text-[10px] font-mono text-[#ECC880]">
-                  <span>Recipe:</span>
-                  <span className="bg-white/10 px-2 py-0.5 rounded text-white text-[9px]">Firebase</span>
-                  <span className="bg-white/10 px-2 py-0.5 rounded text-white text-[9px]">Maps API</span>
-                </div>
-                <span className="text-[10px] font-bold text-[#ECC880] group-hover:text-white transition-colors flex items-center gap-0.5">
-                  <span>Open Bento</span>
-                  <span>↗</span>
-                </span>
+              {/* Tiny Physical Brass Plates on Trunk */}
+              <div className="grid grid-cols-4 gap-1 text-center font-mono text-[8px] font-bold text-[#3D0A18] mb-2">
+                <span className="bg-[#FAF5EE] py-0.5 rounded border border-[#ECC880]/50">HOSTEL</span>
+                <span className="bg-[#FAF5EE] py-0.5 rounded border border-[#ECC880]/50">BOOKING</span>
+                <span className="bg-[#FAF5EE] py-0.5 rounded border border-[#ECC880]/50">DJANGO</span>
+                <span className="bg-[#FAF5EE] py-0.5 rounded border border-[#ECC880]/50">AUTH</span>
+              </div>
+
+              {/* Folded Map protruding indicator */}
+              <div className="pt-2 border-t border-[#ECC880]/30 flex items-center justify-between text-[9px] font-mono text-[#8B1E3F]">
+                <span>📍 Folded Campus Map Inside</span>
+                <span className="group-hover:translate-x-1 transition-transform font-bold">Unlatch Trunk &rarr;</span>
               </div>
 
             </div>
-
-            {/* Bottom Action Buttons */}
-            <div className="flex items-center gap-2 pt-2 border-t border-[#ECC880]/20">
-              <button 
-                onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[0]); }}
-                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
-              >
-                <span>▶ Watch Demo (Video)</span>
-              </button>
-              <a 
-                href={PROJECTS_DATA[0].githubUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold border border-white/20 transition-all"
-              >
-                GitHub ↗
-              </a>
-            </div>
-
           </div>
 
-          {/* CARD 02: KAFKA SIMULATOR (Sleek Parisian Sweet Shop Bakery) */}
+          {/* ================= OBJECT 02: SHAREBITE (WOODEN BENTO BOX) ================= */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[1])}
-            className="bg-[#FFFDF9] rounded-[28px] border-2 border-[#ECC880] shadow-lg hover:-translate-y-2 transition-all duration-300 overflow-hidden flex flex-col justify-between group cursor-pointer"
+            className="group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] relative"
+            style={{ filter: "drop-shadow(0 16px 24px rgba(61, 10, 24, 0.16))" }}
           >
-            {/* Sleek Scalloped Awning Roof in Velvet Burgundy and Warm Ivory */}
-            <div>
-              <div className="h-6 awning-stripes border-b-2 border-[#ECC880] flex items-center justify-between px-3">
-                <span className="w-2 h-2 rounded-full bg-[#ECC880]"></span>
-                <span className="text-[9px] font-bold text-[#FFFDF9] tracking-widest bg-[#4A0E17] px-2.5 py-0.5 rounded-full border border-[#ECC880]/40">
-                  BAKERY CONVEYOR
-                </span>
-                <span className="w-2 h-2 rounded-full bg-[#ECC880]"></span>
-              </div>
-
-              <div className="p-4 space-y-3">
-                {/* Shop Header */}
-                <div className="flex items-center justify-between">
-                  <div>
-                    <div className="text-[10px] uppercase font-mono text-[#8B1E3F] font-bold flex items-center gap-1">
-                      <span>🧁</span>
-                      <span>Kafka Simulator</span>
+            {/* The Bento Box Body Itself (Dark Lacquer Wood Grain with Gold Bevels) */}
+            <div className="relative rounded-2xl bg-gradient-to-br from-[#3D0A18] via-[#2A0610] to-[#1C040A] border-3 border-[#ECC880] p-4 shadow-xl">
+              
+              {/* Beveled Compartment Grid (NO LITERAL FOOD!) */}
+              <div className="space-y-2.5">
+                
+                {/* Compartment 1: Sprout Outline Chamber */}
+                <div className="bg-[#122E22] text-[#F0FDF4] p-2.5 rounded-xl border border-[#34D399]/40 shadow-inner flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-sm">🌱</span>
+                    <div>
+                      <div className="text-[10px] font-serif font-bold text-white">ShareBite</div>
+                      <div className="text-[8px] font-mono text-[#34D399] tracking-wider uppercase">SURPLUS FOOD DONATION NGO</div>
                     </div>
-                    <h4 className="font-serif text-lg font-bold text-[#3D0A18]">Event Stream Sorter</h4>
                   </div>
-                  <span className="text-[9px] font-mono bg-[#D1FAE5] text-[#065F46] px-2.5 py-0.5 rounded-full font-bold border border-[#065F46]/20">
-                    VERCEL LIVE
+                  <span className="text-[8px] bg-[#34D399]/20 text-[#34D399] px-2 py-0.5 rounded-full font-bold">
+                    FLUTTER 3
                   </span>
                 </div>
 
-                {/* Animated Conveyor Track */}
-                <div className="bg-[#2D0A14] text-white p-3 rounded-2xl border border-[#ECC880]/30 overflow-hidden">
-                  <div className="flex items-center justify-between text-[10px] font-mono text-[#ECC880] mb-2">
-                    <span>Conveyor Rollers</span>
-                    <span>hash(key) % 3</span>
-                  </div>
+                {/* Compartments 2 & 3: Typographic Rice & Typographic Tomato */}
+                <div className="grid grid-cols-12 gap-2">
                   
-                  {/* Moving Sweet Boxes */}
-                  <div className="flex items-center gap-2 py-1">
-                    <div className="px-2 py-1 rounded-lg bg-[#ECC880] text-[#2D0A14] text-[10px] font-bold shadow animate-pulse flex items-center gap-1">
-                      <span>📦</span>
-                      <span>order_created</span>
+                  {/* Compartment 2: Typographic Rice (Dense tiny words that form rice grain texture) */}
+                  <div className="col-span-7 bg-[#FAF7F2] p-2 rounded-xl border border-[#ECC880]/40 flex flex-col justify-between">
+                    <div className="text-[8px] font-mono text-[#7A4555] uppercase font-bold tracking-wider mb-1">
+                      🍚 Typographic Rice
                     </div>
-                    <span className="text-white/40">&rarr;</span>
-                    <div className="px-2 py-1 rounded-lg bg-[#E8B4B8] text-[#3D0A18] text-[10px] font-bold shadow flex items-center gap-1">
-                      <span>🍬</span>
-                      <span>P1 Basket</span>
+                    <div className="text-[7.5px] font-mono text-[#8C7A6B] leading-tight select-none opacity-85">
+                      PICKUP &bull; DONATION &bull; TRACK &bull; NGO &bull; VERIFY &bull; HOT SLA &bull; RESCUE &bull; FOOD &bull; SURPLUS
+                    </div>
+                    <div className="mt-1 pt-1 border-t border-[#ECC880]/30 text-[9px] font-serif font-bold text-[#8B1E3F]">
+                      12,450+ Meals Logged
                     </div>
                   </div>
+
+                  {/* Compartment 3: Typographic Tomato (Circular cluster of burgundy words) */}
+                  <div className="col-span-5 bg-gradient-to-br from-[#4A0E17] to-[#2D0A14] text-[#ECC880] p-2 rounded-xl border border-[#ECC880]/30 flex flex-col items-center justify-center text-center">
+                    <div className="w-10 h-10 rounded-full border border-dashed border-[#ECC880]/50 flex items-center justify-center p-1 text-[6.5px] font-mono text-[#FFFDF9] leading-none text-center">
+                      DONOR SURPLUS RESCUE
+                    </div>
+                    <span className="text-[8px] font-mono text-[#ECC880] mt-1">88+ Shelters</span>
+                  </div>
+
                 </div>
 
-                {/* 3 Sleek Editorial Partition Bins */}
-                <div className="grid grid-cols-3 gap-2 text-center text-xs font-mono">
-                  <div className="p-2 rounded-xl bg-[#FAF0F2] border border-[#E8B4B8] text-[#8B1E3F]">
-                    <span className="text-sm">🧁</span>
-                    <div className="font-bold text-[10px]">P0 Bin</div>
+                {/* Compartment 4: Phone Outline Chamber with authentic ShareBite app screen */}
+                <div className="bg-black/40 p-2 rounded-xl border border-white/10 flex items-center justify-between text-[9px] font-mono text-[#ECC880]">
+                  <div className="flex items-center gap-1.5">
+                    <span>📱</span>
+                    <span>SHAREBITE.mp4 Walkthrough</span>
                   </div>
-                  <div className="p-2 rounded-xl bg-[#F0F4F8] border border-[#CBD5E1] text-[#334155]">
-                    <span className="text-sm">🍬</span>
-                    <div className="font-bold text-[10px]">P1 Bin</div>
-                  </div>
-                  <div className="p-2 rounded-xl bg-[#FEF9EE] border border-[#ECC880]/60 text-[#78350F]">
-                    <span className="text-sm">🍰</span>
-                    <div className="font-bold text-[10px]">P2 Bin</div>
-                  </div>
+                  <span className="text-[#34D399] font-bold">15-min SLA ↗</span>
                 </div>
 
               </div>
-            </div>
 
-            {/* Bottom Action Buttons */}
-            <div className="p-4 pt-0 flex items-center gap-2">
-              <a 
-                href={PROJECTS_DATA[1].liveUrl} 
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
-              >
-                <span>▶ Launch Live Demo</span>
-              </a>
-              <a 
-                href={PROJECTS_DATA[1].githubUrl} 
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="px-3 py-2 rounded-xl bg-[#8B1E3F]/10 hover:bg-[#8B1E3F]/20 text-[#8B1E3F] text-[11px] font-semibold border border-[#8B1E3F]/20 transition-all"
-              >
-                GitHub ↗
-              </a>
-            </div>
+              {/* Wooden Chopsticks & Sakura Blossom Resting Below Box */}
+              <div className="mt-3 pt-2 border-t border-[#ECC880]/30 flex items-center gap-2">
+                <div className="h-1 flex-1 bg-gradient-to-r from-[#ECC880] to-[#B8860B] rounded-full"></div>
+                <span className="text-xs">🌸</span>
+                <div className="h-1 flex-1 bg-gradient-to-r from-[#ECC880] to-[#B8860B] rounded-full"></div>
+              </div>
 
+            </div>
           </div>
 
-          {/* CARD 03: UNISTAY (Sleek Leatherette Dorm Trunk) */}
+          {/* ================= OBJECT 03: KAFKA SIMULATOR (EVENT-STREAM MACHINE) ================= */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[2])}
-            className="bg-[#FFFDF9] rounded-[28px] border-2 border-[#ECC880]/60 shadow-lg hover:-translate-y-2 transition-all duration-300 p-4 flex flex-col justify-between relative group cursor-pointer"
+            className="group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] relative"
+            style={{ filter: "drop-shadow(0 16px 24px rgba(30, 34, 41, 0.15))" }}
           >
-            {/* Brass Clasp & Handle at Top */}
-            <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#ECC880]/40">
-              <div className="flex items-center gap-2">
-                <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#FAF0F2] text-[#8B1E3F] font-bold border border-[#E8B4B8] flex items-center gap-1">
-                  <span>🏷️</span>
-                  <span>Room #412</span>
+            {/* The Machine Chassis Itself (Charcoal Metal, Slate Blue, Champagne Brass) */}
+            <div className="relative rounded-2xl bg-gradient-to-b from-[#242933] via-[#1B1E26] to-[#14171D] border-2 border-[#ECC880] p-4 text-white shadow-xl">
+              
+              {/* Top Precision Plate: EVENT -> KEY -> PARTITION */}
+              <div className="bg-black/50 p-2 rounded-xl border border-[#ECC880]/40 mb-3 flex items-center justify-between font-mono text-[9px]">
+                <div className="text-[#ECC880] font-bold flex items-center gap-1">
+                  <span>⚙️</span>
+                  <span>EVENT &rarr; KEY &rarr; PARTITION</span>
+                </div>
+                <span className="text-[#38BDF8] bg-[#38BDF8]/10 px-1.5 py-0.5 rounded border border-[#38BDF8]/20">
+                  KEY = 5 &bull; 5 % 3 = 2
                 </span>
-                <span className="w-2.5 h-2.5 rounded-full bg-[#E8B4B8] shadow-inner"></span>
               </div>
-              <div className="w-9 h-4 suitcase-brass-clasp rounded flex items-center justify-center shadow">
-                <div className="w-1.5 h-1.5 rounded-full bg-black/40"></div>
+
+              {/* Mechanical Roller Channel with Event Blocks */}
+              <div className="bg-[#12151B] p-2.5 rounded-xl border border-white/10 mb-3">
+                <div className="text-[8px] font-mono text-white/60 uppercase mb-1.5 flex justify-between">
+                  <span>Conveyor Rollers</span>
+                  <span>Deterministic Hash</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <span className="px-2 py-0.5 rounded bg-[#ECC880] text-[#14171D] font-mono text-[8.5px] font-bold shadow-xs">
+                    order_created
+                  </span>
+                  <span className="text-white/40 text-[9px]">&rarr;</span>
+                  <span className="px-2 py-0.5 rounded bg-[#38BDF8] text-white font-mono text-[8.5px] font-bold shadow-xs">
+                    P1 Stream
+                  </span>
+                </div>
               </div>
+
+              {/* Three Precision Physical Channels: P0, P1, P2 */}
+              <div className="grid grid-cols-3 gap-1.5 text-center font-mono text-[8.5px] mb-3">
+                <div className="p-1.5 rounded-lg bg-[#334155]/60 border border-[#94A3B8]/30">
+                  <div className="text-[#ECC880] font-bold">P0</div>
+                  <div className="text-[7px] text-white/70">Orders</div>
+                </div>
+                <div className="p-1.5 rounded-lg bg-[#334155]/60 border border-[#94A3B8]/30">
+                  <div className="text-[#38BDF8] font-bold">P1</div>
+                  <div className="text-[7px] text-white/70">Payments</div>
+                </div>
+                <div className="p-1.5 rounded-lg bg-[#334155]/60 border border-[#94A3B8]/30">
+                  <div className="text-[#F472B6] font-bold">P2</div>
+                  <div className="text-[7px] text-white/70">Users</div>
+                </div>
+              </div>
+
+              {/* Chassis Nameplate */}
+              <div className="pt-2 border-t border-[#ECC880]/30 flex items-center justify-between text-[9px] font-mono">
+                <span className="text-[#ECC880] font-bold">KAFKA SIMULATOR</span>
+                <span className="text-white/60 group-hover:text-white transition-colors">Extend Machine &rarr;</span>
+              </div>
+
             </div>
-
-            <div className="space-y-3">
-              <div>
-                <div className="text-[10px] uppercase font-mono text-[#8B1E3F] font-bold">Dorm Booking &bull; BMSCE</div>
-                <h4 className="font-serif text-lg font-bold text-[#3D0A18]">UniStay</h4>
-                <p className="text-xs text-[#7A4555] mt-0.5">Centralized hostel allocation with single-booking integrity.</p>
-              </div>
-
-              {/* Polaroid Preview with Washi Tape */}
-              <div className="relative bg-white p-2.5 rounded-2xl shadow-sm border border-[#ECC880]/40 flex items-center gap-3">
-                <div className="w-14 h-14 rounded-xl bg-[#FAF5EE] border border-[#ECC880]/40 flex items-center justify-center text-2xl shadow-inner">
-                  🧳
-                </div>
-                <div className="text-xs">
-                  <div className="font-serif font-bold text-[#8B1E3F]">Maple Hall &bull; Ensuite</div>
-                  <div className="text-[10px] text-[#7A4555] mt-0.5">4 Residents &bull; Study Desks</div>
-                  <div className="text-[9px] text-[#059669] font-mono mt-1">&check; 1 Room / Student Constraint</div>
-                </div>
-              </div>
-
-              {/* Architecture Badges */}
-              <div className="grid grid-cols-2 gap-2 text-xs font-mono">
-                <div className="p-2 rounded-xl bg-[#FAF5EE] border border-[#ECC880]/30 text-center">
-                  <span className="text-[10px] text-[#8C7A6B] block">Architecture</span>
-                  <span className="font-bold text-[#3D0A18]">Django MVT</span>
-                </div>
-                <div className="p-2 rounded-xl bg-[#FAF5EE] border border-[#ECC880]/30 text-center">
-                  <span className="text-[10px] text-[#8C7A6B] block">Database</span>
-                  <span className="font-bold text-[#3D0A18]">MySQL</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Bottom Action Buttons */}
-            <div className="pt-3 border-t border-[#ECC880]/30 flex items-center gap-2 mt-2">
-              <button 
-                onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[2]); }}
-                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
-              >
-                <span>▶ Unlock Trunk (Case Study)</span>
-              </button>
-              <a 
-                href={PROJECTS_DATA[2].githubUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="px-3 py-2 rounded-xl bg-[#8B1E3F]/10 hover:bg-[#8B1E3F]/20 text-[#8B1E3F] text-[11px] font-semibold border border-[#8B1E3F]/20 transition-all"
-              >
-                GitHub ↗
-              </a>
-            </div>
-
           </div>
 
         </div>
 
-        {/* ================= BOTTOM ROW: 2 SLEEK PHYSICAL OBJECT CARDS ================= */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-7">
+        {/* ================= BOTTOM ROW: 2 STANDALONE OBJECTS ================= */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-10 max-w-4xl mx-auto">
           
-          {/* CARD 04: CIE ANALYZER (Sleek Sage Desk Organizer) */}
+          {/* ================= OBJECT 04: CIE ANALYZER (SAGE DESK ORGANIZER) ================= */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[3])}
-            className="bg-[#F6FAF7] rounded-[28px] border-2 border-[#A7F3D0] shadow-lg hover:-translate-y-2 transition-all duration-300 p-5 flex flex-col justify-between group cursor-pointer"
+            className="group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] relative"
+            style={{ filter: "drop-shadow(0 16px 24px rgba(45, 90, 70, 0.12))" }}
           >
-            <div>
-              {/* Tiered Pen Slots at Top with Muted Editorial Highlighters */}
+            {/* The Sage Organizer Caddy (Matching User Image 1) */}
+            <div className="relative rounded-2xl bg-gradient-to-b from-[#F4F9F6] to-[#E9F3ED] border-2 border-[#A7F3D0] p-4 pt-5 shadow-lg">
+              
+              {/* Five Physical Mildliner Markers Protruding from Top Slot */}
               <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#A7F3D0]/60">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono px-2 py-0.5 rounded-md bg-[#D1FAE5] text-[#065F46] font-bold">
-                    🗃️ Study Organizer
-                  </span>
-                  <span className="text-[9px] font-bold px-2 py-0.5 rounded-md bg-red-50 text-red-700 border border-red-200">
-                    &lt; 40% Flag
-                  </span>
-                </div>
-
-                {/* Refined Mildliners sticking up (Rosewood, Mint, Gold, Slate) */}
                 <div className="flex items-center gap-1.5">
-                  <div className="w-2.5 h-6 rounded-t-sm bg-[#C47D88] shadow-xs"></div>
-                  <div className="w-2.5 h-7 rounded-t-sm bg-[#2D5A46] shadow-xs"></div>
-                  <div className="w-2.5 h-5 rounded-t-sm bg-[#D4AF37] shadow-xs"></div>
-                  <div className="w-2.5 h-6 rounded-t-sm bg-[#475569] shadow-xs"></div>
+                  <span className="px-2 py-0.5 rounded bg-[#D1FAE5] text-[#065F46] font-mono text-[9px] font-bold border border-[#A7F3D0]">
+                    🗃️ CIE ANALYZER
+                  </span>
+                  <span className="px-1.5 py-0.5 rounded bg-[#FEF3C7] text-[#92400E] font-mono text-[8.5px] font-bold">
+                    CIE 1 &bull; 2 &bull; 3
+                  </span>
+                </div>
+
+                {/* The 5 Protruding Markers */}
+                <div className="flex items-center gap-1">
+                  <div className="w-2.5 h-6 rounded-t bg-[#C4B5FD] text-[6px] font-mono text-center pt-0.5 shadow-2xs" title="ZIP">Z</div>
+                  <div className="w-2.5 h-7 rounded-t bg-[#A7F3D0] text-[6px] font-mono text-center pt-0.5 shadow-2xs" title="EXCEL">E</div>
+                  <div className="w-2.5 h-5 rounded-t bg-[#FBCFE8] text-[6px] font-mono text-center pt-0.5 shadow-2xs" title="PANDAS">P</div>
+                  <div className="w-2.5 h-6 rounded-t bg-[#FDE68A] text-[6px] font-mono text-center pt-0.5 shadow-2xs" title="ANALYSIS">A</div>
+                  <div className="w-2.5 h-5 rounded-t bg-[#BAE6FD] text-[6px] font-mono text-center pt-0.5 shadow-2xs" title="DASHBOARD">D</div>
                 </div>
               </div>
 
-              {/* Content */}
-              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-                <div className="sm:col-span-7">
-                  <div className="text-[10px] uppercase font-mono text-[#059669] font-bold">Educational Analytics &bull; Docker</div>
-                  <h4 className="font-serif text-xl font-bold text-[#3D0A18] mt-0.5">CIE Analyzer</h4>
-                  <p className="text-xs text-[#7A4555] mt-1 leading-relaxed">
-                    Automated continuous internal evaluation pipeline flagging slow learners via headless document conversion.
-                  </p>
-
-                  {/* 5-Step Pipeline Mini Chips */}
-                  <div className="flex flex-wrap gap-1 mt-3 text-[9px] font-mono">
-                    <span className="px-2 py-0.5 rounded bg-white border border-[#A7F3D0] text-[#065F46]">ZIP Ingest</span>
-                    <span>&rarr;</span>
-                    <span className="px-2 py-0.5 rounded bg-white border border-[#A7F3D0] text-[#065F46]">LibreOffice</span>
-                    <span>&rarr;</span>
-                    <span className="px-2 py-0.5 rounded bg-white border border-[#A7F3D0] text-[#065F46]">Pandas</span>
-                    <span>&rarr;</span>
-                    <span className="px-2 py-0.5 rounded bg-[#34D399]/20 text-[#065F46] font-bold">Chart.js</span>
-                  </div>
+              {/* Center Compartments: Paper Clip 40% Threshold & Tiny Curve */}
+              <div className="grid grid-cols-12 gap-3 items-center mb-3">
+                
+                {/* 40% Threshold Clip */}
+                <div className="col-span-4 bg-white p-2 rounded-xl border border-red-200 shadow-2xs text-center">
+                  <span className="text-[8px] font-mono uppercase text-red-600 font-bold block">📎 Paper Clip</span>
+                  <div className="text-sm font-serif font-bold text-red-700 my-0.5">&lt; 40%</div>
+                  <span className="text-[7.5px] font-mono text-[#7A4555]">Threshold Flag</span>
                 </div>
 
-                {/* Mini Line Chart Visualizer */}
-                <div className="sm:col-span-5 bg-white p-3 rounded-2xl border border-[#A7F3D0] shadow-sm">
-                  <div className="flex items-center justify-between text-[9px] font-mono text-[#8C7A6B] mb-1">
-                    <span>CIE Trends</span>
-                    <span className="text-rose-600 font-bold">&lt; 40% Alert</span>
+                {/* Tiny Printed Progress Curve */}
+                <div className="col-span-8 bg-white p-2 rounded-xl border border-[#A7F3D0] shadow-2xs">
+                  <div className="flex justify-between text-[7.5px] font-mono text-[#7A4555] mb-0.5">
+                    <span>Longitudinal Evaluation Curve</span>
+                    <span className="text-[#059669] font-bold">Chart.js</span>
                   </div>
-                  {/* Mini SVG Graph */}
-                  <svg className="w-full h-16" viewBox="0 0 100 40">
-                    <line x1="0" y1="25" x2="100" y2="25" stroke="#FCA5A5" strokeDasharray="2,2" strokeWidth="1" />
-                    <path d="M 5,30 Q 30,10 50,28 T 95,8" fill="none" stroke="#059669" strokeWidth="2" />
-                    <circle cx="5" cy="30" r="2" fill="#059669" />
-                    <circle cx="50" cy="28" r="2" fill="#059669" />
-                    <circle cx="95" cy="8" r="2" fill="#059669" />
+                  <svg className="w-full h-8" viewBox="0 0 100 25">
+                    <line x1="0" y1="18" x2="100" y2="18" stroke="#FCA5A5" strokeDasharray="2,2" strokeWidth="0.8" />
+                    <path d="M 5,20 Q 25,6 50,16 T 95,5" fill="none" stroke="#059669" strokeWidth="1.5" />
+                    <circle cx="5" cy="20" r="1.5" fill="#059669" />
+                    <circle cx="50" cy="16" r="1.5" fill="#059669" />
+                    <circle cx="95" cy="5" r="1.5" fill="#059669" />
                   </svg>
-                  <div className="flex justify-between text-[8px] font-mono text-[#8C7A6B] mt-1">
-                    <span>CIE 1</span>
-                    <span>CIE 2</span>
-                    <span>CIE 3</span>
-                  </div>
                 </div>
+
               </div>
-            </div>
 
-            {/* Bottom Action Buttons */}
-            <div className="pt-3 border-t border-[#A7F3D0]/60 flex items-center gap-2 mt-3">
-              <button 
-                onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[3]); }}
-                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
-              >
-                <span>▶ Open Caddy (Case Study)</span>
-              </button>
-              <a 
-                href={PROJECTS_DATA[3].githubUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="px-3 py-2 rounded-xl bg-[#059669]/10 hover:bg-[#059669]/20 text-[#065F46] text-[11px] font-semibold border border-[#059669]/20 transition-all"
-              >
-                GitHub ↗
-              </a>
-            </div>
+              {/* Bottom Drawer Plate */}
+              <div className="pt-2 border-t border-[#A7F3D0]/60 flex items-center justify-between text-[9px] font-mono text-[#065F46]">
+                <span>Docker &bull; Headless LibreOffice &bull; Pandas</span>
+                <span className="font-bold group-hover:translate-x-1 transition-transform">Pull Drawers &rarr;</span>
+              </div>
 
+            </div>
           </div>
 
-          {/* CARD 05: SMARTATTEND (Sleek Acrylic Lanyard Badge) */}
+          {/* ================= OBJECT 05: ATTENDANCE SYSTEM (ACRYLIC BADGE) ================= */}
           <div 
             onClick={() => setActiveProject(PROJECTS_DATA[4])}
-            className="bg-gradient-to-br from-[#2D0A14] via-[#1F050E] to-[#120208] text-white rounded-[28px] border-2 border-[#ECC880]/40 shadow-lg hover:-translate-y-2 transition-all duration-300 p-5 flex flex-col justify-between relative group overflow-hidden cursor-pointer"
+            className="group cursor-pointer transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] relative"
+            style={{ filter: "drop-shadow(0 16px 24px rgba(61, 10, 24, 0.14))" }}
           >
-            {/* Acrylic Glass Shine */}
-            <div className="absolute -top-20 -left-20 w-44 h-44 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
-
-            <div>
-              {/* Lanyard Clip & Ribbon Strap */}
-              <div className="flex items-center justify-between mb-3 pb-2 border-b border-white/10">
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-mono uppercase px-2 py-0.5 rounded-md bg-white/10 text-[#ECC880] font-bold border border-white/20">
-                    🪪 Smart ID Badge
-                  </span>
-                  <span className="text-[9px] font-mono text-[#34D399] font-bold flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#34D399] animate-ping"></span>
-                    <span>≤ 30m Active</span>
-                  </span>
-                </div>
-                <span className="text-[9px] font-mono text-[#ECC880]/80">★ SMARTATTEND ★</span>
-              </div>
-
-              {/* Content */}
-              <div className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-center">
-                <div className="sm:col-span-7">
-                  <div className="text-[10px] uppercase font-mono text-[#ECC880] font-bold">Cybersecurity &bull; Java Spring Boot</div>
-                  <h4 className="font-serif text-xl font-bold text-white mt-0.5">SmartAttend</h4>
-                  <p className="text-xs text-white/80 mt-1 leading-relaxed">
-                    Eliminating proxy attendance through cryptographic geofencing and 1-student-1-device hardware binding.
-                  </p>
-                  
-                  <div className="mt-3 flex flex-wrap gap-1 text-[9px] font-mono">
-                    <span className="px-2 py-0.5 rounded bg-black/40 text-[#ECC880] border border-white/10">Haversine GPS</span>
-                    <span className="px-2 py-0.5 rounded bg-[#10B981]/20 text-[#34D399] border border-[#10B981]/30">1 USN = 1 Device</span>
-                    <span className="px-2 py-0.5 rounded bg-white/10 text-white">Supabase Cloud</span>
-                  </div>
-                </div>
-
-                {/* Animated Sweeping Radar Widget */}
-                <div className="sm:col-span-5 bg-black/50 p-3 rounded-2xl border border-[#ECC880]/30 flex flex-col items-center text-center">
-                  <div className="relative w-20 h-20 rounded-full border border-[#10B981]/40 flex items-center justify-center my-1">
-                    <div className="absolute inset-1 rounded-full border border-dashed border-[#ECC880]/30"></div>
-                    {/* Sweeping Beam */}
-                    <div className="absolute inset-0 rounded-full radar-sweep-anim opacity-40 pointer-events-none" style={{ background: "conic-gradient(from 0deg, rgba(52,211,153,0.4) 0deg, transparent 60deg)" }}></div>
-                    <span className="text-sm">📍</span>
-                  </div>
-                  <span className="text-[9px] font-mono text-[#34D399] font-bold mt-1">Classroom Locked</span>
-                </div>
+            {/* Woven Lanyard Neck Ribbon at Top */}
+            <div className="flex justify-center -mb-2 relative z-20">
+              <div className="px-4 py-0.5 rounded-t-lg bg-gradient-to-r from-[#E8B4B8] via-[#8B1E3F] to-[#E8B4B8] text-[8px] font-mono font-bold text-white shadow-xs border-t border-x border-[#ECC880]">
+                ★ SMARTATTEND ★
               </div>
             </div>
 
-            {/* Bottom Action Buttons */}
-            <div className="pt-3 border-t border-white/15 flex items-center gap-2 mt-3">
-              <button 
-                onClick={(e) => { e.stopPropagation(); setActiveProject(PROJECTS_DATA[4]); }}
-                className="flex-1 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-[11px] font-bold shadow hover:brightness-110 flex items-center justify-center gap-1 transition-all"
-              >
-                <span>▶ Inspect Badge (Case Study)</span>
-              </button>
-              <a 
-                href={PROJECTS_DATA[4].githubUrl} 
-                target="_blank" 
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-                className="px-3 py-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-[11px] font-semibold border border-white/20 transition-all"
-              >
-                GitHub ↗
-              </a>
-            </div>
+            {/* The Acrylic Badge Body Itself (Matching User Image 2) */}
+            <div className="relative rounded-2xl bg-gradient-to-br from-[#FFFDF9]/95 via-[#FAF5EE]/95 to-[#F5EBE6]/95 backdrop-blur-md border-2 border-[#ECC880]/80 p-4 shadow-xl overflow-hidden">
+              
+              {/* Specular Acrylic Light Sheen */}
+              <div className="absolute -top-12 -left-12 w-28 h-28 bg-white/40 rounded-full blur-xl pointer-events-none" />
 
+              {/* Student ID Header */}
+              <div className="flex items-center justify-between mb-3 pb-2 border-b border-[#ECC880]/40 relative z-10">
+                <div>
+                  <div className="text-xs font-serif font-bold text-[#3D0A18]">Attendance System</div>
+                  <div className="text-[8px] font-mono text-[#8B1E3F] uppercase">GEOFENCING &bull; DEVICE ID &bull; BMSCE</div>
+                </div>
+                <div className="w-4 h-4 rounded-full bg-[#10B981]/20 border border-[#10B981] flex items-center justify-center">
+                  <div className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-ping"></div>
+                </div>
+              </div>
+
+              {/* Circular Sonar Radar & Haversine Formula Display */}
+              <div className="grid grid-cols-12 gap-3 items-center mb-3">
+                
+                {/* Dark Forest Green Radar */}
+                <div className="col-span-5 bg-[#0A1F16] p-2 rounded-xl border border-[#34D399]/40 flex flex-col items-center justify-center text-center">
+                  <div className="relative w-12 h-12 rounded-full border border-[#34D399]/40 flex items-center justify-center my-0.5">
+                    <div className="absolute inset-1 rounded-full border border-dashed border-[#ECC880]/40"></div>
+                    <span className="text-xs">📍</span>
+                  </div>
+                  <span className="text-[7.5px] font-mono text-[#34D399] font-bold">&le; 30m Active</span>
+                </div>
+
+                {/* Haversine Math Display */}
+                <div className="col-span-7 bg-[#FAF5EE] p-2 rounded-xl border border-[#ECC880]/40 font-mono text-[8px] text-[#3D0A18]">
+                  <div className="font-bold text-[#8B1E3F] mb-0.5">Haversine Distance</div>
+                  <div className="text-[7.5px] text-[#7A4555] leading-tight">
+                    d = 2r &bull; arcsin(&radic;sin&sup2;(&Delta;&phi;/2)...)
+                  </div>
+                  <div className="mt-1 text-[7.5px] text-[#059669] font-bold">1 USN = 1 Device ID</div>
+                </div>
+
+              </div>
+
+              {/* Bottom Plate */}
+              <div className="pt-2 border-t border-[#ECC880]/40 flex items-center justify-between text-[9px] font-mono text-[#8B1E3F]">
+                <span>Java 17+ &bull; Spring Boot &bull; Supabase</span>
+                <span className="font-bold group-hover:translate-x-1 transition-transform">Inspect Badge &rarr;</span>
+              </div>
+
+            </div>
           </div>
 
         </div>
@@ -755,30 +676,34 @@ export default function ProjectsBento() {
       </div>
 
       {/* ========================================================================= */}
-      {/* EXPANDED MODAL (Strict 2cm Margin: inset-3 sm:inset-5 md:inset-7 lg:inset-8) */}
+      {/* EXPANDED CASE STUDY (IN THE SAME OBJECT WITH 2CM MARGIN)                 */}
+      {/* Inset clamp(24px, 3vw, 64px) ensures strict 2cm breathing space          */}
+      {/* Warm Ivory Linen background, Champagne Gold borders, Velvet Burgundy     */}
       {/* ========================================================================= */}
       {activeProject && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-5 md:p-7 lg:p-8">
-          
-          {/* Backdrop Scrim */}
+        <div 
+          className="fixed inset-0 z-50 flex items-center justify-center"
+          style={{ padding: "clamp(24px, 3vw, 64px)" }}
+        >
+          {/* Subtle Scrim leaving portfolio visible */}
           <div 
             onClick={closeModal}
-            className="fixed inset-0 bg-[#140408]/80 backdrop-blur-md transition-opacity duration-300"
-          ></div>
+            className="fixed inset-0 bg-[#3D0A18]/40 backdrop-blur-sm transition-opacity duration-300"
+          />
 
-          {/* Expanded Modal Box (2cm gap from edges) */}
-          <div className="relative z-10 w-full max-w-6xl max-h-[calc(100vh-2rem)] sm:max-h-[calc(100vh-3rem)] md:max-h-[calc(100vh-4rem)] bg-[#1A050B] rounded-3xl border-2 border-[#ECC880]/40 shadow-2xl overflow-y-auto overscroll-contain touch-pan-y flex flex-col scrollbar-thin scrollbar-thumb-[#8B1E3F] scrollbar-track-black/20">
+          {/* The Same Physical Object Opened Wide */}
+          <div className="relative z-10 w-full max-w-5xl max-h-full bg-[#FFFDF9] rounded-3xl border-3 border-[#ECC880] shadow-2xl overflow-y-auto overscroll-contain touch-pan-y flex flex-col scrollbar-thin scrollbar-thumb-[#8B1E3F] scrollbar-track-cream">
             
-            {/* Top Bar with Cute Object Title & Close Button */}
-            <div className="sticky top-0 z-20 bg-[#2D0A14]/95 backdrop-blur-md px-6 py-4 border-b border-[#ECC880]/20 flex items-center justify-between">
+            {/* Top Bar with Object Metaphor Title & Close Button */}
+            <div className="sticky top-0 z-30 bg-[#FFFDF9]/95 backdrop-blur-md px-6 py-4 border-b border-[#ECC880]/40 flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <span className="text-2xl">{activeProject.metaphorIcon}</span>
+                <span className="text-2xl">{activeProject.objectMeta.icon}</span>
                 <div>
-                  <span className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#ECC880] font-bold">
-                    {activeProject.metaphorBadge}
-                  </span>
-                  <h3 className="text-xl font-serif font-bold text-white leading-tight">
-                    {activeProject.title} &bull; <span className="text-[#ECC880]/80 font-normal text-sm">{activeProject.subtitle}</span>
+                  <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-[#8B1E3F] font-bold">
+                    {activeProject.objectMeta.tag} &bull; {activeProject.objectMeta.material}
+                  </div>
+                  <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#3D0A18] leading-tight">
+                    {activeProject.title}
                   </h3>
                 </div>
               </div>
@@ -786,573 +711,214 @@ export default function ProjectsBento() {
               {/* Close Button */}
               <button 
                 onClick={closeModal}
-                className="w-10 h-10 rounded-full bg-[#FFFDF9]/10 hover:bg-[#FFFDF9]/20 border border-[#ECC880]/40 flex items-center justify-center text-[#ECC880] hover:text-white transition-all shadow-md group"
+                className="w-9 h-9 rounded-full bg-[#FAF5EE] hover:bg-[#E8B4B8]/40 border border-[#ECC880] flex items-center justify-center text-[#3D0A18] transition-all shadow-xs"
                 aria-label="Close Case Study"
               >
-                <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-200" />
+                <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* MODAL CONTENT SWITCHER BASED ON PROJECT */}
-            <div className="p-5 sm:p-7 md:p-8 text-[#FFF7ED]">
+            {/* CASE STUDY CONTENT INSIDE THE OPENED OBJECT */}
+            <div className="p-6 sm:p-8 space-y-8 text-[#3D0A18]">
               
-              {/* ---------------- 01. SHAREBITE: BENTO LUNCHBOX ---------------- */}
-              {activeProject.id === "sharebite" && (
-                <div className="space-y-6">
-                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    
-                    {/* Left: 2 Stacked Compartments */}
-                    <div className="lg:col-span-5 flex flex-col gap-5">
-                      
-                      {/* Vegetable Harvest Chamber */}
-                      <div className="bg-gradient-to-br from-[#122E22] via-[#0A1F16] to-[#05140D] rounded-2xl p-5 border border-[#34D399]/40 shadow-lg relative overflow-hidden">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="px-2.5 py-0.5 rounded-full bg-[#34D399]/20 text-[#34D399] text-[10px] font-bold tracking-wider uppercase border border-[#34D399]/30">
-                            🌱 Fresh Harvest &bull; Zero Waste
-                          </span>
-                          <span className="text-xs text-[#ECC880] font-mono">BENTO #01</span>
-                        </div>
-                        <h4 className="text-2xl font-serif text-[#F0FDF4] font-bold mb-2">
-                          ShareBite Mission
-                        </h4>
-                        <p className="text-xs sm:text-sm text-[#A7F3D0]/90 leading-relaxed">
-                          {activeProject.longDescription}
-                        </p>
-                        <div className="mt-4 pt-3 border-t border-[#34D399]/20 flex flex-wrap gap-2 text-xs">
-                          <span className="px-2.5 py-1 rounded bg-[#064E3B] text-[#D1FAE5] font-medium">📍 Realtime Geo-Dispatch</span>
-                          <span className="px-2.5 py-1 rounded bg-[#064E3B] text-[#D1FAE5] font-medium">⚡ 15-Min Pickup SLA</span>
-                        </div>
-                      </div>
-
-                      {/* Warm Spices Chamber (Metrics & Ingredients) */}
-                      <div className="bg-gradient-to-br from-[#2D0A14] to-[#1C040C] rounded-2xl p-5 border border-[#ECC880]/30 shadow-lg flex-1 flex flex-col justify-between">
-                        <div>
-                          <span className="text-[10px] font-mono uppercase tracking-widest text-[#ECC880] font-bold">
-                            Portions & Table Service
-                          </span>
-                          <div className="grid grid-cols-3 gap-2.5 my-3">
-                            {activeProject.metrics.map((m) => (
-                              <div key={m.label} className="bg-black/30 p-2.5 rounded-xl border border-white/5 text-center">
-                                <div className="text-base sm:text-lg font-serif text-[#ECC880] font-bold">{m.value}</div>
-                                <div className="text-[10px] text-white/70 mt-0.5">{m.label}</div>
-                              </div>
-                            ))}
-                          </div>
-
-                          <span className="text-[10px] font-mono uppercase tracking-widest text-[#ECC880] font-bold">
-                            Recipe Ingredients (Tech Stack)
-                          </span>
-                          <div className="flex flex-wrap gap-1.5 mt-2 mb-4">
-                            {activeProject.techStack.map((tech) => (
-                              <span key={tech} className="px-2.5 py-1 rounded bg-[#ECC880]/15 text-[#ECC880] text-[11px] font-medium border border-[#ECC880]/30">
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="pt-3 border-t border-white/10 flex items-center gap-3">
-                          <a 
-                            href={activeProject.githubUrl} 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="flex-1 text-center py-2.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-xs font-bold shadow hover:brightness-110 transition-all flex items-center justify-center gap-2"
-                          >
-                            <Github className="w-4 h-4" />
-                            <span>View GitHub Repository</span>
-                          </a>
-                        </div>
-                      </div>
-
-                    </div>
-
-                    {/* Right: Steamed-Rice Canvas with Real Video Player */}
-                    <div className="lg:col-span-7 bg-[#FCFBF7] text-[#1E1915] rounded-2xl p-5 shadow-2xl border-2 border-[#EADFC9] flex flex-col justify-between">
-                      <div>
-                        <div className="flex items-center justify-between mb-3 text-xs font-mono">
-                          <span className="font-bold text-[#544335] flex items-center gap-1.5">
-                            <span>🍚</span>
-                            <span>STEAMED RICE PORCELAIN CANVAS</span>
-                          </span>
-                          <span className="text-[#8C7A6B]">SHAREBITE.mp4 (10MB)</span>
-                        </div>
-
-                        {/* Real Video Player */}
-                        <div className="relative aspect-video rounded-xl overflow-hidden bg-black shadow-lg border-2 border-[#3E342B]/20">
-                          <video 
-                            ref={videoRef}
-                            src={activeProject.videoSrc}
-                            className="w-full h-full object-contain"
-                            controls
-                            autoPlay
-                            muted={isMuted}
-                            loop
-                            playsInline
-                          />
-                        </div>
-                      </div>
-
-                      <div className="mt-4 pt-3 border-t border-[#E8DFC9] flex items-center justify-between text-xs text-[#8C7A6B]">
-                        <span className="flex items-center gap-1.5">
-                          <span>🥢</span>
-                          <span>Interactive Video Walkthrough of Donor &amp; Volunteer Flow</span>
-                        </span>
-                        <div className="flex items-center gap-2">
-                          <button 
-                            onClick={toggleMute}
-                            className="px-2.5 py-1 rounded-md bg-[#EFE9DC] text-[#3D0A18] hover:bg-[#E2D8C3] font-medium flex items-center gap-1 text-[11px]"
-                          >
-                            {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
-                            <span>{isMuted ? "Unmute" : "Muted"}</span>
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-
-                  </div>
+              {/* Academic & Official Subtitle Banner */}
+              <div className="bg-[#FAF5EE] p-4 rounded-2xl border border-[#ECC880]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div>
+                  <h4 className="font-serif font-bold text-lg text-[#3D0A18]">{activeProject.officialName}</h4>
+                  <p className="text-xs text-[#7A4555] font-mono mt-0.5">{activeProject.academicInfo}</p>
                 </div>
-              )}
-
-              {/* ---------------- 02. KAFKA: SWEET SHOP CONVEYOR ---------------- */}
-              {activeProject.id === "kafka" && (
-                <div className="space-y-6">
-                  {/* Sweet Conveyor Belt Header */}
-                  <div className="bg-gradient-to-r from-[#2A0610] via-[#1E040B] to-[#120206] p-5 rounded-2xl border border-[#ECC880]/30 flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div>
-                      <div className="flex items-center gap-2 text-xs font-mono text-[#ECC880] mb-1">
-                        <span>🧁</span>
-                        <span>CONVEYOR SORTER ENGINE</span>
-                      </div>
-                      <h4 className="text-2xl font-serif font-bold text-white">
-                        Apache Kafka Event Streaming Sandbox
-                      </h4>
-                      <p className="text-xs text-white/80 mt-1 max-w-2xl">
-                        {activeProject.longDescription}
-                      </p>
-                    </div>
-                    {activeProject.liveUrl && (
-                      <a 
-                        href={activeProject.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#2D0A14] text-xs font-bold shadow-lg hover:brightness-110 transition-all flex items-center justify-center gap-2 whitespace-nowrap"
-                      >
-                        <ExternalLink className="w-4 h-4" />
-                        <span>Launch Live Vercel App ↗</span>
-                      </a>
-                    )}
-                  </div>
-
-                  {/* 3 Partition Sorter Baskets */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-black/30 p-4 rounded-xl border border-[#ECC880]/20 text-center">
-                      <span className="text-2xl">🧁</span>
-                      <h5 className="font-serif font-bold text-[#ECC880] mt-1">Partition 0 Basket</h5>
-                      <p className="text-[11px] text-white/70 mt-0.5">Key Hash Routing: hash(key) % 3 == 0</p>
-                      <span className="inline-block mt-2 px-2 py-0.5 rounded bg-[#ECC880]/20 text-[#ECC880] text-[10px] font-mono">
-                        order_created events
-                      </span>
-                    </div>
-                    <div className="bg-black/30 p-4 rounded-xl border border-[#F472B6]/30 text-center">
-                      <span className="text-2xl">🍬</span>
-                      <h5 className="font-serif font-bold text-[#F472B6] mt-1">Partition 1 Basket</h5>
-                      <p className="text-[11px] text-white/70 mt-0.5">Key Hash Routing: hash(key) % 3 == 1</p>
-                      <span className="inline-block mt-2 px-2 py-0.5 rounded bg-[#F472B6]/20 text-[#F472B6] text-[10px] font-mono">
-                        payment_done events
-                      </span>
-                    </div>
-                    <div className="bg-black/30 p-4 rounded-xl border border-[#34D399]/30 text-center">
-                      <span className="text-2xl">🍰</span>
-                      <h5 className="font-serif font-bold text-[#34D399] mt-1">Partition 2 Basket</h5>
-                      <p className="text-[11px] text-white/70 mt-0.5">Key Hash Routing: hash(key) % 3 == 2</p>
-                      <span className="inline-block mt-2 px-2 py-0.5 rounded bg-[#34D399]/20 text-[#34D399] text-[10px] font-mono">
-                        user_signup events
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* 7 Screenshots Gallery */}
-                  <div className="bg-black/40 p-5 rounded-2xl border border-white/10">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-mono uppercase text-[#ECC880] font-bold">
-                        Interactive Architecture Screenshots ({activeSlide + 1} / {activeProject.screenshots.length})
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <button 
-                          onClick={() => setActiveSlide((prev) => (prev > 0 ? prev - 1 : activeProject.screenshots.length - 1))}
-                          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <button 
-                          onClick={() => setActiveSlide((prev) => (prev < activeProject.screenshots.length - 1 ? prev + 1 : 0))}
-                          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-
-                    {/* Main Active Screenshot */}
-                    <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-black/60 border border-white/20 mb-4">
-                      <Image 
-                        src={activeProject.screenshots[activeSlide]} 
-                        alt="Kafka Simulator Screenshot" 
-                        fill 
-                        className="object-contain" 
-                      />
-                    </div>
-
-                    {/* Thumbnail Strip */}
-                    <div className="grid grid-cols-7 gap-2">
-                      {activeProject.screenshots.map((s, idx) => (
-                        <div 
-                          key={s}
-                          onClick={() => setActiveSlide(idx)}
-                          className={`relative aspect-video rounded-lg overflow-hidden cursor-pointer border-2 transition-all ${
-                            idx === activeSlide ? "border-[#ECC880] scale-105" : "border-transparent opacity-60 hover:opacity-100"
-                          }`}
-                        >
-                          <Image src={s} alt={`Slide ${idx + 1}`} fill className="object-cover" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  {/* Action Link */}
-                  <div className="flex justify-end gap-3 pt-2">
+                <div className="flex items-center gap-2">
+                  {activeProject.liveUrl && (
                     <a 
-                      href={activeProject.githubUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-white text-xs font-semibold flex items-center gap-2"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>GitHub Source Code</span>
-                    </a>
-                  </div>
-                </div>
-              )}
-
-              {/* ---------------- 03. UNISTAY: PASTEL DORM TRUNK ---------------- */}
-              {activeProject.id === "unistay" && (
-                <div className="space-y-6">
-                  
-                  {/* Suitcase Lid: Polaroid Photo Prints & Washi Tape */}
-                  <div className="bg-gradient-to-br from-[#FFFDF9] via-[#FAF3F5] to-[#FCEEF1] text-[#3D0A18] p-6 rounded-2xl border-2 border-[#E8B4B8] shadow-lg">
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-[#E8B4B8]/40">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xl">🧳</span>
-                        <h4 className="font-serif font-bold text-lg text-[#8B1E3F]">
-                          Dorm Room Polaroids &amp; Campus Map
-                        </h4>
-                      </div>
-                      <span className="text-xs font-mono text-[#BE185D] bg-[#FCE7F3] px-3 py-1 rounded-full border border-[#F472B6]/30 font-bold">
-                        9 Room Photos Pinned
-                      </span>
-                    </div>
-
-                    {/* Active Screenshot Display with Polaroid Styling */}
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-                      <div className="lg:col-span-8 relative aspect-[16/10] bg-white p-3 rounded-2xl shadow-md border border-[#E8B4B8]/50 flex flex-col justify-between">
-                        <div className="relative w-full h-[85%] rounded-xl overflow-hidden bg-black/5">
-                          <Image 
-                            src={activeProject.screenshots[activeSlide]} 
-                            alt="Dorm Photo" 
-                            fill 
-                            className="object-contain" 
-                          />
-                        </div>
-                        <div className="flex items-center justify-between text-xs pt-2 font-serif italic text-[#8B1E3F]">
-                          <span>Photo {activeSlide + 1} of {activeProject.screenshots.length} &bull; UniStay Portal</span>
-                          <span className="font-sans not-italic text-[11px] text-[#A24857]">Single / Double / Triple Sharing</span>
-                        </div>
-                      </div>
-
-                      {/* Polaroid Thumbnails */}
-                      <div className="lg:col-span-4 flex flex-col gap-2">
-                        <span className="text-xs font-bold text-[#8B1E3F] uppercase tracking-wider">
-                          Dorm Photo Snapshots
-                        </span>
-                        <div className="grid grid-cols-3 gap-2">
-                          {activeProject.screenshots.map((s, idx) => (
-                            <div 
-                              key={s}
-                              onClick={() => setActiveSlide(idx)}
-                              className={`relative aspect-square rounded-xl overflow-hidden cursor-pointer border-2 transition-all ${
-                                idx === activeSlide ? "border-[#BE185D] ring-2 ring-[#BE185D]/30 scale-105" : "border-white opacity-70 hover:opacity-100"
-                              }`}
-                            >
-                              <Image src={s} alt={`Thumb ${idx + 1}`} fill className="object-cover" />
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Suitcase Bottom: Keycard, Room #412 & Specs */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-[#2D0A14] p-4 rounded-xl border border-[#ECC880]/30 flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-[#ECC880]/20 flex items-center justify-center text-xl text-[#ECC880]">
-                        🔑
-                      </div>
-                      <div>
-                        <div className="text-xs text-[#ECC880] font-mono">Assigned Room</div>
-                        <div className="text-lg font-serif font-bold text-white">Room #412</div>
-                        <div className="text-[10px] text-white/60">Fluffy Pink Pom-Pom Key</div>
-                      </div>
-                    </div>
-                    <div className="bg-[#2D0A14] p-4 rounded-xl border border-white/10 flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl">
-                        🏢
-                      </div>
-                      <div>
-                        <div className="text-xs text-[#ECC880] font-mono">Allocation Rule</div>
-                        <div className="text-lg font-serif font-bold text-white">1 Room / USN</div>
-                        <div className="text-[10px] text-white/60">Zero Double Bookings</div>
-                      </div>
-                    </div>
-                    <div className="bg-[#2D0A14] p-4 rounded-xl border border-white/10 flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-xl">
-                        📍
-                      </div>
-                      <div>
-                        <div className="text-xs text-[#ECC880] font-mono">Campus Distance</div>
-                        <div className="text-lg font-serif font-bold text-white">BMSCE Campus</div>
-                        <div className="text-[10px] text-white/60">Google Maps Navigation</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Actions */}
-                  <div className="flex justify-between items-center pt-2">
-                    <span className="text-xs text-white/60 font-mono">Course: 23CS3AEFWD &bull; Guide: Mrs. Rachana M S</span>
-                    <a 
-                      href={activeProject.githubUrl}
+                      href={activeProject.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-xs font-bold shadow flex items-center gap-2"
+                      className="px-3.5 py-1.5 rounded-xl bg-[#4A0E17] text-[#FFFDF9] text-xs font-bold shadow-xs hover:bg-[#60121F] flex items-center gap-1.5"
                     >
-                      <Github className="w-4 h-4" />
-                      <span>View GitHub Source</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                      <span>Live App ↗</span>
                     </a>
-                  </div>
-
+                  )}
+                  <a 
+                    href={activeProject.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-3.5 py-1.5 rounded-xl bg-white text-[#3D0A18] border border-[#ECC880] text-xs font-bold shadow-xs hover:bg-[#FAF5EE] flex items-center gap-1.5"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                    <span>GitHub ↗</span>
+                  </a>
                 </div>
-              )}
+              </div>
 
-              {/* ---------------- 04. CIE ANALYZER: DESK ORGANIZER ---------------- */}
-              {activeProject.id === "cie" && (
-                <div className="space-y-6">
-                  
-                  {/* 5-Step Pipeline Flow Banner */}
-                  <div className="bg-black/40 p-4 rounded-2xl border border-[#ECC880]/30">
-                    <span className="text-[10px] font-mono uppercase tracking-widest text-[#ECC880] font-bold block mb-2">
-                      Automated 5-Step Diagnostic Pipeline
+              {/* 1. WHAT THE PROJECT IS (Problem & Purpose) */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div className="bg-white p-5 rounded-2xl border border-[#ECC880]/40 shadow-xs">
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider font-bold text-[#8B1E3F] mb-2">
+                    <span>⚠️</span>
+                    <span>The Problem</span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-[#7A4555] leading-relaxed">
+                    {activeProject.problem}
+                  </p>
+                </div>
+
+                <div className="bg-white p-5 rounded-2xl border border-[#ECC880]/40 shadow-xs">
+                  <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider font-bold text-[#059669] mb-2">
+                    <span>💡</span>
+                    <span>The Technical Solution</span>
+                  </div>
+                  <p className="text-xs sm:text-sm text-[#7A4555] leading-relaxed">
+                    {activeProject.solution}
+                  </p>
+                </div>
+              </div>
+
+              {/* 2. MAIN FUNCTIONALITIES (Bulleted Core Features from Report) */}
+              <div className="bg-white p-5 rounded-2xl border border-[#ECC880]/40 shadow-xs">
+                <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-wider font-bold text-[#8B1E3F] mb-3">
+                  <span>⚙️</span>
+                  <span>Main Functionalities &amp; Architecture Modules</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  {activeProject.functionalities.map((func, idx) => (
+                    <div key={idx} className="flex items-start gap-2 text-xs text-[#3D0A18] bg-[#FAF5EE] p-2.5 rounded-xl border border-[#ECC880]/20">
+                      <span className="text-[#8B1E3F] font-bold mt-0.5">&bull;</span>
+                      <span className="leading-relaxed">{func}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 3. TECHNOLOGY STACK (Categorized Badges) */}
+              <div className="bg-[#FAF5EE] p-5 rounded-2xl border border-[#ECC880]/40">
+                <div className="text-xs font-mono uppercase tracking-wider font-bold text-[#8B1E3F] mb-3">
+                  🛠️ Complete Technology Stack
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+                  {activeProject.techStack.map((group, idx) => (
+                    <div key={idx} className="bg-white p-3 rounded-xl border border-[#ECC880]/30 shadow-2xs">
+                      <div className="text-[10px] font-mono uppercase font-bold text-[#7A4555] mb-1.5">{group.category}</div>
+                      <div className="flex flex-wrap gap-1">
+                        {group.items.map((item, itemIdx) => (
+                          <span key={itemIdx} className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#FAF5EE] text-[#3D0A18] border border-[#ECC880]/30">
+                            {item}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* 4. REAL MEDIA & DEMONSTRATION */}
+              {activeProject.mediaType === "video" ? (
+                /* ShareBite Real Video Player */
+                <div className="bg-white p-5 rounded-2xl border border-[#ECC880]/40 shadow-xs">
+                  <div className="flex items-center justify-between mb-3 text-xs font-mono">
+                    <span className="font-bold text-[#8B1E3F] flex items-center gap-1.5">
+                      <span>🎬</span>
+                      <span>Authentic Mobile App Walkthrough Video (SHAREBITE.mp4)</span>
                     </span>
-                    <div className="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs font-mono text-center">
-                      <div className="bg-white/5 p-2 rounded-lg border border-white/10">📦 1. ZIP Ingest</div>
-                      <div className="bg-white/5 p-2 rounded-lg border border-white/10">📄 2. LibreOffice</div>
-                      <div className="bg-white/5 p-2 rounded-lg border border-white/10">🐼 3. Pandas Engine</div>
-                      <div className="bg-white/5 p-2 rounded-lg border border-white/10">🔥 4. Firestore</div>
-                      <div className="bg-[#10B981]/20 text-[#34D399] p-2 rounded-lg border border-[#10B981]/40 font-bold">📈 5. Chart.js</div>
-                    </div>
-                  </div>
-
-                  {/* Desk Organizer Boxes */}
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-[#2D0A14] p-4 rounded-xl border border-red-500/30">
-                      <span className="text-[10px] uppercase font-mono text-rose-300 font-bold">Diagnostic Rubber Stamp</span>
-                      <div className="text-2xl font-serif font-bold text-rose-400 mt-1">&lt; 40% Score</div>
-                      <p className="text-xs text-white/70 mt-1">Automatic threshold flag triggers early faculty remedial intervention.</p>
-                    </div>
-                    <div className="bg-[#2D0A14] p-4 rounded-xl border border-white/10">
-                      <span className="text-[10px] uppercase font-mono text-[#ECC880] font-bold">Exam Scope</span>
-                      <div className="text-2xl font-serif font-bold text-white mt-1">CIE 1, 2, 3</div>
-                      <p className="text-xs text-white/70 mt-1">Longitudinal multi-exam progress comparison across semester.</p>
-                    </div>
-                    <div className="bg-[#2D0A14] p-4 rounded-xl border border-white/10">
-                      <span className="text-[10px] uppercase font-mono text-[#34D399] font-bold">Deployment</span>
-                      <div className="text-2xl font-serif font-bold text-white mt-1">Dockerized</div>
-                      <p className="text-xs text-white/70 mt-1">Encapsulating LibreOffice system binaries for cross-platform reliability.</p>
-                    </div>
-                  </div>
-
-                  {/* 11 Screenshots Gallery */}
-                  <div className="bg-black/40 p-5 rounded-2xl border border-white/10">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-mono uppercase text-[#ECC880] font-bold">
-                        Examination Roster &amp; Dashboard Slides ({activeSlide + 1} / {activeProject.screenshots.length})
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <button 
-                          onClick={() => setActiveSlide((prev) => (prev > 0 ? prev - 1 : activeProject.screenshots.length - 1))}
-                          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <button 
-                          onClick={() => setActiveSlide((prev) => (prev < activeProject.screenshots.length - 1 ? prev + 1 : 0))}
-                          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-black/60 border border-white/20 mb-4">
-                      <Image 
-                        src={activeProject.screenshots[activeSlide]} 
-                        alt="CIE Analyzer Screenshot" 
-                        fill 
-                        className="object-contain" 
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-6 sm:grid-cols-11 gap-1.5">
-                      {activeProject.screenshots.map((s, idx) => (
-                        <div 
-                          key={s}
-                          onClick={() => setActiveSlide(idx)}
-                          className={`relative aspect-video rounded-md overflow-hidden cursor-pointer border-2 transition-all ${
-                            idx === activeSlide ? "border-[#ECC880] scale-105" : "border-transparent opacity-60 hover:opacity-100"
-                          }`}
-                        >
-                          <Image src={s} alt={`Thumb ${idx + 1}`} fill className="object-cover" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center pt-2">
-                    <span className="text-xs text-white/60 font-mono">BMSCE CSE &bull; Guide: Prof. Monisha HM</span>
-                    <a 
-                      href={activeProject.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-xs font-bold shadow flex items-center gap-2"
+                    <button 
+                      onClick={toggleMute}
+                      className="px-2.5 py-1 rounded bg-[#FAF5EE] text-[#3D0A18] hover:bg-[#E8B4B8]/30 border border-[#ECC880]/40 font-medium flex items-center gap-1 text-[11px]"
                     >
-                      <Github className="w-4 h-4" />
-                      <span>View GitHub Repository</span>
-                    </a>
+                      {isMuted ? <VolumeX className="w-3.5 h-3.5" /> : <Volume2 className="w-3.5 h-3.5" />}
+                      <span>{isMuted ? "Unmute Audio" : "Muted"}</span>
+                    </button>
+                  </div>
+                  <div className="relative aspect-video rounded-xl overflow-hidden bg-black shadow-inner border border-[#ECC880]/40">
+                    <video 
+                      ref={videoRef}
+                      src={activeProject.videoSrc}
+                      className="w-full h-full object-contain"
+                      controls
+                      autoPlay
+                      muted={isMuted}
+                      loop
+                      playsInline
+                    />
+                  </div>
+                </div>
+              ) : (
+                /* Authentic Screenshot Gallery */
+                <div className="bg-white p-5 rounded-2xl border border-[#ECC880]/40 shadow-xs">
+                  <div className="flex items-center justify-between mb-3 text-xs font-mono">
+                    <span className="font-bold text-[#8B1E3F] flex items-center gap-1.5">
+                      <span>📸</span>
+                      <span>Authentic Project Screenshots ({activeSlide + 1} / {activeProject.screenshots.length})</span>
+                    </span>
+                    <div className="flex items-center gap-1.5">
+                      <button 
+                        onClick={() => setActiveSlide((prev) => (prev > 0 ? prev - 1 : activeProject.screenshots.length - 1))}
+                        className="w-7 h-7 rounded-full bg-[#FAF5EE] hover:bg-[#E8B4B8]/40 border border-[#ECC880] flex items-center justify-center text-[#3D0A18]"
+                      >
+                        <ChevronLeft className="w-4 h-4" />
+                      </button>
+                      <button 
+                        onClick={() => setActiveSlide((prev) => (prev < activeProject.screenshots.length - 1 ? prev + 1 : 0))}
+                        className="w-7 h-7 rounded-full bg-[#FAF5EE] hover:bg-[#E8B4B8]/40 border border-[#ECC880] flex items-center justify-center text-[#3D0A18]"
+                      >
+                        <ChevronRight className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
 
+                  {/* Active Slide */}
+                  <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-[#FAF5EE] border border-[#ECC880]/40 mb-3 shadow-inner">
+                    <Image 
+                      src={activeProject.screenshots[activeSlide]} 
+                      alt="Project Screenshot" 
+                      fill 
+                      className="object-contain" 
+                    />
+                  </div>
+
+                  {/* Thumbnail Strip */}
+                  <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-none">
+                    {activeProject.screenshots.map((s, idx) => (
+                      <div 
+                        key={s}
+                        onClick={() => setActiveSlide(idx)}
+                        className={`relative w-16 h-10 flex-shrink-0 rounded-lg overflow-hidden cursor-pointer border-2 transition-all ${
+                          idx === activeSlide ? "border-[#8B1E3F] scale-105" : "border-transparent opacity-60 hover:opacity-100"
+                        }`}
+                      >
+                        <Image src={s} alt={`Slide ${idx + 1}`} fill className="object-cover" />
+                      </div>
+                    ))}
+                  </div>
                 </div>
               )}
 
-              {/* ---------------- 05. SMARTATTEND: LANYARD ID BADGE ---------------- */}
-              {activeProject.id === "smartattend" && (
-                <div className="space-y-6">
-                  
-                  {/* Top Security Scope Banner */}
-                  <div className="bg-gradient-to-r from-[#200612] to-[#120208] p-5 rounded-2xl border border-[#ECC880]/30 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                    
-                    {/* Radar graphic on Left */}
-                    <div className="md:col-span-4 flex flex-col items-center text-center">
-                      <div className="relative w-36 h-36 rounded-full border border-[#10B981]/40 flex items-center justify-center">
-                        <div className="absolute inset-2 rounded-full border border-dashed border-[#ECC880]/30 animate-spin" style={{ animationDuration: "25s" }}></div>
-                        <div className="text-center">
-                          <span className="text-3xl">📍</span>
-                          <div className="text-[10px] font-mono text-[#34D399] font-bold mt-1">30m GEOFENCE</div>
-                          <div className="text-[9px] font-mono text-[#ECC880]/70">Haversine Lock</div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Security Details on Right */}
-                    <div className="md:col-span-8">
-                      <span className="text-[10px] font-mono uppercase tracking-widest text-[#ECC880] font-bold">
-                        Anti-Proxy Security Handshake
-                      </span>
-                      <h4 className="text-2xl font-serif font-bold text-white mt-1">
-                        Cryptographic Geofence &amp; Hardware Lock
-                      </h4>
-                      <p className="text-xs text-white/80 mt-1 leading-relaxed">
-                        {activeProject.longDescription}
-                      </p>
-                      
-                      <div className="mt-3 flex flex-wrap gap-2 text-xs">
-                        <span className="px-2.5 py-1 rounded bg-black/40 text-[#ECC880] font-mono border border-[#ECC880]/20">
-                          d = 2r &bull; arcsin(...)
-                        </span>
-                        <span className="px-2.5 py-1 rounded bg-[#10B981]/20 text-[#34D399] font-mono border border-[#10B981]/30">
-                          1 Student = 1 Device ID
-                        </span>
-                        <span className="px-2.5 py-1 rounded bg-white/10 text-white font-mono">
-                          Dynamic Session Code Expiry
-                        </span>
-                      </div>
-                    </div>
-
-                  </div>
-
-                  {/* 8 Screenshots Gallery */}
-                  <div className="bg-black/40 p-5 rounded-2xl border border-white/10">
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-xs font-mono uppercase text-[#ECC880] font-bold">
-                        Security Terminal &amp; Supabase Ledger ({activeSlide + 1} / {activeProject.screenshots.length})
-                      </span>
-                      <div className="flex items-center gap-2">
-                        <button 
-                          onClick={() => setActiveSlide((prev) => (prev > 0 ? prev - 1 : activeProject.screenshots.length - 1))}
-                          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
-                        >
-                          <ChevronLeft className="w-4 h-4" />
-                        </button>
-                        <button 
-                          onClick={() => setActiveSlide((prev) => (prev < activeProject.screenshots.length - 1 ? prev + 1 : 0))}
-                          className="w-8 h-8 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center text-white"
-                        >
-                          <ChevronRight className="w-4 h-4" />
-                        </button>
-                      </div>
-                    </div>
-
-                    <div className="relative aspect-[16/9] rounded-xl overflow-hidden bg-black/60 border border-white/20 mb-4">
-                      <Image 
-                        src={activeProject.screenshots[activeSlide]} 
-                        alt="SmartAttend Screenshot" 
-                        fill 
-                        className="object-contain" 
-                      />
-                    </div>
-
-                    <div className="grid grid-cols-4 sm:grid-cols-8 gap-2">
-                      {activeProject.screenshots.map((s, idx) => (
-                        <div 
-                          key={s}
-                          onClick={() => setActiveSlide(idx)}
-                          className={`relative aspect-video rounded-md overflow-hidden cursor-pointer border-2 transition-all ${
-                            idx === activeSlide ? "border-[#ECC880] scale-105" : "border-transparent opacity-60 hover:opacity-100"
-                          }`}
-                        >
-                          <Image src={s} alt={`Thumb ${idx + 1}`} fill className="object-cover" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-
-                  <div className="flex justify-between items-center pt-2">
-                    <span className="text-xs text-white/60 font-mono">BMSCE CSE &bull; Guide: Prof. Monisha HM</span>
-                    <a 
-                      href={activeProject.githubUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#ECC880] to-[#D4AF37] text-[#3D0A18] text-xs font-bold shadow flex items-center gap-2"
-                    >
-                      <Github className="w-4 h-4" />
-                      <span>View GitHub Repository</span>
-                    </a>
-                  </div>
-
+              {/* 5. VERIFIED REPOSITORIES & ACTION FOOTER */}
+              <div className="pt-4 border-t border-[#ECC880]/40 flex flex-col sm:flex-row sm:items-center justify-between gap-3 text-xs text-[#7A4555]">
+                <div className="font-mono">
+                  <span>Source Verification &bull; Tested on Node.js / Python / Java</span>
                 </div>
-              )}
+                <div className="flex items-center gap-2">
+                  <a 
+                    href={activeProject.githubUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-4 py-2 rounded-xl bg-[#4A0E17] text-[#FFFDF9] font-bold shadow-xs hover:bg-[#60121F] transition-all flex items-center gap-1.5"
+                  >
+                    <Github className="w-4 h-4" />
+                    <span>View GitHub Source Code ↗</span>
+                  </a>
+                  <button 
+                    onClick={closeModal}
+                    className="px-4 py-2 rounded-xl bg-[#FAF5EE] border border-[#ECC880] text-[#3D0A18] font-bold hover:bg-[#E8B4B8]/30 transition-all"
+                  >
+                    Close Object
+                  </button>
+                </div>
+              </div>
 
             </div>
 
           </div>
-
         </div>
       )}
 
